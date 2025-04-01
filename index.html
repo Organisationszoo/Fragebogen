@@ -62,7 +62,7 @@
     .frage-box h2 {
       font-size: 1.2em;
       margin-top: 0;
-      color: #00695c;
+      color: color: orange; /* oder #FFA500 für ein typisches Orange */
     }
     .skala-antwort {
       margin-left: 20px;
@@ -832,9 +832,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Normiere die erreichten Punkte der gefilterten Eigenschaften auf eine Skala von 0 bis 16
     const filteredEigKeys = Object.keys(filteredEigenschaftCounts);
     const normFilteredEigVals = filteredEigKeys.map(key => {
-      const maxVal = filteredEigenschaftMax[key] || 16; // Fallback: falls kein Maximalwert ermittelt wurde
+      const maxVal = filteredEigenschaftMax[key] || 10; // Fallback: falls kein Maximalwert ermittelt wurde
       const ratio = filteredEigenschaftCounts[key] / maxVal;
-      const adjusted = Math.pow(ratio, 0.8) * 16;  // nichtlineare Transformation (Exponent 0.8)
+      const adjusted = Math.pow(ratio, 0.8) * 10;  // nichtlineare Transformation (Exponent 0.8)
       return Math.round(adjusted);
     });
 
@@ -865,7 +865,7 @@ document.addEventListener("DOMContentLoaded", function() {
         scales: {
           r: {
             min: 0,
-            max: 16,
+            max: 10,
             ticks: { stepSize: 2 },
             pointLabels: { font: { size: 9 } }
           }
