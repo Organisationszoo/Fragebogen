@@ -176,38 +176,33 @@
   </style>
 </head>
 <body>
+ <body>
+  <!-- Fragebogen-Container mit Logo, Titel, Beschreibung, Formular und Button -->
   <div id="questionnaire-container">
-  <!-- Eulenbild oben mitte -->
-  <img class="top-right-image" src="eule-organisationszoo.jpg" alt="Logo" />
+    <!-- Eulenbild oben mitte -->
+    <img class="top-right-image" src="eule-organisationszoo.jpg" alt="Logo" />
 
-  <h1>Dein Fragebogen</h1>
+    <h1>Dein Fragebogen</h1>
 
-  <!-- Hinweis wieder einsetzen -->
-  <p class="beschreibung">
-    Wähle für jede Aussage eine Zahl von 0 bis 4,<br>
-    wobei 0 gar nicht zutrifft und 4 völlig zutrifft.
-  </p>
+    <p class="beschreibung">
+      Wähle für jede Aussage eine Zahl von 0 bis 4,<br>
+      wobei 0 gar nicht zutrifft und 4 völlig zutrifft.
+    </p>
 
-  <form id="fragebogen">
-    <!-- Fragen werden hier per JavaScript eingefügt -->
-  </form>
+    <form id="fragebogen">
+      <!-- Fragen kommen hier per JS rein -->
+    </form>
 
-  <button form="fragebogen" type="submit">Auswerten</button>
-</div>
-  
-  <form id="fragebogen">
-    <!-- Hier würde dein Formular mit den Fragen stehen -->
-  </form>
-  <button form="fragebogen" type="submit">Auswerten</button>
-  
- <div id="ergebnis" style="position: relative;">
-  <!-- Fixiertes Bild -->
-  <img class="fixed-top-right" src="eule-organisationszoo.jpg" alt="Eule" />
-  <!-- Container für den dynamischen Inhalt -->
-  <div id="dynamic-result"></div>
-</div>
+    <button form="fragebogen" type="submit">Auswerten</button>
+  </div>
 
-  <!-- Druck-Button -->
+  <!-- Ergebnisbereich (außerhalb des Fragebogens) -->
+  <div id="ergebnis" style="position: relative;">
+    <img class="fixed-top-right" src="eule-organisationszoo.jpg" alt="Eule" />
+    <div id="dynamic-result"></div>
+  </div>
+
+  <!-- PDF / Druck Button -->
   <button id="printButton" type="button">Drucken / Als PDF speichern</button>
   
   <script>
