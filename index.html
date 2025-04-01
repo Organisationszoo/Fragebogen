@@ -19,11 +19,12 @@
 /* Bild oben rechts im Fragebogen (Wasserzeichen/Logo) */
 .top-right-image {
   position: absolute;
-  top: 10px;       /* Abstand von oben – anpassen */
-  right: 10px;     /* Abstand von rechts – anpassen */
-  width: 80px;     /* Bildgröße anpassen (kleiner als bisher) */
+  top: 10px;              /* Abstand vom oberen Rand */
+  left: 50%;              /* Horizontal in die Mitte der Seite */
+  transform: translateX(-50%); /* Korrigiert den Mittelpunkt */
+  width: 80px;
   height: auto;
-  z-index: 9999;
+  z-index: 9999;          /* Logo bleibt oben drüber */
 }
     /* Basisstil und modernes Farbschema */
     body {
