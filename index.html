@@ -669,7 +669,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
 
-    // 🔢 Normalisierte Punktzahl in Prozent (max. 16 Punkte)
+    // 🔢 Normalisierte Punktzahl in Prozent (max. 10 Punkte)
     const normalisierteTierCounts = {};
     Object.keys(tierCounts).forEach(tier => {
       normalisierteTierCounts[tier] = Math.round((tierCounts[tier] / 16) * 100);
