@@ -23,22 +23,23 @@
       color: #00796b;
     }
     .logo-wrapper {
-  text-align: center;
-}
-
-.logo-wrapper .eule {
-  display: block;
-  margin: 0 auto;
-  max-width: 200px; /* Eule etwas kleiner */
-  height: auto;
-}
-
-.logo-wrapper .organisationszoo {
-  display: block;
-  margin: 20px auto 0;
-  max-width: 300px; /* Organisationszoo etwas größer */
-  height: auto;
-}
+      text-align: center;
+    }
+    .logo-wrapper .eule {
+      display: block;
+      margin: 0 auto;
+      max-width: 200px; /* Eule etwas kleiner */
+      height: auto;
+    }
+    /* Ersetze das Bild durch formatierten Text */
+    .logo-wrapper .organisationszoo {
+      display: block;
+      margin: 20px auto 0;
+      font-size: 48px;       /* Schriftgröße anpassen */
+      font-weight: 700;      /* Fett, falls gewünscht */
+      color: #E44A00;        /* Kräftiges Orange */
+      /* Optional: Eine alternative Schriftart einbinden, z.B. 'Varela Round' */
+      /* font-family: 'Varela Round', sans-serif; */
     }
     .beschreibung {
       text-align: center;
@@ -53,11 +54,11 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     .frage-box h2 {
-  font-size: 1.1em;
-  margin-bottom: 10px;
-  color: #FF8C00;
-  font-weight: normal; /* Damit nur das Keyword fett erscheint */
-}
+      font-size: 1.1em;
+      margin-bottom: 10px;
+      color: #FF8C00;
+      font-weight: normal; /* Damit nur das Keyword fett erscheint */
+    }
     .skala-antwort {
       margin-bottom: 10px;
     }
@@ -106,10 +107,11 @@
 </head>
 <body>
 
- <div class="logo-wrapper">
-  <img src="eule-organisationszoo.jpg" alt="Eule" class="eule" />
-  <img src="Organisationszoo.jpg" alt="OrganisationsZoo" class="organisationszoo" />
-</div>
+  <div class="logo-wrapper">
+    <img src="eule-organisationszoo.jpg" alt="Eule" class="eule" />
+    <!-- Hier wird statt eines Bildes der Text als Logo angezeigt -->
+    <div class="organisationszoo">OrganisationsZoo</div>
+  </div>
 
   <h1>Dein Fragebogen</h1>
   <p class="beschreibung">
