@@ -93,22 +93,32 @@
         height: auto !important;
       }
     }
-    @media print {
-      body > *:not(#ergebnis) {
-        display: none;
-      }
-      #ergebnis {
-        display: block;
-        width: 100%;
-        padding: 10px;
-      }
-    }
+   @media print {
+  /* Blende alle Elemente aus, die nicht zur Auswertung gehören */
+  #fragebogen, 
+  button[type="submit"], 
+  .logo-wrapper { 
+    display: none;
+  }
+  
+  /* Stelle sicher, dass der Ergebnisbereich vollständig angezeigt wird */
+  #ergebnis {
+    display: block;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  /* Seitenumbruch (falls benötigt) */
+  .page-break {
+    page-break-after: always;
+  }
+}
   </style>
 </head>
 <body>
 
   <div class="logo-wrapper">
-    <img src="eule-organisationszoo.jpg" alt="Eule" class="eule" />
+    <img src="eule-organisationszoo.png" alt="Eule" class="eule" />
     <!-- Hier wird statt eines Bildes der Text als Logo angezeigt -->
     <div class="organisationszoo">OrganisationsZoo</div>
   </div>
@@ -552,275 +562,406 @@ questions.forEach((q, index) => {
     }
   };
 
-      formElem.addEventListener("submit", function(evt) {
+formElem.addEventListener("submit", function(evt) {
   evt.preventDefault();
- ergebnisElem.style.display = "block";
-printButton.style.display = "block"; // Verwende printButton statt pdfButton
+  ergebnisElem.style.display = "block";
+  printButton.style.display = "block"; // Verwende printButton statt pdfButton
+  ergebnisElem.style.position = "relative";
 
-ergebnisElem.style.position = "relative";
+  // ---------------------------
+  // Header mit Logo
+  // ---------------------------
+  ergebnisElem.insertAdjacentHTML("afterbegin", `
+    <div id="result-header" style="text-align: center; margin-bottom: 20px;">
+      <img src="eule-organisationszoo.png" alt="Eule" style="display: block; margin: 0 auto; width: 120px; height: auto;">
+      <div class="organisationszoo" style="font-size: 48px; font-weight: bold; color: #E44A00; margin-top: 10px;">
+        OrganisationsZoo
+      </div>
+    </div>
+  `);
 
-ergebnisElem.insertAdjacentHTML("afterbegin", `
-  <div style="position: absolute; top: 10px; right: 10px;">
-    <img src="eule-organisationszoo.jpg" alt="Eule" style="width:120px; height:auto;">
-  </div>
-`);
+  const formData = new FormData(formElem);
+  const tierCounts = {};
+  const eigenschaftCounts = {
+    "Empathie": 0, "Sozialverhalten": 0, "Kreativität": 0,
+    "Struktur": 0, "Durchsetzung": 0, "Flexibilität": 0,
+    "Strategie": 0, "Emotionale Stabilität": 0
+  };
 
-        const formData = new FormData(formElem);
-        const tierCounts = {};
-        const eigenschaftCounts = {
-          "Empathie": 0, "Sozialverhalten": 0, "Kreativität": 0,
-          "Struktur": 0, "Durchsetzung": 0, "Flexibilität": 0,
-          "Strategie": 0, "Emotionale Stabilität": 0
-        };
-
-        // Punkte aus den Antworten sammeln
-        for (let i = 0; i < questions.length; i++) {
-          const q = questions[i];
-          const keys = Object.keys(q.answers);
-          for (let j = 0; j < keys.length; j++) {
-            const code = q.answers[keys[j]].code;
-            const val = parseInt(formData.get("frage" + i + "_" + code)) || 0;
-            const tier = codeToTier[code];
-            if (!tier) continue;
-
-            // Punkte zum aktuellen Tier hinzufügen
-            tierCounts[tier] = (tierCounts[tier] || 0) + val;
-            if (tierEigenschaften[tier]) {
-              tierEigenschaften[tier].forEach(e => eigenschaftCounts[e] += val);
-            }
-
-            // Bei einem Wert von 3 oder 4 wird beim Gegenspieler 1 Punkt abgezogen
-            if (val >= 3) {
-              const opp = gegenspieler[tier];
-              if (opp) {
-                tierCounts[opp] = (tierCounts[opp] || 0) - 1;
-              }
-            }
-          }
+  // ---------------------------
+  // Punkte aus den Antworten sammeln
+  // ---------------------------
+  for (let i = 0; i < questions.length; i++) {
+    const q = questions[i];
+    const keys = Object.keys(q.answers);
+    for (let j = 0; j < keys.length; j++) {
+      const code = q.answers[keys[j]].code;
+      const val = parseInt(formData.get("frage" + i + "_" + code)) || 0;
+      const tier = codeToTier[code];
+      if (!tier) continue;
+      tierCounts[tier] = (tierCounts[tier] || 0) + val;
+      if (tierEigenschaften[tier]) {
+        tierEigenschaften[tier].forEach(e => eigenschaftCounts[e] += val);
+      }
+      if (val >= 3) {
+        const opp = gegenspieler[tier];
+        if (opp) {
+          tierCounts[opp] = (tierCounts[opp] || 0) - 1;
         }
+      }
+    }
+  }
 
-        // Normalisierte Punktzahl in Prozent (max. 10 Punkte)
-        const normalisierteTierCounts = {};
-        Object.keys(tierCounts).forEach(tier => {
-          normalisierteTierCounts[tier] = Math.round((tierCounts[tier] / 10) * 100);
-        });
+  // Normalisierte Punktzahl in Prozent (max. 10 Punkte)
+  const normalisierteTierCounts = {};
+  Object.keys(tierCounts).forEach(tier => {
+    normalisierteTierCounts[tier] = Math.round((tierCounts[tier] / 10) * 100);
+  });
 
-        // Hänge den Inhalt anstatt ihn zu überschreiben
-ergebnisElem.innerHTML += `<h2>🌀 Deine Top-5 Tierprofile</h2>`;
-        const sortedTiers = Object.entries(tierCounts).sort((a, b) => b[1] - a[1]);
-        const top5 = sortedTiers.slice(0, 5);
-        const top5Names = top5.map(([t]) => t);
-        const top5Total = top5.reduce((s, [_, v]) => s + v, 0);
+  // ---------------------------
+  // Gesamtauswertung Top-5 Tierprofile
+  // ---------------------------
+  ergebnisElem.innerHTML += `<h2>🌀 Deine Top-5 Tierprofile</h2>`;
+  const sortedTiers = Object.entries(tierCounts).sort((a, b) => b[1] - a[1]);
+  const top5 = sortedTiers.slice(0, 5);
+  const top5Names = top5.map(([t]) => t);
+  const top5Total = top5.reduce((s, [_, v]) => s + v, 0);
 
-        const chartWrap = document.createElement("div");
-        chartWrap.style.display = "flex";
-        chartWrap.style.flexWrap = "wrap";
-        chartWrap.style.justifyContent = "space-between";
-        chartWrap.style.gap = "4px";
+  const chartWrap = document.createElement("div");
+  chartWrap.style.display = "flex";
+  chartWrap.style.flexWrap = "wrap";
+  chartWrap.style.justifyContent = "space-between";
+  chartWrap.style.gap = "4px";
 
-        // ⭕ Kreisdiagramme mit Prozentanzeige
-    top5.forEach(([tier, val]) => {
-      const canvasId = `tierChart_${tier.replace(/\s+/g, '_')}`;
-      const info = tierTexte[tier] || {};
-      const percentValue = normalisierteTierCounts[tier] || 0;
+  top5.forEach(([tier, val]) => {
+    const canvasId = `tierChart_${tier.replace(/\s+/g, '_')}`;
+    const info = tierTexte[tier] || {};
+    const percentValue = normalisierteTierCounts[tier] || 0;
 
-      const div = document.createElement("div");
-      div.style.width = "48%";
-      div.style.fontSize = "0.75em";
-      div.innerHTML = `
-        <strong>${tier}</strong><br>
-        <span>${info.kurz || ""}</span><br>
-        <em>Symbolisch für: ${info.symbolischFür || "-"}</em>
-        <canvas id="${canvasId}" width="100" height="60"></canvas>
-      `;
-      chartWrap.appendChild(div);
+    const div = document.createElement("div");
+    div.style.width = "48%";
+    div.style.fontSize = "0.75em";
+    div.innerHTML = `
+      <strong>${tier}</strong><br>
+      <span>${info.kurz || ""}</span><br>
+      <em>Symbolisch für: ${info.symbolischFür || "-"}</em>
+      <canvas id="${canvasId}" width="100" height="60"></canvas>
+    `;
+    chartWrap.appendChild(div);
 
-      setTimeout(() => {
-        // 📌 Plugin registrieren (einmalig – oder mehrfach, schadet nicht)
-        Chart.register({
-          id: 'percentInsidePie',
-          afterDraw(chart) {
-            const percent = chart.options.plugins.percentInsidePie?.value;
-            if (percent == null) return;
-            const { ctx } = chart;
-            ctx.save();
-            ctx.font = 'bold 12px Arial';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(`${percent}%`, chart.width / 2, chart.height / 2);
-            ctx.restore();
-          }
-        });
-
-        new Chart(document.getElementById(canvasId).getContext("2d"), {
-          type: 'pie',
-          data: {
-            labels: ["Anteil", "Andere"],
-            datasets: [{
-              data: [val, top5Total - val],
-              backgroundColor: ["#ffffff", "#ffa500"],
-              borderWidth: 0
-            }]
-          },
-          options: {
-            responsive: false,
-            plugins: {
-              legend: { display: false },
-              percentInsidePie: {
-                value: percentValue
-              }
-            }
-          }
-        });
-      }, 10);
-    });
-
-        ergebnisElem.appendChild(chartWrap);
-
-        // 🔥 Reibungspotenzial
-        const konfliktDiv = document.createElement("div");
-        konfliktDiv.style.fontSize = "0.8em";
-        konfliktDiv.innerHTML = "<h3>🔥 Konfliktpotential</h3>";
-        const konfliktPaare = [];
-        top5.forEach(([tier, val]) => {
-          const gegner = gegenspieler[tier];
-          if (gegner && !top5Names.includes(gegner)) {
-            const gegVal = tierCounts[gegner] || 0;
-            const score = Math.abs(val - gegVal);
-            const text = (tierKonflikte[tier] && tierKonflikte[tier][gegner]) ||
-                         (tierKonflikte[gegner] && tierKonflikte[gegner][tier]) ||
-                         "Gegensätzliche Strategien.";
-            konfliktPaare.push({ paar: [tier, gegner], score, text });
-          }
-        });
-        konfliktPaare.sort((a, b) => b.score - a.score).slice(0, 2).forEach(k => {
-          konfliktDiv.innerHTML += `<p><strong>${k.paar[0]} 🆚 ${k.paar[1]}</strong><br><em>${k.text}</em></p>`;
-        });
-        ergebnisElem.appendChild(konfliktDiv);
-
-        // Filterung und Auswertung der Eigenschaften (erste 8 Tiere)
-        const filterSet = ["Ameise", "Biene", "Chamäleon", "Hund", "Adler", "Katze", "Gibbon", "Hyäne"];
-        const filteredEigenschaftCounts = {};
-        filterSet.forEach(animal => {
-          if (tierEigenschaften[animal]) {
-            tierEigenschaften[animal].forEach(attr => {
-              if (!(attr in filteredEigenschaftCounts)) {
-                filteredEigenschaftCounts[attr] = 0;
-              }
-            });
-          }
-        });
-
-        // Punkte für gefilterte Tiere sammeln
-        for (let i = 0; i < questions.length; i++) {
-          const q = questions[i];
-          const answerKeys = Object.keys(q.answers);
-          for (let j = 0; j < answerKeys.length; j++) {
-            const code = q.answers[answerKeys[j]].code;
-            const val = parseInt(formData.get("frage" + i + "_" + code)) || 0;
-            const animal = codeToTier[code];
-            if (!animal) continue;
-            if (filterSet.includes(animal)) {
-              if (tierEigenschaften[animal]) {
-                tierEigenschaften[animal].forEach(attr => {
-                  filteredEigenschaftCounts[attr] += val;
-                });
-              }
-            }
-          }
+    setTimeout(() => {
+      Chart.register({
+        id: 'percentInsidePie',
+        afterDraw(chart) {
+          const percent = chart.options.plugins.percentInsidePie?.value;
+          if (percent == null) return;
+          const { ctx } = chart;
+          ctx.save();
+          ctx.font = 'bold 12px Arial';
+          ctx.fillStyle = '#000';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(`${percent}%`, chart.width / 2, chart.height / 2);
+          ctx.restore();
         }
-
-        // Maximale Punktzahl pro Eigenschaft berechnen
-        const filteredEigenschaftMax = {};
-        for (let i = 0; i < questions.length; i++) {
-          const q = questions[i];
-          const answerKeys = Object.keys(q.answers);
-          for (let j = 0; j < answerKeys.length; j++) {
-            const code = q.answers[answerKeys[j]].code;
-            const animal = codeToTier[code];
-            if (!animal) continue;
-            if (filterSet.includes(animal)) {
-              if (tierEigenschaften[animal]) {
-                tierEigenschaften[animal].forEach(attr => {
-                  filteredEigenschaftMax[attr] = (filteredEigenschaftMax[attr] || 0) + 4;
-                });
-              }
-            }
-          }
-        }
-
-        // Eigenschaftswerte normalisieren
-        const filteredEigKeys = Object.keys(filteredEigenschaftCounts);
-        const normFilteredEigVals = filteredEigKeys.map(key => {
-          const maxVal = filteredEigenschaftMax[key] || 10;
-          const ratio = filteredEigenschaftCounts[key] / maxVal;
-          const adjusted = Math.pow(ratio, 0.8) * 10;
-          return Math.round(adjusted);
-        });
-
-        // Radar-Chart für die gefilterten Eigenschaften
-        const canvas = document.createElement("canvas");
-        canvas.width = 280;
-        canvas.height = 200;
-        canvas.style.margin = "10px auto";
-        canvas.style.display = "block";
-        ergebnisElem.appendChild(canvas);
-
-        new Chart(canvas.getContext("2d"), {
-          type: 'radar',
-          data: {
-            labels: filteredEigKeys,
-            datasets: [{
-              label: "Eigenschaften (erste 8 Tiere)",
-              data: normFilteredEigVals,
-              backgroundColor: "rgba(66,165,245,0.2)",
-              borderColor: "#42a5f5",
-              borderWidth: 2,
-              pointBackgroundColor: "#1e88e5"
-            }]
-          },
-          options: {
-            responsive: false,
-            scales: {
-              r: {
-                min: 0,
-                max: 10,
-                ticks: { stepSize: 2, display: false }, // Zahlen ausblenden
-                pointLabels: { font: { size: 9 } }
-              }
-            },
-            plugins: { legend: { display: false } }
-          }
-        });
-
-        // Reflexionstext anzeigen
-        const reflekt = document.createElement("div");
-        reflekt.style.fontSize = "0.75em";
-        reflekt.innerHTML = `
-          <h3>🔍 Was dein Tierprofil dir zeigt – und warum es mehr als nur spannend ist</h3>
-          <p>
-            Dein Ergebnis ist mehr als eine nette Spielerei: <strong>Es ist ein Spiegel deiner aktuellen Verhaltensdynamik</strong>.
-            Jedes Tier steht für bestimmte Denk-, Fühl- und Handlungsweisen – und <em>der Mix macht dich einzigartig</em>.
-          </p>
-          <p>
-            Vielleicht steckt in dir ein mutiger <strong>Löwe</strong>, eine strukturierte <strong>Ameise</strong>,
-            ein visionäres <strong>Einhorn</strong> oder ein tiefgründiger <strong>Wal</strong>?
-          </p>
-          <p>
-            Diese Tierbilder helfen dir, dich selbst mit einem Augenzwinkern und Tiefe zu betrachten –
-            <strong>ohne Schubladen, dafür mit Raum zur Reflexion</strong>.
-          </p>
-          <p>
-            Lust, dein Profil gemeinsam mit anderen zu entdecken, zu hinterfragen und weiterzuentwickeln?
-            <strong>Dann ist ein Workshop genau das Richtige für dich!</strong>
-          </p>
-          <p>
-            Denn: <em>Persönlichkeitsentwicklung darf Spass machen.</em> Erkenntnisse gewinnen wir oft am besten im Austausch.
-          </p>
-        `;
-        ergebnisElem.appendChild(reflekt);
       });
+
+      new Chart(document.getElementById(canvasId).getContext("2d"), {
+        type: 'pie',
+        data: {
+          labels: ["Anteil", "Andere"],
+          datasets: [{
+            data: [val, top5Total - val],
+            backgroundColor: ["#ffffff", "#ffa500"],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: false,
+          plugins: {
+            legend: { display: false },
+            percentInsidePie: { value: percentValue }
+          }
+        }
+      });
+    }, 10);
+  });
+
+  ergebnisElem.appendChild(chartWrap);
+
+  // ---------------------------
+  // Reibungspotenzial
+  // ---------------------------
+  const konfliktDiv = document.createElement("div");
+  konfliktDiv.style.fontSize = "0.8em";
+  konfliktDiv.innerHTML = "<h3>🔥 Konfliktpotential</h3>";
+  const konfliktPaare = [];
+  top5.forEach(([tier, val]) => {
+    const gegner = gegenspieler[tier];
+    if (gegner && !top5Names.includes(gegner)) {
+      const gegVal = tierCounts[gegner] || 0;
+      const score = Math.abs(val - gegVal);
+      const text = (tierKonflikte[tier] && tierKonflikte[tier][gegner]) ||
+                   (tierKonflikte[gegner] && tierKonflikte[gegner][tier]) ||
+                   "Gegensätzliche Strategien.";
+      konfliktPaare.push({ paar: [tier, gegner], score, text });
+    }
+  });
+  konfliktPaare.sort((a, b) => b.score - a.score).slice(0, 2).forEach(k => {
+    konfliktDiv.innerHTML += `<p><strong>${k.paar[0]} 🆚 ${k.paar[1]}</strong><br><em>${k.text}</em></p>`;
+  });
+  ergebnisElem.appendChild(konfliktDiv);
+
+  // ---------------------------
+  // Filterung und Auswertung der Eigenschaften (erste 8 Tiere)
+  // ---------------------------
+  const filterSet = ["Ameise", "Biene", "Chamäleon", "Hund", "Adler", "Katze", "Gibbon", "Hyäne"];
+  const filteredEigenschaftCounts = {};
+  filterSet.forEach(animal => {
+    if (tierEigenschaften[animal]) {
+      tierEigenschaften[animal].forEach(attr => {
+        if (!(attr in filteredEigenschaftCounts)) {
+          filteredEigenschaftCounts[attr] = 0;
+        }
+      });
+    }
+  });
+
+  for (let i = 0; i < questions.length; i++) {
+    const q = questions[i];
+    const answerKeys = Object.keys(q.answers);
+    for (let j = 0; j < answerKeys.length; j++) {
+      const code = q.answers[answerKeys[j]].code;
+      const val = parseInt(formData.get("frage" + i + "_" + code)) || 0;
+      const animal = codeToTier[code];
+      if (!animal) continue;
+      if (filterSet.includes(animal)) {
+        if (tierEigenschaften[animal]) {
+          tierEigenschaften[animal].forEach(attr => {
+            filteredEigenschaftCounts[attr] += val;
+          });
+        }
+      }
+    }
+  }
+
+  const filteredEigenschaftMax = {};
+  for (let i = 0; i < questions.length; i++) {
+    const q = questions[i];
+    const answerKeys = Object.keys(q.answers);
+    for (let j = 0; j < answerKeys.length; j++) {
+      const code = q.answers[answerKeys[j]].code;
+      const animal = codeToTier[code];
+      if (!animal) continue;
+      if (filterSet.includes(animal)) {
+        if (tierEigenschaften[animal]) {
+          tierEigenschaften[animal].forEach(attr => {
+            filteredEigenschaftMax[attr] = (filteredEigenschaftMax[attr] || 0) + 4;
+          });
+        }
+      }
+    }
+  }
+
+  const filteredEigKeys = Object.keys(filteredEigenschaftCounts);
+  const normFilteredEigVals = filteredEigKeys.map(key => {
+    const maxVal = filteredEigenschaftMax[key] || 10;
+    const ratio = filteredEigenschaftCounts[key] / maxVal;
+    const adjusted = Math.pow(ratio, 0.8) * 10;
+    return Math.round(adjusted);
+  });
+
+  const canvasEig = document.createElement("canvas");
+  canvasEig.width = 280;
+  canvasEig.height = 200;
+  canvasEig.style.margin = "10px auto";
+  canvasEig.style.display = "block";
+  ergebnisElem.appendChild(canvasEig);
+
+  new Chart(canvasEig.getContext("2d"), {
+    type: 'radar',
+    data: {
+      labels: filteredEigKeys,
+      datasets: [{
+        label: "Eigenschaften (erste 8 Tiere)",
+        data: normFilteredEigVals,
+        backgroundColor: "rgba(66,165,245,0.2)",
+        borderColor: "#42a5f5",
+        borderWidth: 2,
+        pointBackgroundColor: "#1e88e5"
+      }]
+    },
+    options: {
+      responsive: false,
+      scales: {
+        r: {
+          min: 0,
+          max: 10,
+          ticks: { stepSize: 2, display: false },
+          pointLabels: { font: { size: 9 } }
+        }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+
+// Mapping der Kategorien zu den Frage-Indizes (0-basierend)
+// Für "Selbstreflexion, Werte & Persönliche Entwicklung" werden nur die Indizes [2, 4, 8] verwendet
+const categoryMapping = {
+  "Teamarbeit & Zusammenarbeit": [0, 1, 9],
+  "Führung & Verantwortung": [6, 7, 12],
+  "Entscheidungsfindung & Strategische Planung": [5, 10],
+  "Anpassungsfähigkeit & Stressbewältigung": [3, 11],
+  "Selbstreflexion, Werte & Persönliche Entwicklung": [2, 4, 8]
+};
+
+// Kurze Beschreibungen für die Top-Tiere pro Kategorie
+const categoryDescriptions = {
+  "Teamarbeit & Zusammenarbeit": {
+    "Ameise": "Organisiert und zielstrebig, sorgt für Struktur im Team.",
+    "Biene": "Fleißig und gemeinschaftlich, fördert den Zusammenhalt.",
+    "Chamäleon": "Flexibel und kreativ, bringt neue Ideen ins Team.",
+    "Hund": "Empathisch und loyal, stärkt den Teamgeist.",
+    "Adler": "Kann inspirieren, neigt aber zu Individualismus.",
+    "Katze": "Agiert eigenständig und bringt oft kritische Perspektiven ein."
+  },
+  "Führung & Verantwortung": {
+    "Adler": "Führungspersönlichkeit, visionär und entschlossen.",
+    "Hybrid": "Vielseitig in der Führung, kombiniert Strategie mit Flexibilität.",
+    "Löwe": "Dominant und charismatisch, aber manchmal autoritär.",
+    "Hund": "Verantwortungsbewusst und kooperativ."
+  },
+  "Entscheidungsfindung & Strategische Planung": {
+    "Gibbon": "Kreativ und überlegt, trifft fundierte Entscheidungen.",
+    "Einhorn": "Visionär und innovativ, entwickelt strategische Pläne.",
+    "Adler": "Strukturiert und zielgerichtet in der Planung.",
+    "Ameise": "Plant methodisch, um Ziele zu erreichen."
+  },
+  "Anpassungsfähigkeit & Stressbewältigung": {
+    "Eiche": "Steht für Stabilität und Ausdauer, bewahrt Ruhe in Stresssituationen.",
+    "Piranha": "Reagiert impulsiv, handelt aber schnell und entschlossen.",
+    "Chamäleon": "Passt sich flexibel an neue Bedingungen an.",
+    "Faultier": "Bleibt gelassen, auch wenn es langsamer agiert."
+  },
+  "Selbstreflexion, Werte & Persönliche Entwicklung": {
+    "Ameise": "Reflektiert strukturiert und arbeitet kontinuierlich an sich.",
+    "Biene": "Offen für Feedback und strebt nach ständiger Verbesserung.",
+    "Katze": "Zeigt Selbstkritik und agiert unabhängig.",
+    "Gibbon": "Bringt kreative und kommunikative Impulse in die Selbstreflexion.",
+    "Eule": "Wirkt weise und analytisch – ideal für tiefe Reflexion."
+  }
+};
+
+// Tier-Symbole (Emoji) für eine moderne Darstellung:
+const tierSymbols = {
+  "Adler": "🦅",
+  "Ameise": "🐜",
+  "Biene": "🐝",
+  "Chamäleon": "🦎",
+  "Hund": "🐕",
+  "Katze": "🐈",
+  "Gibbon": "🐒",
+  "Hybrid": "🔀",
+  "Löwe": "🦁",
+  "Maus": "🐁",
+  "Parasit": "🪱",
+  "Eule": "🦉",
+  "Piranha": "🐟",
+  "Eiche": "🌳",
+  "Faultier": "🦥",
+  "Dinosaurier": "🦖",
+  "Einhorn": "🦄",
+  "Geier": "🦅",
+  "Wal": "🐋",
+  "Yak": "🐂",
+  "Kind": "👶"
+};
+
+// Objekt zum Speichern der Ergebnisse pro Kategorie
+const categoryResults = {};
+
+// Punkte aus den zugeordneten Fragen für jede Kategorie sammeln
+for (const [category, questionIndices] of Object.entries(categoryMapping)) {
+  categoryResults[category] = {};
+  questionIndices.forEach(qIndex => {
+    const q = questions[qIndex];
+    for (const key in q.answers) {
+      const code = q.answers[key].code;
+      const animal = codeToTier[code];
+      if (!animal) continue;
+      // Hole den Punktwert aus dem Formular
+      const val = parseInt(formData.get("frage" + qIndex + "_" + code)) || 0;
+      categoryResults[category][animal] = (categoryResults[category][animal] || 0) + val;
+      // Abzug beim Gegenspieler, wenn der Wert 3 oder 4 ist
+      if (val >= 3) {
+        const opp = gegenspieler[animal];
+        if (opp) {
+          categoryResults[category][opp] = (categoryResults[category][opp] || 0) - 1;
+        }
+      }
+    }
+  });
+}
+
+// Erstelle den HTML-Output: Pro Kategorie wird nur das Tier mit der höchsten Punktzahl angezeigt,
+// inklusive der Tierbeschreibung und des Symbols – Punktwerte und Normalisierung werden nicht ausgegeben.
+let categoryOutputHTML = "<h2>Deine Kategorien-Auswertung</h2>";
+
+for (const [category, animalScores] of Object.entries(categoryResults)) {
+  // Sortiere die Ergebnisse absteigend
+  const sorted = Object.entries(animalScores).sort((a, b) => b[1] - a[1]);
+  const topAnimal = sorted.length > 0 ? sorted[0][0] : "Keine Daten";
+  
+  // Symbol ermitteln
+  const symbol = tierSymbols[topAnimal] || "";
+  
+  // Falls für diese Kategorie eine Beschreibung für das Top-Tier vorhanden ist, verwenden wir sie
+  let description = "";
+  if (categoryDescriptions[category] && categoryDescriptions[category][topAnimal]) {
+    description = categoryDescriptions[category][topAnimal];
+  }
+  
+  categoryOutputHTML += `
+    <div style="margin-bottom: 20px;">
+      <h3>${category}</h3>
+      <p><strong>Top-Tier:</strong> ${symbol} ${topAnimal}</p>
+      <p><em>${description}</em></p>
+    </div>
+  `;
+}
+
+// Hänge den finalen HTML-Output an den Ergebnisbereich an
+ergebnisElem.innerHTML += categoryOutputHTML;
+
+  // ---------------------------
+  // Reflexionstext als Abschluss
+  // ---------------------------
+  const reflekt = document.createElement("div");
+  reflekt.style.fontSize = "0.75em";
+  reflekt.innerHTML = `
+    <h3>🔍 Was dein Tierprofil dir zeigt – und warum es mehr als nur spannend ist</h3>
+    <p>
+      Dein Ergebnis ist mehr als eine nette Spielerei: <strong>Es ist ein Spiegel deiner aktuellen Verhaltensdynamik</strong>.
+      Jedes Tier steht für bestimmte Denk-, Fühl- und Handlungsweisen – und <em>der Mix macht dich einzigartig</em>.
+    </p>
+    <p>
+      Vielleicht steckt in dir ein mutiger <strong>Löwe</strong>, eine strukturierte <strong>Ameise</strong>,
+      ein visionäres <strong>Einhorn</strong> oder ein tiefgründiger <strong>Wal</strong>?
+    </p>
+    <p>
+      Diese Tierbilder helfen dir, dich selbst mit einem Augenzwinkern und Tiefe zu betrachten –
+      <strong>ohne Schubladen, dafür mit Raum zur Reflexion</strong>.
+    </p>
+    <p>
+      Lust, dein Profil gemeinsam mit anderen zu entdecken, zu hinterfragen und weiterzuentwickeln?
+      <strong>Dann ist ein Workshop genau das Richtige für dich!</strong>
+    </p>
+    <p>
+      Denn: <em>Persönlichkeitsentwicklung darf Spass machen.</em> Erkenntnisse gewinnen wir oft am besten im Austausch.
+    </p>
+  `;
+  ergebnisElem.appendChild(reflekt);
+});
 
       // Druck-Button: Löst window.print() aus
 printButton.addEventListener("click", function() {
