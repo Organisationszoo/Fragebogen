@@ -883,9 +883,11 @@ chartWrap.style.alignItems = "center";     // Zentriert die einzelnen Profilboxe
    const div = document.createElement("div");
 div.className = "tier-profil";
 
+const tierBildPfad = normalizeTierName(tier);
+
 div.innerHTML = `
   <div class="tier-bild">
-    <img src="${normalizeTierName(tier)}.png" alt="${tier}" />
+    <img src="${tierBildPfad}.png" alt="${tier}" />
   </div>
   <div class="tier-text">
     <strong>${tier}</strong>
