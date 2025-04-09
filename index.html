@@ -12,210 +12,144 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
+    /* Basis-Styling */
     body {
-   font-family: 'Open Sans', sans-serif;
-  margin: 0 auto;
-  padding: 0 20px 40px;
-  max-width: 960px;
-  background: #f5f5f5;
-  color: #2c2c2c; /* neutraler, gut lesbarer Text */
-}
-
-h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  text-align: center;
-  margin-top: 60px;
-  margin-bottom: 20px;
-  letter-spacing: 0.3px;
-}
-.logo-wrapper .organisationszoo {
-  display: inline-block;
-  background-color: transparent;
-  font-size: 48px;
-  font-weight: 700;
-  color: #E44A00; /* orange bleibt! */
-  margin: 20px auto 0;
-}
-
-.beschreibung {
-  max-width: 800px;
-  margin: 40px auto;
-  font-size: 1.1em;
-  line-height: 1.7;
-  color: #2c2c2c;
-  text-align: center;
-}
-
-.beschreibung h2 {
-  font-size: 1.6em;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 20px;
-}
-
-.beschreibung .highlight {
-  color: #E44A00;
-  font-weight: 700;
-
-}.intro-section {
-  background-color: #ffffff;
-  padding: 40px 20px;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  box-sizing: border-box;
-}
-.logo-container {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  background-color: #ffffff;
-  padding: 40px 0;
-  box-sizing: border-box;
-}
-.logo-background {
-  background-color: #ffffff;
-  padding: 30px 0;
-}
-    h1 {
-      text-align: center;
-      color: #006400;
+      font-family: 'Open Sans', sans-serif;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      max-width: 960px;
+      background: #f5f5f5;
+      color: #2c2c2c; /* neutraler, gut lesbarer Text */
     }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-align: center;
+      margin-top: 60px;
+      margin-bottom: 20px;
+      letter-spacing: 0.3px;
+    }
+    /* Logo, Header und Beschreibung */
     .logo-wrapper {
       text-align: center;
     }
+    .logo-wrapper .organisationszoo {
+      display: inline-block !important;
+      background-color: #ffffff !important;
+      padding: 0 3mm !important;
+      font-size: 48px;
+      font-weight: 700;
+      color: #E44A00;
+      margin: 20px auto 0;
+    }
     .logo-wrapper .eule,
-#result-header img {
+    #result-header img {
       display: block;
       margin: 0 auto;
       width: 200px;       /* gewünschte Breite; anpassen, falls nötig */
       height: 200px;      /* gleiche Höhe für einen quadratischen (und damit runden) Bereich */
       object-fit: cover;  /* sorgt dafür, dass das Bild den gesamten Kreis füllt */
       border-radius: 50%;
-      background-color: #ffffff; /* weißer Hintergrund im Kreis */
-      border: none;       /* kein Rahmen */
+      background-color: #ffffff;
+      border: none;
     }
-
-  .logo-wrapper .organisationszoo {
-  display: inline-block !important;  /* Damit der Hintergrund nur um den Text herum liegt */
-  background-color: #ffffff !important;
-  padding: 0 3mm !important;           /* Nur horizontaler Innenabstand */
-  font-size: 48px;
-  font-weight: 700;
-  color: #E44A00;
-  margin: 20px auto 0;  /* Falls gewünscht, ansonsten anpassen */
-}
-  body {
-  font-family: 'Open Sans', sans-serif;
-  margin: 0 auto;
-  padding: 0 20px 40px;
-  max-width: 960px;
-  background: #f5f5f5;
-  color: #2c2c2c; /* neutraler, gut lesbarer Text */
-}
-/* Angepasster Container, der alle Profilboxen als Spalte anordnet */
-#gallery, /* Falls du einen Container mit ID gallery hast */ 
-.chartWrap {  /* Oder, wie du ihn aktuell verwendest, z.B. chartWrap */
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center; /* Zentriert die Elemente horizontal */
-  width: 100%;
-}
-
-/* Jede Profilbox soll nun den vollen verfügbaren Platz einnehmen */
-.tier-profil {
-  width: 100%;   /* Nimmt 100% der Breite des übergeordneten Containers ein */
-  max-width: 960px;  /* Optional: Setzt eine maximale Breite für bessere Lesbarkeit */
-  height: auto;  /* Höhe passt sich dem Inhalt an – oder setze einen festen Wert, wenn nötig */
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  padding: 10px;
-  box-sizing: border-box;
-  
-  /* Inhalte horizontal anordnen */
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Bereich für das Bild (links) */
-.tier-bild {
-  flex: 0 0 80px;         /* Feste Breite für den Bildbereich */
-  height: 80px;           /* Feste Höhe */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.tier-bild img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* Bereich für den Text (Mitte) */
-.tier-text {
-  flex: 1;                /* Nimmt den verbleibenden Platz ein */
-  padding: 0 10px;
-  text-align: center;
-  font-size: 0.9em;
-  color: #2c2c2c;
-}
-.tier-text strong {
-  font-size: 1.1em;
-  color: #1a1a1a;
-  display: block;
-  margin-bottom: 4px;
-}
-.tier-text p,
-.tier-text em {
-  font-size: 0.85em;
-}
-
-/* Bereich für das Diagramm (rechts) */
-.tier-diagramm {
-  flex: 0 0 80px;         /* Feste Breite */
-  height: 80px;           /* Feste Höhe */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  text-align: center;
-  margin-top: 60px;
-  margin-bottom: 20px;
-  letter-spacing: 0.3px;
-}
-
-.logo-wrapper .organisationszoo {
-  display: inline-block;
-  background-color: transparent;
-  font-size: 48px;
-  font-weight: 700;
-  color: #E44A00; /* orange bleibt! */
-  margin: 20px auto 0;
-}
-
-.beschreibung {
-  max-width: 800px;
-  margin: 40px auto;
-  font-size: 1.1em;
-  line-height: 1.7;
-  color: #2c2c2c;
-  text-align: center;
-}
-.beschreibung h2 {
-  color: #1a1a1a;
-  font-size: 1.5em;
-  margin-bottom: 20px;
-  font-weight: 600;
-}
+    .logo-container {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      background-color: #ffffff;
+      padding: 40px 0;
+      box-sizing: border-box;
+    }
+    .logo-background {
+      background-color: #ffffff;
+      padding: 30px 0;
+    }
+    .beschreibung {
+      max-width: 800px;
+      margin: 40px auto;
+      font-size: 1.1em;
+      line-height: 1.7;
+      color: #2c2c2c;
+      text-align: center;
+    }
+    .beschreibung h2 {
+      font-size: 1.6em;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
+    .beschreibung .highlight {
+      color: #E44A00;
+      font-weight: 700;
+    }
+    .intro-section {
+      background-color: #ffffff;
+      padding: 40px 20px;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      box-sizing: border-box;
+    }
+    /* Galerie und Profilboxen */
+    #gallery,
+    .chartWrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      width: 100%;
+    }
+    .tier-profil {
+      width: 100%;
+      max-width: 960px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      padding: 10px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .tier-bild {
+      flex: 0 0 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tier-bild img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .tier-text {
+      flex: 1;
+      padding: 0 10px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #2c2c2c;
+    }
+    .tier-text strong {
+      font-size: 1.1em;
+      color: #1a1a1a;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .tier-text p,
+    .tier-text em {
+      font-size: 0.85em;
+    }
+    .tier-diagramm {
+      flex: 0 0 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Frage-Boxen und Antworten */
     .frage-box {
       background: #fff;
       padding: 15px 20px;
@@ -224,37 +158,39 @@ h1 {
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     .frage-box h2 {
-  font-size: 1.1em;
-  margin-bottom: 10px;
-  color: #2c3e50; /* edles Anthrazit */
-  font-weight: 600;
-}
+      font-size: 1.1em;
+      margin-bottom: 10px;
+      color: #2c3e50;
+      font-weight: 600;
+    }
     .skala-antwort {
       margin-bottom: 10px;
     }
-.skala-antwort label {
-  color: #555555;
-  font-weight: 500;
-}
-
-button {
+    .skala-antwort label {
+      color: #555555;
+      font-weight: 500;
+    }
+    /* Buttons */
+    button {
       display: block;
-  margin: 25px auto;
-  padding: 12px 25px;
-  font-size: 1rem;
-  background-color: #8e5c33; /* Braun */
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-}
+      margin: 25px auto;
+      padding: 12px 25px;
+      font-size: 1rem;
+      background-color: #8e5c33; /* Braun */
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
     #ergebnis {
       background: #fff;
       padding: 30px;
       border-radius: 10px;
       margin: 30px auto;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: none;
     }
+    /* Responsive Styles */
     @media screen and (max-width: 600px) {
       .frage-box, #ergebnis {
         padding: 15px;
@@ -264,112 +200,142 @@ button {
         height: auto !important;
       }
     }
-   @media print {
-  /* Blende alle Elemente aus, die nicht zur Auswertung gehören */
+   /* Druck-Stile */
+@media print {
+  /* Elemente der Hauptseite ausblenden */
   #fragebogen, 
   button[type="submit"], 
   .logo-wrapper { 
     display: none;
   }
-
-  /* Stelle sicher, dass der Ergebnisbereich vollständig angezeigt wird */
+  
+  /* Ergebnisbereich anzeigen */
   #ergebnis {
     display: block;
     width: 100%;
     padding: 10px;
   }
-
-  /* Beispiel: Eule-Logo beim Drucken kleiner machen */
+  
   #eule-logo {
     width: 50px !important;
     height: auto !important;
     margin-bottom: 10px !important;
   }
-
-  /* Titel kleiner machen */
+  
   .organisationszoo {
     font-size: 20px !important;
   }
-
-  /* Stil für den Header der Kategorien-Auswertung */
+  
   .category-header h2 {
     font-size: 1.2em !important;
   }
+  
   .category-header p {
     font-size: 0.8em !important;
   }
-
-  /* Seitenumbruch erzwingen */
+  
   .page-break {
     page-break-after: always;
   }
-
-  /* Spezielle Druck-Regeln für den zweiten Auswertungsteil */
+  
   .second-evaluation {
     font-size: 10pt;
     margin: 0 auto;
     max-width: 100%;
     padding: 5mm;
   }
+  
   .second-evaluation h2 {
     font-size: 14pt !important;
   }
+  
   .second-evaluation h3 {
     font-size: 12pt !important;
   }
+  
   .second-evaluation p {
     font-size: 10pt !important;
   }
+  
   .second-evaluation canvas {
     max-width: 90% !important;
     height: auto !important;
   }
+  
+  /* Top-5-Bereich und Konfliktbereich dynamisch skalieren */
+  .chartWrap {
+    transform: scale(0.9);
+    transform-origin: center top;
+  }
+  
+  /* Reduziere die Abstände in den Profil-Boxen */
+  .tier-profil {
+    padding: 5px !important;
+    margin-bottom: 10px !important;
+  }
+  
+  /* Schriftgrößen in den Profil-Texten verkleinern */
+  .tier-text strong {
+    font-size: 1em !important;
+  }
+  .tier-text p, 
+  .tier-text em {
+    font-size: 0.8em !important;
+  }
 }
+
+/* Dark Mode (optional) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #111;
+    color: #eee;
+  }
+  .beschreibung, .frage-box, #ergebnis {
+    background-color: #222;
+    color: #ddd;
+  }
+}
+
   </style>
 </head>
 <body>
-
   <div class="logo-container">
-  <div class="logo-wrapper">
-    <img src="eule-organisationszoo.png" alt="Eule" class="eule" />
-    <div class="organisationszoo">OrganisationsZoo</div>
+    <div class="logo-wrapper">
+      <img src="eule-organisationszoo.png" alt="Eule" class="eule" />
+      <div class="organisationszoo">OrganisationsZoo</div>
+    </div>
   </div>
-</div>
 
-<div class="beschreibung">
-  <h2>
-    Willkommen beim <span class="highlight">OrganisationsZoo</span>
-  </h2>
-  <p>
-    Stell dir vor, du befindest dich in einer herausfordernden Arbeitssituation – sei es in einem dynamischen Team, bei einem wichtigen Projekt oder in einer Konfliktsituation.
-  </p>
-  <p>
-    Überlege genau, wie du in solchen Momenten reagierst, Entscheidungen triffst und welche Stärken du einsetzt.
-  </p>
-  <p>
-    Für jede der folgenden Aussagen wählst du eine Zahl von 0 („gar nicht“) bis 4 („voll zutreffend“). Achte darauf, dass deine Antworten authentisch deine typischen Verhaltensweisen widerspiegeln.
-  </p>
-  <p>
-    Viel Erfolg beim Ausfüllen – und beim Entdecken deiner tierisch starken Seiten!
-  </p>
-</div>
+  <div class="beschreibung">
+    <h2>
+      Willkommen beim <span class="highlight">OrganisationsZoo</span>
+    </h2>
+    <p>
+      Stell dir vor, du befindest dich in einer herausfordernden Arbeitssituation – sei es in einem dynamischen Team, bei einem wichtigen Projekt oder in einer Konfliktsituation.
+    </p>
+    <p>
+      Überlege genau, wie du in solchen Momenten reagierst, Entscheidungen triffst und welche Stärken du einsetzt.
+    </p>
+    <p>
+      Für jede der folgenden Aussagen wählst du eine Zahl von 0 („gar nicht“) bis 4 („voll zutreffend“). Achte darauf, dass deine Antworten authentisch deine typischen Verhaltensweisen widerspiegeln.
+    </p>
+    <p>
+      Viel Erfolg beim Ausfüllen – und beim Entdecken deiner tierisch starken Seiten!
+    </p>
+  </div>
 
-<h1>Dein Fragebogen</h1>
+  <h1>Dein Fragebogen</h1>
   <form id="fragebogen"></form>
   <button type="submit" form="fragebogen">Auswerten</button>
-
   <div id="ergebnis" style="display:none;"></div>
-
   <!-- Druck-Button: Wird erst sichtbar, wenn Ergebnisse vorhanden sind -->
   <button id="printButton" style="display:none;">🖨 Drucken</button>
 
- <script>
+  <script>
     document.addEventListener("DOMContentLoaded", function () {
       const formElem = document.getElementById("fragebogen");
       const ergebnisElem = document.getElementById("ergebnis");
-      // Korrekte Referenz: Nutze die ID "printButton" (nicht pdfDownload)
       const printButton = document.getElementById("printButton");
-
       // Array der Fragen
       const questions = [
   {
@@ -559,6 +525,281 @@ box.innerHTML = `<h2><strong>${frageText}</strong></h2>`;
   
   formElem.appendChild(box);
 });
+
+// Definiere hier zuerst das Mapping der Tierdaten:
+const animalProperties = {
+  "Ameise": {
+    staerken: [
+      "fleissig", "loyal", "engagiert", "gebietsorientiert",
+      "instinktiv", "geschäftig", "hart arbeitend", "auf den moment fokussiert"
+    ],
+    schwaechen: [
+      "empfindsam", "denkend", "logisch", "entscheidungsfreudig",
+      "individualistisch", "selbstbewusst", "visionär", "reflektierend"
+    ]
+  },
+  "Biene": {
+    staerken: [
+      "fleissig", "teamorientiert", "kommunikativ", "gebietsorientiert",
+      "wissend", "hart arbeitend", "kooperativ", "sozial", "organisiert",
+      "intelligent", "loyal", "fürsorglich", "aggressiv"
+    ],
+    schwaechen: [
+      "sich selbst bewusst", "individualistisch", "leichtgläubig",
+      "politisch", "reflektierend", "langsam"
+    ]
+  },
+  "Chamäleon": {
+    staerken: [
+      "doppelzüngig", "schlau", "manipulativ", "schwach",
+      "politisch", "intelligent"
+    ],
+    schwaechen: [
+      "treu", "vertrauenswürdig", "konsistent", "zuversichtlich",
+      "herausfordernd", "handlungsorientiert"
+    ]
+  },
+  "Hund": {
+    staerken: [
+      "treu", "vertrauensvoll", "begeistert", "ungestüm",
+      "leichtgläubig", "energiegeladen", "zuverlässig", "vorhersehbar",
+      "glücklich", "spielerisch", "produktiv", "vertrauenswürdig"
+    ],
+    schwaechen: [
+      "sorgfältig", "ernst", "nachdenklich", "denkend", "schlau"
+    ]
+  },
+ "Adler": {
+    staerken: [
+      "visionär", "stark", "fokussiert", "inspirierend", "zuversichtlich",
+      "intelligent", "produktiv", "entschlussfreudig", "ausgeglichen",
+      "scharf", "handlungsorientiert", "offen", "vertrauenswürdig", "intuitiv",
+      "aggressiv", "verantwortlich", "holistisch", "extravertiert", "respektiert"
+    ],
+    schwaechen: [
+      "zögernd", "emotional", "schwach", "zurückgezogen", "schüchtern", "langsam"
+    ]
+  },
+  "Katze": {
+    staerken: [
+      "individualistisch", "eifrig", "distanziert", "eitel",
+      "egoistisch", "frustrierend", "arrogant", "eingebildet"
+    ],
+    schwaechen: [
+      "kontaktfreudig", "freundlich", "fürsorglich", "teamorientiert",
+      "gemeinschaftsorientiert", "interessant"
+    ]
+  },
+  "Gibbon": {
+    staerken: [
+      "fröhlich", "spielerisch", "lebhaft", "kontaktfreudig", "cool",
+      "begeistert", "lustig", "interessant", "rebellisch"
+    ],
+    schwaechen: [
+      "vorsichtig", "ernst", "produktiv", "zukunftsorientiert", "fokussiert"
+    ]
+  },
+  "Hyäne": {
+    staerken: [
+      "aggressiv", "intrigant", "kontrollierend", "manipulativ",
+      "teamorientiert", "stark", "politisch", "opportunistisch"
+    ],
+    schwaechen: [
+      "vertrauenswürdig", "fürsorglich", "rücksichtsvoll", "intuitiv", "schüchtern"
+    ]
+  },
+  "Insekt": {
+    staerken: [
+      "unterstützend", "einfallsreich", "zukunftsorientiert", "teamorientiert"
+    ],
+    schwaechen: [
+      "egoistisch", "arrogant", "allgegenwärtig", "zögerlich", "langsam"
+    ]
+  },
+  "Schakal": {
+    staerken: [
+      "gebietsorientiert", "verteidigungseifrig", "sozial", "aggressiv",
+      "kontrollierend", "lebhaft", "eifersüchtig", "lebenslustig", "loyal", "fürsorglich"
+    ],
+    schwaechen: [
+      "geduldig", "tolerant", "schüchtern", "zurückgezogen", "fürsorglich"
+    ]
+  },
+  "Kind": {
+    staerken: [
+      "naiv", "verspielt", "energisch", "motiviert", "entbehrlich", "begeistert", "jugendlich"
+    ],
+    schwaechen: [
+      "erfahren", "zuverlässig", "kenntnisreich", "hart im Nehmen", "pfiffig"
+    ]
+  },
+  "Löwe": {
+    staerken: [
+      "stark", "machtorientiert", "aggressiv", "kontrollierend",
+      "gebietsorientiert", "faul", "eigennützig", "manipulativ", "zuversichtlich"
+    ],
+    schwaechen: [
+      "engagiert", "fleißig", "fürsorglich", "schüchtern", "emotional"
+    ]
+  },
+  "Maus": {
+    staerken: [
+      "eifrig", "produktiv", "wirtschaftlich", "zuverlässig", "begeistert",
+      "unsichtbar", "beschäftigt", "individualistisch", "intelligent"
+    ],
+    schwaechen: [
+      "faul", "extrovertiert", "eigennützig", "aggressiv", "emotional"
+    ]
+  },
+  "Parasit": {
+    staerken: [
+      "faul", "parasitär", "abhängig", "eigennützig", "unsichtbar"
+    ],
+    schwaechen: [
+      "gemeinschaftsorientiert", "produktiv", "freundlich", "rücksichtsvoll", "nützlich"
+    ]
+  },
+  "Eule": {
+    staerken: [
+      "weise", "engagiert", "hilfsbereit", "respektiert", "kenntnisreich",
+      "logisch", "scharf", "zuversichtlich", "ruhig", "gemeinschaftsorientiert"
+    ],
+    schwaechen: [
+      "faul", "extrovertiert", "egozentrisch", "ehrgeizig", "aggressiv"
+    ]
+  },
+  "Piranha": {
+    staerken: [
+      "aggressiv", "räuberisch", "gefährlich", "egoistisch", "frustrierend",
+      "ausschwärmend", "eigennützig"
+    ],
+    schwaechen: [
+      "freundlich", "vertrauenswürdig", "zugänglich", "glücklich", "vertrauensvoll",
+      "aufrichtig", "individualistisch", "vorausdenkend"
+    ]
+  },
+  "Eiche": {
+    staerken: [
+      "kenntnisreich", "entscheidungsfreudig", "intelligent", "erfahren",
+      "stimulierend", "inspirierend", "begeistert", "wie eltern", "zuverlässig",
+      "menschenfreundlich", "zugänglich", "selten"
+    ],
+    schwaechen: [
+      "egoistisch", "desinteressiert", "faul", "emotional", "aggressiv"
+    ]
+  },
+  "Klapperschlange": {
+    staerken: [
+      "politisch", "gerissen", "defensiv", "reaktiv", "unsicher", "laut",
+      "doppelzüngig", "spaltend", "überlebend", "angepasst an raue umgebungen"
+    ],
+    schwaechen: [
+      "vertrauenswürdig", "aufrichtig", "treu", "vertrauensvoll", "glücklich",
+      "kontaktfreudig", "einladend"
+    ]
+  },
+  "Faultier": {
+    staerken: [
+      "langsam", "müde", "minimalistisch", "fügsam", "faul"
+    ],
+    schwaechen: [
+      "kontaktfreudig", "eifrig", "enthusiastisch", "produktiv", "geschäftig",
+      "anpassungsfähig", "gemeinschaftsorientiert", "nützlich"
+    ]
+  },
+  "Dinosaurier": {
+    staerken: [
+      "müde", "pessimistisch", "veränderungsscheu", "fremdenfeindlich", "zurückgezogen",
+      "kampferprobt", "hart im nehmen", "negativ", "reflektierend", "nostalgisch", "problematisch"
+    ],
+    schwaechen: [
+      "visionär", "anpassungsfähig", "kooperativ", "offen", "angepasst", "scharfsinnig",
+      "gemeinschaftsorientiert", "opportunistisch", "jugendlich", "sozial"
+    ]
+  },
+  "Einhorn": {
+    staerken: [
+      "perfekt", "visionär", "offen", "ehrlich", "arrogant", "unnahbar", "ehrgeizig",
+      "frustrierend", "unsicher", "kontrollierend", "gefährlich", "inkonsistent", "nostalgisch"
+    ],
+    schwaechen: [
+      "realistisch", "selbstbewusst", "offen", "stimulierend", "vertrauenswürdig",
+      "bescheiden", "ehrlich", "vorausdenkend", "motivierend"
+    ]
+  },
+  "Geier": {
+    staerken: [
+      "gemein", "angepasst", "aasfressend", "egozentrisch", "gefährlich", "opportunistisch",
+      "politisch", "wetteifernd", "schlau", "geduldig"
+    ],
+    schwaechen: [
+      "wohlwollend", "vertrauenswürdig", "glücklich", "teamorientiert", "mutig",
+      "offen", "angenehm", "sozial"
+    ]
+  },
+  "Wal": {
+    staerken: [
+      "intelligent", "inspirierend", "kenntnisreich", "mächtig", "sozial",
+      "gemeinschaftsorientiert", "selbstgrenzend", "unfallgefährdet", "zurückhaltend",
+      "behutsam", "vom aussterben bedroht"
+    ],
+    schwaechen: [
+      "anpassungsfähig", "aggressiv", "faul", "arrogant", "gefährlich", "manipulativ"
+    ]
+  },
+  "Hybrid": {
+    staerken: [
+      "arrogant", "ehrgeizig", "geschäftig", "extravertiert", "gebildet", "weitschweifig",
+      "egoistisch", "schön", "modisch", "kompetent"
+    ],
+    schwaechen: [
+      "erfahren", "vertrauenswürdig", "tolerant", "geduldig", "fürsorglich", "gründlich", "anpassungsfähig"
+    ]
+  },
+  "Yak": {
+    staerken: [
+      "stürmisch", "enthusiastisch", "taktisch", "freundlich", "frustrierend", "fröhlich",
+      "spielerisch", "energisch", "sozial", "glücklich", "fokussiert"
+    ],
+    schwaechen: [
+      "vorsichtig", "geduldig", "erfahren", "rücksichtsvoll", "zurückhaltend", "bescheiden",
+      "sanftmütig", "langsam", "strategisch", "selbstbewusst", "intelligent"
+]
+  }
+};
+
+// Initialisiere das Mapping-Objekt
+const similarityMapping = {};
+
+// Erstelle für jedes Tier einen leeren Eintrag im Mapping
+Object.keys(animalProperties).forEach(animal => {
+  similarityMapping[animal] = [];
+});
+
+// Vergleiche jedes Tier mit allen anderen
+Object.keys(animalProperties).forEach(animal => {
+  Object.keys(animalProperties).forEach(otherAnimal => {
+    if (animal === otherAnimal) return; // Selbstvergleich überspringen
+
+    // Hole die Stärken beider Tiere
+    const strengthsAnimal = animalProperties[animal].staerken;
+    const strengthsOther = animalProperties[otherAnimal].staerken;
+    
+    // Ermittle die gemeinsamen Stärken
+    const commonStrengths = strengthsAnimal.filter(strength => strengthsOther.includes(strength));
+    
+    // Falls es gemeinsame Eigenschaften gibt, füge den Eintrag hinzu
+    if (commonStrengths.length > 0) {
+      similarityMapping[animal].push({
+        animal: otherAnimal,
+        commonStrengths: commonStrengths,
+        similarityScore: commonStrengths.length
+      });
+    }
+  });
+});
+
+console.log(similarityMapping);
 
       // Definition der tierEigenschaften
       const tierEigenschaften = {
@@ -790,6 +1031,11 @@ box.innerHTML = `<h2><strong>${frageText}</strong></h2>`;
 formElem.addEventListener("submit", function(evt) {
   evt.preventDefault();
 
+document.querySelector(".logo-container").style.display = "none";
+document.querySelector(".beschreibung").style.display = "none";
+document.querySelector("h1").style.display = "none";
+document.querySelector("button[type='submit']").style.display = "none";
+
    // Blende Titel, Beschreibung und Fragebogen aus
     document.querySelector("h1").style.display = "none";
     document.querySelector(".beschreibung").style.display = "none";
@@ -800,16 +1046,18 @@ formElem.addEventListener("submit", function(evt) {
     printButton.style.display = "block";
     ergebnisElem.style.position = "relative";
     
-    // Ergebnis-Header einfügen (dein bereits funktionierender Header)
-    ergebnisElem.insertAdjacentHTML("afterbegin", `
-      <div id="result-header" style="text-align: center; margin-bottom: 20px;">
-        <img src="eule-organisationszoo.png" alt="Eule" style="display: block; margin: 0 auto; width: 120px; height: 120px; object-fit: cover; border-radius: 50%; background-color: #ffffff; border: none;">
-        <div class="organisationszoo" style="display: inline-block; background-color: #ffffff; padding: 0 3mm; font-size: 36px; font-weight: bold; color: #E44A00; margin-top: 10px;">
-          OrganisationsZoo
-        </div>
-        <h2 style="font-size: 2em; color: #00796b; margin-top: 10px;">Deine Auswertung</h2>
+ergebnisElem.insertAdjacentHTML("afterbegin", `
+  <div id="result-header" style="position: relative; padding-top: 3cm; margin-bottom: 1cm;">
+    <!-- Absolut positionierter Logo-Bereich ganz oben rechts -->
+    <div style="position: absolute; top: 0; right: 0; text-align: center;">
+      <img src="eule-organisationszoo.png" alt="Eule" 
+           style="height: 2.5cm; width: auto; object-fit: cover; border-radius: 50%; background-color: #fff; border: none;">
+      <div class="organisationszoo" style="font-size: 1.2em; font-weight: bold; color: #E44A00; margin-top: 0.2cm;">
+        OrganisationsZoo
       </div>
-    `);
+    </div>
+  </div>
+`);
 
   const formData = new FormData(formElem);
   const tierCounts = {};
@@ -822,32 +1070,41 @@ formElem.addEventListener("submit", function(evt) {
   // ---------------------------
   // Punkte aus den Antworten sammeln
   // ---------------------------
-  for (let i = 0; i < questions.length; i++) {
-    const q = questions[i];
-    const keys = Object.keys(q.answers);
-    for (let j = 0; j < keys.length; j++) {
-      const code = q.answers[keys[j]].code;
-      const val = parseInt(formData.get("frage" + i + "_" + code)) || 0;
-      const tier = codeToTier[code];
-      if (!tier) continue;
-      tierCounts[tier] = (tierCounts[tier] || 0) + val;
-      if (tierEigenschaften[tier]) {
-        tierEigenschaften[tier].forEach(e => eigenschaftCounts[e] += val);
-      }
-      if (val >= 3) {
-        const opp = gegenspieler[tier];
-        if (opp) {
-          tierCounts[opp] = (tierCounts[opp] || 0) - 1;
-        }
+ for (let i = 0; i < questions.length; i++) {
+  const q = questions[i];
+  const keys = Object.keys(q.answers);
+  for (let j = 0; j < keys.length; j++) {
+    const code = q.answers[keys[j]].code;
+    const val = parseInt(formData.get("frage" + i + "_" + code)) || 0;
+    const directAnimal = codeToTier[code];
+    if (!directAnimal) continue;
+
+    // Direkte Punktevergabe für das zugeordnete Tier:
+    tierCounts[directAnimal] = (tierCounts[directAnimal] || 0) + val;
+
+    // Zusätzliche Bonuspunkte: Für alle Tiere, die als ähnlich eingestuft werden
+    // (unabhängig von der genauen Anzahl gemeinsamer Eigenschaften, also immer 0,5 Punkt).
+    const similarAnimals = similarityMapping[directAnimal] || [];
+    similarAnimals.forEach(sim => {
+      // Du kannst prüfen, ob sim.animal schon der direkte Tiername ist – eigentlich nicht nötig, da im similarityMapping der direkte Vergleich normalerweise ausgeschlossen wird.
+      tierCounts[sim.animal] = (tierCounts[sim.animal] || 0) + 0.5;
+    });
+
+    // Den Gegenspieler abziehen, falls val >= 3, wie bisher:
+    if (val >= 3) {
+      const opp = gegenspieler[directAnimal];
+      if (opp) {
+        tierCounts[opp] = (tierCounts[opp] || 0) - 1;
       }
     }
   }
+}
 
-  // Normalisierte Punktzahl in Prozent (max. 10 Punkte)
-  const normalisierteTierCounts = {};
-  Object.keys(tierCounts).forEach(tier => {
-    normalisierteTierCounts[tier] = Math.round((tierCounts[tier] / 10) * 100);
-  });
+  // Normalisierte Punktzahl in Prozent (max. 11,5 Punkte)
+const normalisierteTierCounts = {};
+Object.keys(tierCounts).forEach(tier => {
+  normalisierteTierCounts[tier] = Math.round((tierCounts[tier] / 11.5) * 100);
+});
 
   // ---------------------------
   // Gesamtauswertung Top-5 Tierprofile
@@ -882,7 +1139,7 @@ div.innerHTML = `
     <em>Symbolisch für: ${info.symbolischFür || "-"}</em>
   </div>
   <div class="tier-diagramm">
-    <canvas id="${canvasId}" width="120" height="120"></canvas>
+    <canvas id="${canvasId}" width="80" height="80"></canvas>
   </div>
 `;
 chartWrap.appendChild(div);
@@ -910,27 +1167,49 @@ setTimeout(() => {
 
   ergebnisElem.appendChild(chartWrap);
 
-// Konfliktpotential
-  const konfliktDiv = document.createElement("div");
-  konfliktDiv.style.fontSize = "0.8em";
-  konfliktDiv.innerHTML = "<h3>Konfliktpotential</h3>";
-  const konfliktPaare = [];
-  top5.forEach(([tier, val]) => {
-    const gegner = gegenspieler[tier];
-    if (gegner && !top5Names.includes(gegner)) {
-      const gegVal = tierCounts[gegner] || 0;
-      const score = Math.abs(val - gegVal);
-      const text = (tierKonflikte[tier] && tierKonflikte[tier][gegner]) ||
-                   (tierKonflikte[gegner] && tierKonflikte[gegner][tier]) ||
-                   "Gegensätzliche Strategien.";
-      konfliktPaare.push({ paar: [tier, gegner], score, text });
-    }
-  });
-  konfliktPaare.sort((a, b) => b.score - a.score).slice(0, 2).forEach(k => {
-    konfliktDiv.innerHTML += `<p><strong>${k.paar[0]} : ${k.paar[1]}</strong><br><em>${k.text}</em></p>`;
-  });
-  ergebnisElem.appendChild(konfliktDiv);
+// Konfliktpotential - Berechnung des konfliktPaare-Arrays:
+const konfliktPaare = [];
+top5.forEach(([tier, val]) => {
+  const gegner = gegenspieler[tier];
+  if (gegner && !top5Names.includes(gegner)) {
+    const gegVal = tierCounts[gegner] || 0;
+    const score = Math.abs(val - gegVal);
+    const text = (tierKonflikte[tier] && tierKonflikte[tier][gegner]) ||
+                 (tierKonflikte[gegner] && tierKonflikte[gegner][tier]) ||
+                 "Gegensätzliche Strategien.";
+    konfliktPaare.push({ paar: [tier, gegner], score, text });
+  }
+});
+konfliktPaare.sort((a, b) => b.score - a.score);
 
+// Neuen Konfliktbereich erzeugen:
+let conflictHeader = document.createElement("div");
+conflictHeader.innerHTML = "<h2 style='font-size: 1.5em;'>HAT MÜHE MIT</h2>";
+
+if (konfliktPaare.length > 0) {
+  const conflictPair = konfliktPaare[0];
+  const conflictTier = conflictPair.paar[1];
+  const conflictText = conflictPair.text;
+  
+  const conflictDiv = document.createElement("div");
+  conflictDiv.className = "tier-profil";
+  conflictDiv.innerHTML = `
+    <div class="tier-bild">
+      <img src="${conflictTier.toLowerCase()}.png" alt="${conflictTier}" />
+    </div>
+    <div class="tier-text">
+      <strong>${conflictTier}</strong>
+      <p>${(tierTexte[conflictTier] && tierTexte[conflictTier].kurz) || ""}</p>
+      <em>${conflictText}</em>
+    </div>
+  `;
+  
+  ergebnisElem.appendChild(conflictHeader);
+  ergebnisElem.appendChild(conflictDiv);
+} else {
+  conflictHeader.innerHTML += "<p>Keine Konflikte erkannt.</p>";
+  ergebnisElem.appendChild(conflictHeader);
+}
 // Seitenumbruch einfügen (zwischen Konfliktpotential und der Kategorieneinschätzung)
 ergebnisElem.insertAdjacentHTML("beforeend", `<div class="page-break"></div>`);
 
@@ -1142,37 +1421,42 @@ for (const [category, questionIndices] of Object.entries(categoryMapping)) {
 // Erstelle den HTML-Output: Pro Kategorie wird nur das Tier mit der höchsten Punktzahl angezeigt,
 // inklusive der Tierbeschreibung und des Symbols – Punktwerte und Normalisierung werden nicht ausgegeben.
 let categoryOutputHTML = `
-  <h2 style="font-weight: bold;">Deine Tiermetaphern im Kontext</h2>
-  <p style="font-size: 0.9em;">
-    In diesem Abschnitt werden deine Top-Tiere in separaten Berechnungen dargestellt – etwa in den Bereichen Führung, Teamarbeit, strategische Planung, Anpassungsfähigkeit und Selbstreflexion.
-    Diese situative Auswertung ist unabhängig von der oberen Darstellung deiner Hauptmetaphern und zeigt, in welchen Situationen welche Tiermetapher am stärksten ausgeprägt ist.
+  <h2 style="font-weight: bold; margin-bottom: 20px;">Deine Tiermetaphern im Kontext</h2>
+  <p style="font-size: 0.9em; margin-bottom: 20px;">
+    In diesem Abschnitt werden deine Tiermetaphern in separaten Berechnungen dargestellt – etwa in den Bereichen Führung, Teamarbeit, strategische Planung, Anpassungsfähigkeit und Selbstreflexion.
+    Jede Zeile zeigt links das Tierbild, in der Mitte den Kategorienamen und rechts die zugehörige Beschreibung.
   </p>
 `;
 
 for (const [category, animalScores] of Object.entries(categoryResults)) {
-  // Sortiere die Ergebnisse absteigend
+  // Sortiere die Ergebnisse absteigend, um das Tier mit der höchsten Punktzahl zu ermitteln:
   const sorted = Object.entries(animalScores).sort((a, b) => b[1] - a[1]);
   const topAnimal = sorted.length > 0 ? sorted[0][0] : "Keine Daten";
   
-  // Symbol ermitteln
-  const symbol = tierSymbols[topAnimal] || "";
-  
-  // Falls für diese Kategorie eine Beschreibung für das Top-Tier vorhanden ist, verwenden wir sie
   let description = "";
   if (categoryDescriptions[category] && categoryDescriptions[category][topAnimal]) {
     description = categoryDescriptions[category][topAnimal];
   }
   
-  categoryOutputHTML += `
-    <div style="margin-bottom: 20px;">
-      <h3>${category}</h3>
-      <p><strong>Top-Tier:</strong> ${symbol} ${topAnimal}</p>
-      <p><em>${description}</em></p>
+  // Erstelle eine Container-Zeile mit drei gleich breiten Spalten
+categoryOutputHTML += `
+  <div style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 10px; margin-bottom: 20px; border-radius: 12px;">
+    <!-- Linke Spalte: Tierbild -->
+    <div style="flex: 1; text-align: center;">
+      <img src="${topAnimal.toLowerCase()}.png" alt="${topAnimal}" style="height: 3cm; width: auto;">
     </div>
-  `;
+    <!-- Mittlere Spalte: Kategoriename -->
+    <div style="flex: 1; text-align: center; font-weight: bold; font-size: 1.2em;">
+      ${category}
+    </div>
+    <!-- Rechte Spalte: Beschreibungstext -->
+    <div style="flex: 1; text-align: left; padding-left: 10px;">
+      <p style="margin: 0;">${description}</p>
+    </div>
+  </div>
+`;
 }
 
-// Hänge den finalen HTML-Output an den Ergebnisbereich an
 ergebnisElem.insertAdjacentHTML("beforeend", categoryOutputHTML);
 
 // Seitenumbruch einfügen (zwischen Kategorieneinschätzung und der Netzdiagramm)
@@ -1246,7 +1530,6 @@ const normFilteredEigVals = filteredEigKeys.map(key => {
   return Math.round(Math.pow(ratio, 0.8) * 16);
 });
 
-// Canvas erstellen
 const radarCanvas = document.createElement("canvas");
 radarCanvas.width = 300;
 radarCanvas.height = 250;
@@ -1254,7 +1537,6 @@ radarCanvas.style.margin = "20px auto";
 radarCanvas.style.display = "block";
 ergebnisElem.appendChild(radarCanvas);
 
-// Radar-Chart erstellen
 if (filteredEigKeys.length > 0) {
   new Chart(radarCanvas.getContext("2d"), {
     type: 'radar',
@@ -1263,10 +1545,13 @@ if (filteredEigKeys.length > 0) {
       datasets: [{
         label: "Eigenschaften (erste 8 Tiere)",
         data: normFilteredEigVals,
-        backgroundColor: "rgba(66,165,245,0.3)",
-        borderColor: "#42a5f5",
+        backgroundColor: "rgba(228,74,0,0.3)",      // Orange mit Transparenz
+        borderColor: "#E44A00",                      // OrganisationsZoo-Orange
         borderWidth: 2,
-        pointBackgroundColor: "#1e88e5"
+        pointBackgroundColor: "#E44A00",             // Punkte in Orange
+        pointBorderColor: "#fff",
+        pointHoverBackgroundColor: "#fff",
+        pointHoverBorderColor: "#E44A00"
       }]
     },
     options: {
@@ -1275,8 +1560,22 @@ if (filteredEigKeys.length > 0) {
         r: {
           min: 0,
           max: 16,
-          ticks: { display: false },
-          pointLabels: { font: { size: 9 } }
+          angleLines: {
+            color: "rgba(228,74,0,0.5)"            // Linien in Orange, leicht transparent
+          },
+          grid: {
+            color: "rgba(228,74,0,0.3)"            // Rasterlinien in Orange, noch transparenter
+          },
+          ticks: {
+            display: false                       // Keine Tick-Werte anzeigen
+          },
+          pointLabels: {
+            font: {
+              size: 10,
+              weight: "bold"
+            },
+            color: "#2c2c2c"                      // Für gute Lesbarkeit
+          }
         }
       },
       plugins: {
@@ -1294,7 +1593,7 @@ if (filteredEigKeys.length > 0) {
   const reflekt = document.createElement("div");
   reflekt.style.fontSize = "0.75em";
   reflekt.innerHTML = `
-    <h3>🔍 Was dein Tierprofil dir zeigt – und warum es mehr als nur spannend ist</h3>
+    <h3> Was dein Tierprofil dir zeigt – und warum es mehr als nur spannend ist</h3>
     <p>
       Dein Ergebnis ist mehr als eine nette Spielerei: <strong>Es ist ein Spiegel deiner aktuellen Verhaltensdynamik</strong>.
       Jedes Tier steht für bestimmte Denk-, Fühl- und Handlungsweisen – und <em>der Mix macht dich einzigartig</em>.
@@ -1317,6 +1616,8 @@ if (filteredEigKeys.length > 0) {
   `;
  ergebnisElem.appendChild(reflekt);
 });
+
+window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // Druck-Button: Löst window.print() aus
 printButton.addEventListener("click", function() {
