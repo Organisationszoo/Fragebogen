@@ -369,6 +369,17 @@ button {
       const ergebnisElem = document.getElementById("ergebnis");
       // Korrekte Referenz: Nutze die ID "printButton" (nicht pdfDownload)
       const printButton = document.getElementById("printButton");
+       // 📌 Diese Funktion direkt HIER definieren – vor der Verwendung weiter unten!
+  function normalizeTierName(tier) {
+    return tier
+      .toLowerCase()
+      .replace(/ä/g, 'ae')
+      .replace(/ö/g, 'oe')
+      .replace(/ü/g, 'ue')
+      .replace(/ß/g, 'ss')
+      .replace(/\s/g, '_')
+      .replace(/\(|\)/g, '');
+  }
 
       // Array der Fragen
       const questions = [
@@ -874,7 +885,7 @@ div.className = "tier-profil";
 
 div.innerHTML = `
   <div class="tier-bild">
-    <img src="Bilder/${normalizeTierName(tier)}.png" alt="${tier}" />
+    <img src="${normalizeTierName(tier)}.png" alt="${tier}" />
   </div>
   <div class="tier-text">
     <strong>${tier}</strong>
