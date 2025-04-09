@@ -852,7 +852,7 @@ formElem.addEventListener("submit", function(evt) {
   // ---------------------------
   // Gesamtauswertung Top-5 Tierprofile
   // ---------------------------
-  ergebnisElem.innerHTML += <h2>Deine Top-5 Profile</h2>;
+  ergebnisElem.innerHTML += "<h2>Deine Top-5 Profile</h2>";
   const sortedTiers = Object.entries(tierCounts).sort((a, b) => b[1] - a[1]);
   const top5 = sortedTiers.slice(0, 5);
   const top5Names = top5.map(([t]) => t);
@@ -864,15 +864,19 @@ chartWrap.style.flexDirection = "column";  // Elemente untereinander anordnen
 chartWrap.style.gap = "20px";              // Abstand zwischen den Profilen
 chartWrap.style.alignItems = "center";     // Zentriert die einzelnen Profilboxen horizontal
 
+   // Hilfsfunktion: macht aus "High Tier" → "high-tier"
+function normalizeTierName(name) {
+  return name.toLowerCase().replace(/\s+/g, '-');
+}
   top5.forEach(([tier, val]) => {
-    const canvasId = tierChart_${tier.replace(/\s+/g, '_')};
+   const canvasId = `tierChart_${tier.replace(/\s+/g, '_')}`;
     const info = tierTexte[tier] || {};
     const percentValue = normalisierteTierCounts[tier] || 0;
 
    const div = document.createElement("div");
 div.className = "tier-profil";
 
-div.innerHTML = 
+div.innerHTML = `
   <div class="tier-bild">
     <img src="${normalizeTierName(tier)}.png" alt="${tier}" />
   </div>
@@ -884,7 +888,7 @@ div.innerHTML =
   <div class="tier-diagramm">
     <canvas id="${canvasId}" width="120" height="120"></canvas>
   </div>
-;
+`;
   
   chartWrap.appendChild(div);
 
