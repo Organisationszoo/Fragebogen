@@ -364,15 +364,15 @@ button {
   <button id="printButton" style="display:none;">🖨 Drucken</button>
 
  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const formElem = document.getElementById("fragebogen");
-      const ergebnisElem = document.getElementById("ergebnis");
-      // Korrekte Referenz: Nutze die ID "printButton" (nicht pdfDownload)
-      const printButton = document.getElementById("printButton");
+  document.addEventListener("DOMContentLoaded", function () {
+    const formElem = document.getElementById("fragebogen");
+    const ergebnisElem = document.getElementById("ergebnis");
+    // Korrekte Referenz: Nutze die ID "printButton" (nicht pdfDownload)
+    const printButton = document.getElementById("printButton");
 
-      // Array der Fragen
-      const questions = [
-  {
+    // Array der Fragen
+    const questions = [
+      {
     frage: "Frage 1: Wie setzt du deine Fähigkeiten in einem Team am liebsten ein?",
     keyword: "Team",
     answers: {
