@@ -849,68 +849,67 @@ formElem.addEventListener("submit", function(evt) {
     normalisierteTierCounts[tier] = Math.round((tierCounts[tier] / 10) * 100);
   });
 
-  // ---------------------------
-  // Gesamtauswertung Top-5 Tierprofile
-  // ---------------------------
-  ergebnisElem.innerHTML += `<h2>Deine Top-5 Profile</h2>`;
-  const sortedTiers = Object.entries(tierCounts).sort((a, b) => b[1] - a[1]);
-  const top5 = sortedTiers.slice(0, 5);
-  const top5Names = top5.map(([t]) => t);
-  const top5Total = top5.reduce((s, [_, v]) => s + v, 0);
+ // ---------------------------
+// Gesamtauswertung Top-5 Tierprofile
+// ---------------------------
+ergebnisElem.innerHTML += `<h2>Deine Top-5 Profile</h2>`;
+const sortedTiers = Object.entries(tierCounts).sort((a, b) => b[1] - a[1]);
+const top5 = sortedTiers.slice(0, 5);
+const top5Names = top5.map(([t]) => t);
+const top5Total = top5.reduce((s, [_, v]) => s + v, 0);
 
- const chartWrap = document.createElement("div");
+const chartWrap = document.createElement("div");
 chartWrap.style.display = "flex";
-chartWrap.style.flexDirection = "column";  // Elemente untereinander anordnen
-chartWrap.style.gap = "20px";              // Abstand zwischen den Profilen
-chartWrap.style.alignItems = "center";     // Zentriert die einzelnen Profilboxen horizontal
+chartWrap.style.flexDirection = "column";
+chartWrap.style.gap = "20px";
+chartWrap.style.alignItems = "center";
 
-  top5.forEach(([tier, val]) => {
-    const canvasId = `tierChart_${tier.replace(/\s+/g, '_')}`;
-    const info = tierTexte[tier] || {};
-    const percentValue = normalisierteTierCounts[tier] || 0;
+top5.forEach(([tier, val]) => {
+  const canvasId = `tierChart_${tier.replace(/\s+/g, '_')}`;
+  const info = tierTexte[tier] || {};
+  const percentValue = normalisierteTierCounts[tier] || 0;
 
-   const div = document.createElement("div");
-div.className = "tier-profil";
+  const div = document.createElement("div");
+  div.className = "tier-profil";
 
-const tierBildPfad = normalizeTierName(tier);
+  div.innerHTML = `
+    <div class="tier-bild">
+      <img src="${normalizeTierName(tier)}.png" alt="${tier}" />
+    </div>
+    <div class="tier-text">
+      <strong>${tier}</strong>
+      <p>${info.kurz || ""}</p>
+      <em>Symbolisch für: ${info.symbolischFür || "-"}</em>
+    </div>
+    <div class="tier-diagramm">
+      <canvas id="${canvasId}" width="120" height="120"></canvas>
+    </div>
+  `;
 
-div.innerHTML = `
-  <div class="tier-bild">
-    <img src="${tierBildPfad}.png" alt="${tier}" />
-  </div>
-  <div class="tier-text">
-    <strong>${tier}</strong>
-    <p>${info.kurz || ""}</p>
-    <em>Symbolisch für: ${info.symbolischFür || "-"}</em>
-  </div>
-  <div class="tier-diagramm">
-    <canvas id="${canvasId}" width="120" height="120"></canvas>
-  </div>
-`;
-chartWrap.appendChild(div);
+  chartWrap.appendChild(div);
 
-setTimeout(() => {
-  new Chart(document.getElementById(canvasId).getContext("2d"), {
-    type: 'pie',
-    data: {
-      labels: ["Anteil", "Andere"],
-      datasets: [{
-        data: [val, top5Total - val],
-        backgroundColor: ["#E44A00", "#FFD1B2"],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      responsive: false,
-      plugins: {
-        legend: { display: false }
+  setTimeout(() => {
+    new Chart(document.getElementById(canvasId).getContext("2d"), {
+      type: 'pie',
+      data: {
+        labels: ["Anteil", "Andere"],
+        datasets: [{
+          data: [val, top5Total - val],
+          backgroundColor: ["#E44A00", "#FFD1B2"],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: false,
+        plugins: {
+          legend: { display: false }
+        }
       }
-    }
-  });
-}, 10);
-  });
+    });
+  }, 10);
+});
 
-  ergebnisElem.appendChild(chartWrap);
+ergebnisElem.appendChild(chartWrap);
 
 // Konfliktpotential
   const konfliktDiv = document.createElement("div");
