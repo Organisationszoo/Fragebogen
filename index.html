@@ -534,12 +534,12 @@ questions.forEach((q, index) => {
   
   // Wenn ein Keyword definiert ist, ersetze alle Vorkommen des Schlüsselworts durch eine fette Version
   if (q.keyword) {
-    const regex = new RegExp(`(${q.keyword})`, 'gi');  // 'gi' = global und case-insensitive
+    const regex = new RegExp((${q.keyword}), 'gi');  // 'gi' = global und case-insensitive
     frageText = frageText.replace(regex, '<strong>$1</strong>');
   }
   
   // Setze den modifizierten Fragetext in ein <h2>
-box.innerHTML = `<h2><strong>${frageText}</strong></h2>`;  
+box.innerHTML = <h2><strong>${frageText}</strong></h2>;  
   // Erzeuge die Antwortmöglichkeiten
   for (const key in q.answers) {
     const ans = q.answers[key];
@@ -547,13 +547,13 @@ box.innerHTML = `<h2><strong>${frageText}</strong></h2>`;
     div.className = "skala-antwort";
     let radios = "";
     for (let i = 0; i <= 4; i++) {
-      radios += `
+      radios += 
         <label>
           <input type="radio" name="frage${index}_${ans.code}" value="${i}" required /> ${i}
         </label>
-      `;
+      ;
     }
-    div.innerHTML = `<p><strong>${key}:</strong> ${ans.text}</p>${radios}`;
+    div.innerHTML = <p><strong>${key}:</strong> ${ans.text}</p>${radios};
     box.appendChild(div);
   }
   
@@ -801,7 +801,7 @@ formElem.addEventListener("submit", function(evt) {
     ergebnisElem.style.position = "relative";
     
     // Ergebnis-Header einfügen (dein bereits funktionierender Header)
-    ergebnisElem.insertAdjacentHTML("afterbegin", `
+    ergebnisElem.insertAdjacentHTML("afterbegin", 
       <div id="result-header" style="text-align: center; margin-bottom: 20px;">
         <img src="eule-organisationszoo.png" alt="Eule" style="display: block; margin: 0 auto; width: 120px; height: 120px; object-fit: cover; border-radius: 50%; background-color: #ffffff; border: none;">
         <div class="organisationszoo" style="display: inline-block; background-color: #ffffff; padding: 0 3mm; font-size: 36px; font-weight: bold; color: #E44A00; margin-top: 10px;">
@@ -809,7 +809,7 @@ formElem.addEventListener("submit", function(evt) {
         </div>
         <h2 style="font-size: 2em; color: #00796b; margin-top: 10px;">Deine Auswertung</h2>
       </div>
-    `);
+    );
 
   const formData = new FormData(formElem);
   const tierCounts = {};
@@ -849,43 +849,43 @@ formElem.addEventListener("submit", function(evt) {
     normalisierteTierCounts[tier] = Math.round((tierCounts[tier] / 10) * 100);
   });
 
- // ---------------------------
-// Gesamtauswertung Top-5 Tierprofile
-// ---------------------------
-ergebnisElem.innerHTML += `<h2>Deine Top-5 Profile</h2>`;
-const sortedTiers = Object.entries(tierCounts).sort((a, b) => b[1] - a[1]);
-const top5 = sortedTiers.slice(0, 5);
-const top5Names = top5.map(([t]) => t);
-const top5Total = top5.reduce((s, [_, v]) => s + v, 0);
+  // ---------------------------
+  // Gesamtauswertung Top-5 Tierprofile
+  // ---------------------------
+  ergebnisElem.innerHTML += <h2>Deine Top-5 Profile</h2>;
+  const sortedTiers = Object.entries(tierCounts).sort((a, b) => b[1] - a[1]);
+  const top5 = sortedTiers.slice(0, 5);
+  const top5Names = top5.map(([t]) => t);
+  const top5Total = top5.reduce((s, [_, v]) => s + v, 0);
 
-const chartWrap = document.createElement("div");
+ const chartWrap = document.createElement("div");
 chartWrap.style.display = "flex";
-chartWrap.style.flexDirection = "column";
-chartWrap.style.gap = "20px";
-chartWrap.style.alignItems = "center";
+chartWrap.style.flexDirection = "column";  // Elemente untereinander anordnen
+chartWrap.style.gap = "20px";              // Abstand zwischen den Profilen
+chartWrap.style.alignItems = "center";     // Zentriert die einzelnen Profilboxen horizontal
 
-top5.forEach(([tier, val]) => {
-  const canvasId = `tierChart_${tier.replace(/\s+/g, '_')}`;
-  const info = tierTexte[tier] || {};
-  const percentValue = normalisierteTierCounts[tier] || 0;
+  top5.forEach(([tier, val]) => {
+    const canvasId = tierChart_${tier.replace(/\s+/g, '_')};
+    const info = tierTexte[tier] || {};
+    const percentValue = normalisierteTierCounts[tier] || 0;
 
-  const div = document.createElement("div");
-  div.className = "tier-profil";
+   const div = document.createElement("div");
+div.className = "tier-profil";
 
-  div.innerHTML = `
-    <div class="tier-bild">
-      <img src="${normalizeTierName(tier)}.png" alt="${tier}" />
-    </div>
-    <div class="tier-text">
-      <strong>${tier}</strong>
-      <p>${info.kurz || ""}</p>
-      <em>Symbolisch für: ${info.symbolischFür || "-"}</em>
-    </div>
-    <div class="tier-diagramm">
-      <canvas id="${canvasId}" width="120" height="120"></canvas>
-    </div>
-  `;
-
+div.innerHTML = 
+  <div class="tier-bild">
+    <img src="${normalizeTierName(tier)}.png" alt="${tier}" />
+  </div>
+  <div class="tier-text">
+    <strong>${tier}</strong>
+    <p>${info.kurz || ""}</p>
+    <em>Symbolisch für: ${info.symbolischFür || "-"}</em>
+  </div>
+  <div class="tier-diagramm">
+    <canvas id="${canvasId}" width="120" height="120"></canvas>
+  </div>
+;
+  
   chartWrap.appendChild(div);
 
   setTimeout(() => {
