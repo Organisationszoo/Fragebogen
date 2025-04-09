@@ -800,16 +800,15 @@ formElem.addEventListener("submit", function(evt) {
     printButton.style.display = "block";
     ergebnisElem.style.position = "relative";
     
-    // Ergebnis-Header einfügen (dein bereits funktionierender Header)
-    ergebnisElem.insertAdjacentHTML("afterbegin", 
-      <div id="result-header" style="text-align: center; margin-bottom: 20px;">
-        <img src="eule-organisationszoo.png" alt="Eule" style="display: block; margin: 0 auto; width: 120px; height: 120px; object-fit: cover; border-radius: 50%; background-color: #ffffff; border: none;">
-        <div class="organisationszoo" style="display: inline-block; background-color: #ffffff; padding: 0 3mm; font-size: 36px; font-weight: bold; color: #E44A00; margin-top: 10px;">
-          OrganisationsZoo
-        </div>
-        <h2 style="font-size: 2em; color: #00796b; margin-top: 10px;">Deine Auswertung</h2>
-      </div>
-    );
+    /ergebnisElem.insertAdjacentHTML("afterbegin", `
+  <div id="result-header" style="text-align: center; margin-bottom: 20px;">
+    <img src="eule-organisationszoo.png" alt="Eule" style="display: block; margin: 0 auto; width: 120px; height: 120px; object-fit: cover; border-radius: 50%; background-color: #ffffff; border: none;">
+    <div class="organisationszoo" style="display: inline-block; background-color: #ffffff; padding: 0 3mm; font-size: 36px; font-weight: bold; color: #E44A00; margin-top: 10px;">
+      OrganisationsZoo
+    </div>
+    <h2 style="font-size: 2em; color: #00796b; margin-top: 10px;">Deine Auswertung</h2>
+  </div>
+`);
 
   const formData = new FormData(formElem);
   const tierCounts = {};
