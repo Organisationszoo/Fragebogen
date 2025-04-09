@@ -819,6 +819,17 @@ formElem.addEventListener("submit", function(evt) {
     "Strategie": 0, "Emotionale Stabilität": 0
   };
 
+  // 🆕 Die Funktion ganz oben einfügen (vor Nutzung)
+function normalizeTierName(tier) {
+  return tier
+    .toLowerCase()
+    .replace(/ä/g, 'ae')
+    .replace(/ö/g, 'oe')
+    .replace(/ü/g, 'ue')
+    .replace(/ß/g, 'ss')
+    .replace(/\s/g, '_')          // Leerzeichen zu Unterstrich
+    .replace(/\(|\)/g, '');       // Klammern entfernen
+}
   // ---------------------------
   // Punkte aus den Antworten sammeln
   // ---------------------------
@@ -874,7 +885,7 @@ div.className = "tier-profil";
 
 div.innerHTML = `
   <div class="tier-bild">
-    <img src="assets/bilder/${tier.toLowerCase()}.png" alt="${tier}" />
+    <img src="Bilder/${normalizeTierName(tier)}.png" alt="${tier}" />
   </div>
   <div class="tier-text">
     <strong>${tier}</strong>
