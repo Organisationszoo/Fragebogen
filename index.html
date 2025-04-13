@@ -695,7 +695,7 @@ const animalProperties = {
       "politisch", "reflektierend", "langsam"
     ]
   },
-  "chamaeleon": {
+  "Chamäleon": {
     staerken: [
       "doppelzüngig", "schlau", "manipulativ", "schwach",
       "politisch", "intelligent"
@@ -754,7 +754,7 @@ const animalProperties = {
       "vertrauenswürdig", "fürsorglich", "rücksichtsvoll", "intuitiv", "schüchtern"
     ]
   },
-  "Insekt_nuetzlich": {
+  "Insekt_nützlich": {
     staerken: [
       "unterstützend", "einfallsreich", "zukunftsorientiert", "teamorientiert"
     ],
@@ -762,7 +762,7 @@ const animalProperties = {
       "egoistisch", "arrogant", "allgegenwärtig", "zögerlich", "langsam"
     ]
 },
-  "Insekt_laestig": {
+  "Insekt_lästig": {
     staerken: [
       "allgegenwärtig", "eigennützig", "Unberechenbar", "lästig"
     ],
@@ -960,14 +960,14 @@ console.log(similarityMapping);
       const tierEigenschaften = {
   "Ameise": ["Struktur", "Sozialverhalten"],
   "Biene": ["Struktur", "Sozialverhalten"],
-  "chamaeleon": ["Flexibilität", "Strategie"],
+  "Chamäleon": ["Flexibilität", "Strategie"],
   "Hund": ["Empathie", "Sozialverhalten"],
   "Adler": ["Strategie", "Durchsetzung"],
   "Katze": ["Strategie", "Flexibilität"],
   "Gibbon": ["Kreativität", "Sozialverhalten"],
   "Hyäne": ["Durchsetzung", "Strategie"],
-  "insekt_nuetzlich": ["Empathie", "Kreativität"],
-  "insekt_laestig": ["Flexibilität", "Durchsetzung"],
+  "Insekt_nützlich": ["Empathie", "Kreativität"],
+  "Insekt_lästig": ["Flexibilität", "Durchsetzung"],
   "Schakal": ["Durchsetzung", "Sozialverhalten"],
   "Löwe": ["Durchsetzung", "Strategie"],
   "Maus": ["Struktur", "Emotionale Stabilität"],
@@ -989,26 +989,26 @@ console.log(similarityMapping);
       // Mapping CODE -> Tier
       const codeToTier = {
         S1: "Adler",   S2: "Ameise",   R1: "Yak",     R2: "Katze",
-        S3: "Biene",   S4: "chamaeleon", R3: "Parasit", R4: "Wal",
+        S3: "Biene",   S4: "Chamäleon", R3: "Parasit", R4: "Wal",
         S5: "Dinosaurier", S6: "Einhorn", R5: "Schakal", R6: "Piranha",
         S7: "Eiche",   S8: "Eule",     R7: "Maus",    R8: "Löwe",
-        S9: "Faultier", S10: "Geier",   R11: "insekt_laestig", R12: "insekt_nuetzlich",
+        S9: "Faultier", S10: "Geier",   R11: "Insekt_lästig", R12: "Insekt_nützlich",
         S11: "Gibbon", S12: "Hund",    R9: "Klapperschlange", R10: "Kind",
         S13: "Hybrid", S14: "Hyäne",   R15: "Hund",   R16: "Gibbon",
-        S15: "insekt_nuetzlich", S16: "insekt_laestig", R13: "Hyäne", R14: "Hybrid",
+        S15: "Insekt_nützlich", S16: "Insekt_lästig", R13: "Hyäne", R14: "Hybrid",
         S17: "Kind",   S18: "Klapperschlange", R19: "Eule", R20: "Eiche",
         S19: "Löwe",   S20: "Maus",    R21: "Einhorn", R22: "Dinosaurier",
         S21: "Piranha", S22: "Schakal", R17: "Geier",  R18: "Faultier",
         S23: "Wal",    S24: "Parasit", R25: "Ameise", R26: "Adler",
-        S25: "Katze",  S26: "Yak",     R23: "chamaeleon", R24: "Biene"
+        S25: "Katze",  S26: "Yak",     R23: "Chamäleon", R24: "Biene"
       };
 
       // Antwortkombinationen für Frage 14 und 15
       const comboMapping = {
-        C1: ["Adler", "Ameise", "Biene", "chamaeleon", "Wal", "Einhorn"],
+        C1: ["Adler", "Ameise", "Biene", "Chamäleon", "Wal", "Einhorn"],
         C2: ["Yak", "Katze", "Parasit", "Dinosaurier", "Schakal", "Piranha"],
         C3: ["Eiche", "Eule", "Maus", "Löwe", "Faultier", "Geier", "Hybrid"],
-        C4: ["insekt_laestig", "insekt_nuetzlich", "Klapperschlange", "Kind", "Hyäne", "Hund", "Gibbon"]
+        C4: ["Insekt_lästig", "Insekt_nützlich", "Klapperschlange", "Kind", "Hyäne", "Hund", "Gibbon"]
       };
 
       // Tier-Beschreibungen
@@ -1022,7 +1022,7 @@ console.log(similarityMapping);
         "Gibbon": { kurz: " Kontaktfreudig, reflektierend, teils distanziert", symbolischFür: "Kommunikation" },
         "Hyäne": { kurz: " Strategisch, ehrgeizig, aggressiv", symbolischFür: "Zielstrebigkeit" },
         "Insekt (nützlich)": { kurz: " Unterstützend, einfallsreich, positiv", symbolischFür: "Nützlichkeit" },
-        "Insekt_laestig": { kurz: " Eigensinnig, unberechenbar, oft störend", symbolischFür: "Hartnäckigkeit" },
+        "Insekt_lästig": { kurz: " Eigensinnig, unberechenbar, oft störend", symbolischFür: "Hartnäckigkeit" },
         "Schakal": { kurz: " Individualistisch, aggressiv, rebellisch", symbolischFür: "Unabhängigkeit" },
         "Löwe": { kurz: " Intuitiv, machtbewusst, strategisch", symbolischFür: "Kraft" },
         "Maus": { kurz: " Denkend, vorsichtig, zuverlässig", symbolischFür: "Sicherheit" },
@@ -1059,8 +1059,8 @@ console.log(similarityMapping);
         "Maus": "Löwe",
         "Wal": "Schakal",
         "Schakal": "Wal",
-        "Insekt (nützlich)": "Insekt_laestig",
-        "Insekt_laestig": "Insekt (nützlich)",
+        "Insekt (nützlich)": "Insekt_lästig",
+        "Insekt_lästig": "Insekt (nützlich)",
         "Piranha": "Faultier",
         "Faultier": "Piranha",
         "Einhorn": "Geier",
@@ -1109,9 +1109,9 @@ console.log(similarityMapping);
       "Parasit": "Das nützliche Insekt und der Parasit haben unterschiedliche Prioritäten – Unterstützung versus taktisches Verhalten.",
       "Klapperschlange": "Insekt (nützlich) und Klapperschlange gehen unterschiedlich vor: Kooperative Ansätze versus kritische Impulse."
     },
-    "Insekt_laestig": {
-      "Kind": "Insekt_laestig und Kind können aufeinanderprallen, da das unberechenbare Insekt das emotionale Kind überfordern kann.",
-      "Hund": "Insekt_laestig provoziert, während der Hund auf Harmonie bedacht ist – das führt zu Spannungen."
+    "Insekt_lästig": {
+      "Kind": "Insekt_lästig und Kind können aufeinanderprallen, da das unberechenbare Insekt das emotionale Kind überfordern kann.",
+      "Hund": "Insekt_lästig provoziert, während der Hund auf Harmonie bedacht ist – das führt zu Spannungen."
     },
     "Schakal": {
       "Wal": "Schakal und Wal können unterschiedliche Schwerpunkte haben – taktisches Vorgehen versus emotionale Tiefe.",
@@ -1312,49 +1312,51 @@ chartWrap.style.flexDirection = "column";  // Elemente untereinander anordnen
 chartWrap.style.gap = "20px";              // Abstand zwischen den Profilen
 chartWrap.style.alignItems = "center";     // Zentriert die einzelnen Profilboxen horizontal
 
-  top5.forEach(([tier, val]) => {
-    const canvasId = `tierChart_${tier.replace(/\s+/g, '_')}`;
-    const info = tierTexte[tier] || {};
-    const percentValue = val;
+// Definieren Sie den maximal möglichen Wert als 20
+const maxPunkte = 20;
 
-   const div = document.createElement("div");
-div.className = "tier-profil";
+top5.forEach(([tier, val]) => {
+  const canvasId = `tierChart_${tier.replace(/\s+/g, '_')}`;
+  const info = tierTexte[tier] || {};
 
-div.innerHTML = `
-  <div class="tier-bild">
-    <img src="${tier.toLowerCase()}.png" alt="${tier}" />
-  </div>
-  <div class="tier-text">
-    <strong>${tier}</strong>
-    <p>${info.kurz || ""}</p>
-    <em>Symbolisch für: ${info.symbolischFür || "-"}</em>
-  </div>
-  <div class="tier-diagramm">
-    <canvas id="${canvasId}" width="80" height="80"></canvas>
-  </div>
-`;
-chartWrap.appendChild(div);
+  const div = document.createElement("div");
+  div.className = "tier-profil";
 
-setTimeout(() => {
-  new Chart(document.getElementById(canvasId).getContext("2d"), {
-    type: 'pie',
-    data: {
-      labels: ["Anteil", "Andere"],
-      datasets: [{
-        data: [val, gesamtPunkte - val],
-        backgroundColor: ["#E44A00", "#FFD1B2"],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      responsive: false,
-      plugins: {
-        legend: { display: false }
+  div.innerHTML = `
+    <div class="tier-bild">
+      <img src="${tier.toLowerCase()}.png" alt="${tier}" />
+    </div>
+    <div class="tier-text">
+      <strong>${tier}</strong>
+      <p>${info.kurz || ""}</p>
+      <em>Symbolisch für: ${info.symbolischFür || "-"}</em>
+    </div>
+    <div class="tier-diagramm">
+      <canvas id="${canvasId}" width="80" height="80"></canvas>
+    </div>
+  `;
+  chartWrap.appendChild(div);
+
+  setTimeout(() => {
+    new Chart(document.getElementById(canvasId).getContext("2d"), {
+      type: 'pie',
+      data: {
+        labels: ["Erreichte Punkte", "Fehlende Punkte"],
+        datasets: [{
+          data: [val, maxPunkte - val],
+          backgroundColor: ["#E44A00", "#FFD1B2"],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: false,
+        plugins: {
+          legend: { display: false }
+        }
       }
-    }
-  });
-}, 10);
-  });
+    });
+  }, 10);
+});
 
   ergebnisElem.appendChild(chartWrap);
 
@@ -1426,7 +1428,7 @@ const categoryDescriptions = {
     "Gibbon": "Kommunikativ und reflektiert, moderiert gut in Gruppen.",
     "Hyäne": "Dominant und durchsetzungsstark, sorgt für klare Rollenverteilung.",
     "Insekt (nützlich)": "Unterstützend und ideenreich, denkt lösungsorientiert für das Team.",
-    "Insekt_laestig": "Egoistisch und unruhig, kann Teamprozesse stören.",
+    "Insekt_lästig": "Egoistisch und unruhig, kann Teamprozesse stören.",
     "Schakal": "Eigensinnig und rebellisch, bringt Spannung ins Team – nicht immer konstruktiv.",
     "Löwe": "Führungsstark, aber wenig teamorientiert – lieber Anführer als Mitläufer.",
     "Maus": "Ruhig und vorsichtig, arbeitet gewissenhaft im Hintergrund.",
@@ -1456,7 +1458,7 @@ const categoryDescriptions = {
     "Gibbon": "Reflektierend und unterstützend – führt durch Dialog.",
     "Hyäne": "Durchsetzungsfähig und kontrollierend, oft dominant.",
     "Insekt (nützlich)": "Hilfreich im Hintergrund – übernimmt Verantwortung ohne Führungsanspruch.",
-    "Insekt_laestig": "Verantwortungsscheu, wirkt oft störend statt führend.",
+    "Insekt_lästig": "Verantwortungsscheu, wirkt oft störend statt führend.",
     "Schakal": "Rebellisch, übernimmt ungern Verantwortung – führt lieber gegen den Strom.",
     "Maus": "Zurückhaltend, übernimmt Verantwortung nur in sicherem Rahmen.",
     "Parasit": "Vermeidet Verantwortung, agiert lieber im Schatten.",
@@ -1484,7 +1486,7 @@ const categoryDescriptions = {
     "Katze": "Analytisch und unabhängig – entscheidet eigenständig nach Abwägung.",
     "Hyäne": "Berechnend und kontrollierend – verfolgt langfristige Strategien.",
     "Insekt (nützlich)": "Kreativ und lösungsorientiert – denkt unkonventionell.",
-    "Insekt_laestig": "Impulsiv und störend – wenig strategische Tiefe.",
+    "Insekt_lästig": "Impulsiv und störend – wenig strategische Tiefe.",
     "Schakal": "Spontan, eigennützig – Entscheidungen oft rebellisch motiviert.",
     "Maus": "Vorsichtig und bedacht – wägt lange ab vor Entscheidungen.",
     "Parasit": "Vermeidet Entscheidungen – passt sich lieber an Gegebenheiten an.",
@@ -1510,7 +1512,7 @@ const categoryDescriptions = {
     "Gibbon": "Kommuniziert in Stresssituationen offen – sucht Ausgleich durch Austausch.",
     "Hyäne": "Reagiert impulsiv, aber zielgerichtet – kämpft sich durch.",
     "Insekt (nützlich)": "Flexibel und kreativ – löst Stress pragmatisch.",
-    "Insekt_laestig": "Verstärkt Stress im Umfeld – unruhig und störend.",
+    "Insekt_lästig": "Verstärkt Stress im Umfeld – unruhig und störend.",
     "Schakal": "Rebelliert in Stresssituationen – neigt zu impulsivem Verhalten.",
     "Löwe": "Bleibt dominant und kontrollierend – lässt sich selten aus der Ruhe bringen.",
     "Maus": "Reagiert mit Vorsicht und Rückzug – sensibel gegenüber Stress.",
@@ -1540,7 +1542,7 @@ const categoryDescriptions = {
     "Löwe": "Selbstbewusst und stolz – persönliche Entwicklung ist machtorientiert.",
     "Hyäne": "Stark getrieben von Ehrgeiz – reflektiert strategisch.",
     "Insekt (nützlich)": "Selbstwirksam und lernbereit – wächst durch nützliche Aufgaben.",
-    "Insekt_laestig": "Geringe Selbstreflexion – eher selbstzentriert.",
+    "Insekt_lästig": "Geringe Selbstreflexion – eher selbstzentriert.",
     "Schakal": "Rebellisch, aber mit innerem Antrieb zur Veränderung.",
     "Maus": "Still und vorsichtig – reflektiert tief, aber zurückhaltend.",
     "Parasit": "Wenig selbstkritisch – Entwicklung meist aus Notwendigkeit.",
