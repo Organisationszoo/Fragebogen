@@ -485,155 +485,155 @@ input[type="radio"] {
       // Array der Fragen
       const questions = [
   {
-    frage: "Frage 1: Wie setzt du deine Fähigkeiten in einem Team am liebsten ein?",
-    keyword: "Team",
-    answers: {
-      A: { code: "S1", text: "Ich übernehme gerne <strong>Verantwortung</strong>, koordiniere Aufgaben und achte auf den Gesamtüberblick." },
-      B: { code: "S2", text: "Ich arbeite <strong>strukturiert</strong>, gehe Schritt für Schritt vor und bleibe bei erprobten Methoden." },
-      C: { code: "R1", text: "Ich halte auch unter Druck durch, bleibe <strong>ausdauernd</strong> und verliere mein Ziel nicht aus den Augen." },
-      D: { code: "R2", text: "Im Team verfolge ich einen individuellen Ansatz bringe eigene <strong>Ideen</strong>  ein und schätze es, wenn auch alternative Perspektiven berücksichtigt werden." }
-    }
-  },
-  {
-    frage: "Frage 2: Wie verhältst du dich, wenn im Team Konflikte auftreten?",
-    keyword: "Konflikte",
-    answers: {
-      A: { code: "S3", text: "Ich suche das direkte <strong>Gespräch</strong>, höre alle Seiten an und strebe eine gemeinsame Lösung an." },
-      B: { code: "S4", text: "In Konflikten halte ich mich vordergründig <strong>neutral</strong>, beobachte genau – und greife subtil ein, wenn ich erkenne, wo mein Einfluss am wirkungsvollsten ist." },
-      C: { code: "R3", text: "Ich stelle <strong>provozierende</strong> Fragen, um festgefahrene Denkblockaden aufzubrechen – auch wenn das aneckt." },
-      D: { code: "R4", text: "Ich bleibe <strong>ruhig</strong>, vermeide vorschnelle Urteile und vermittle Stabilität in der Gruppe." }
-    }
-  },
-  {
-    frage: "Frage 3: Was motiviert dich, deine Arbeit mit vollem Einsatz zu erledigen?",
-    keyword: "Einsatz",
-    answers: {
-      A: { code: "S5", text: "Ich schöpfe meine Stärke aus <strong>Erfahrung</strong> auch in schwierigen Situationen halte ich durch und verliere nicht den Boden unter den Füssen." },
-      B: { code: "S6", text: "Inspirierende <strong>Visionen</strong> und die Hoffnung, etwas Sinnvolles oder Kreatives beizutragen." },
-      C: { code: "R5", text: "Die Chance, <strong>strategisch</strong> vorzugehen, clevere Lösungen zu finden und Chancen zu erkennen." },
-      D: { code: "R6", text: "Ich bin dann voll dabei, wenn ich <strong>schnell</strong>  reagieren, gezielt Einfluss nehmen und mit Nachdruck meine Interessen durchsetzen kann – notfalls auch gegen Widerstand." }
-    }
-  },
-  {
-    frage: "Frage 4: Wie gehst du mit unerwarteten Veränderungen im Arbeitsablauf um?",
-    keyword: "Veränderungen",
-    answers: {
-      A: { code: "S7", text: "Ich bleibe <strong>ruhig</strong>, passe mich an, sobald ich die neue Situation verstehe." },
-      B: { code: "S8", text: "Ich <strong>analysiere</strong> gründlich, schaue mir Risiken und Chancen an, bevor ich handle." },
-      C: { code: "R7", text: "Ich ziehe mich etwas zurück, gehe <strong>schrittweise</strong> vor und vermeide übereilte Entschlüsse." },
-      D: { code: "R8", text: "Ich übernehme <strong>spontan</strong> Verantwortung und greife schnell ein, wenn ich eine Möglichkeit sehe." }
-    }
-  },
-  {
-    frage: "Frage 5: Welche Aspekte sind dir in einem Arbeitsumfeld besonders wichtig?",
-    keyword: "Arbeitsumfeld",
-    answers: {
-      A: { code: "S9", text: "Besonnene, eher langsame Entscheidungen, damit nichts <strong>überstürzt</strong> wird." },
-      B: { code: "S10", text: "Ein Umfeld, in dem ich klug agieren, Entwicklungen <strong>beobachten</strong> und zum richtigen Zeitpunkt die besten Chancen nutzen kann." },
-      C: { code: "R11", text: "<strong>Provokante</strong> Impulse, die eingefahrene Routinen aufbrechen – auch wenn das andere als aufdringlich empfunden wird." },
-      D: { code: "R12", text: "Effizienz und <strong>Zuverlässigkeit</strong>, damit das Team ein klares Ziel im Auge behält." }
-    }
-  },
-  {
-    frage: "Frage 6: Wie triffst du persönlich Entscheidungen in unsicheren Situationen?",
-    keyword: "Entscheidungen",
-    answers: {
-      A: { code: "S11", text: "Ich beziehe gern mein Umfeld ein, diskutiere mit dem Team und suche einen <strong>Konsens</strong>." },
-      B: { code: "S12", text: "Ich setze auf Bewährtes, bleibe <strong>loyal</strong> gegenüber bestehenden Strukturen und gehe ungern Risiken ein." },
-      C: { code: "R9", text: "Ich handle <strong>schnell</strong> und entschlossen, ohne mich lange von Unsicherheiten aufhalten zu lassen." },
-      D: { code: "R10", text: "Ich folge meinem <strong>Bauchgefühl</strong> und bin offen für spontane Ideen, auch wenn sie ungewöhnlich sind." }
-    }
-  },
-  {
-    frage: "Frage 7: Welche Rolle spielt Unabhängigkeit in deinem Arbeitsalltag?",
-    keyword: "Unabhängigkeit",
-    answers: {
-      A: { code: "S13", text: "Ich halte mich für äusserst vielseitig und <strong>kreativ</strong>, manchmal überschätze ich dabei meine Möglichkeiten." },
-      B: { code: "S14", text: "Ich finde <strong>Durchsetzungsfähigkeit</strong> entscheidend, um eigenständig handeln zu können." },
-      C: { code: "R15", text: "<strong>Teamgeist</strong> geht vor; ich lege grossen Wert auf Austausch und ein starkes Gemeinschaftsgefühl." },
-      D: { code: "R16", text: "Mir ist eine reibungslose <strong>Kommunikation</strong> besonders wichtig, damit alle an einem Strang ziehen." }
-    }
-  },
-  {
-    frage: "Frage 8: Wie stehst du zu Verantwortung im Job?",
-    keyword: "Verantwortung",
-    answers: {
-      A: { code: "S15", text: "Ich übernehme <strong>Verantwortung</strong> eher unterstützend, sorge für Effizienz und helfe dem Team, ohne im Rampenlicht zu stehen." },
-      B: { code: "S16", text: "Ich setze <strong>konsequent</strong> meine eigenen Ideen durch, selbst wenn das Team das als eigenwillig oder störend empfindet." },
-      C: { code: "R13", text: "Ich nutze Verantwortung <strong>strategisch</strong> und scheue mich nicht, nachdrücklich zu handeln, wenn es meinen Zielen dient." },
-      D: { code: "R14", text: "Ich kombiniere viele <strong>Fähigkeiten</strong> und bin überzeugt, fast alles lösen zu können, was teils überheblich wirkt." }
-    }
-  },
-  {
-    frage: "Frage 9: Wie reagierst du, wenn du kritisiert wirst?",
-    keyword: "kritisiert",
-    answers: {
-      A: { code: "S17", text: "Ich bin <strong>offen</strong> dafür, reflektiere mein Verhalten und passe mich an, wenn es sinnvoll ist." },
-      B: { code: "S18", text: "Ich halte an meinem <strong>Standpunkt</strong> fest und lasse mich nicht schnell verunsichern." },
-      C: { code: "R19", text: "Ich denke ausgiebig nach und ziehe meine Lehren aus <strong>konstruktiver Kritik</strong>." },
-      D: { code: "R20", text: "Ich bleibe <strong>gefasst</strong> und nutze Feedback als Chance zur Weiterentwicklung." }
-    }
-  },
-  {
-    frage: "Frage 10: Welche Rolle nimmst du typischerweise in einem Team ein?",
-    keyword: "Rolle",
-    answers: {
-      A: { code: "S19", text: "Ich übernehme gerne <strong>Führung</strong>, bin mutig und gehe voran." },
-      B: { code: "S20", text: "Ich arbeite <strong>gründlich</strong>, kümmere mich um Details und gebe dem Team Rückhalt." },
-      C: { code: "R21", text: "Ich bringe <strong>visionäre</strong> Ideen ein, wirke jedoch manchmal zögerlich oder unsicher, wenn es an die Umsetzung geht." },
-      D: { code: "R22", text: "Ich halte an bewährten Rollen fest, agiere zurückhaltend, aber mit <strong>Erfahrung</strong> besonders wenn es um Stabilität geht." }
-    }
-  },
-  {
-    frage: "Frage 11: Wie gestaltest du deine langfristige Planung?",
-    keyword: "Planung",
-    answers: {
-      A: { code: "S21", text: "Ich investiere viel <strong>Energie</strong> und nutze jede Gelegenheit, notfalls auch manipulativ, um voranzukommen." },
-      B: { code: "S22", text: "Ich passe meine Pläne <strong>flexibel</strong> an, behalte aber mein Hauptziel stets im Blick." },
-      C: { code: "R17", text: "Ich wahre den <strong>Überblick</strong>, formuliere klare Visionen und verfolge sie konsequent." },
-      D: { code: "R18", text: "Ich bleibe <strong>besonnen</strong> und bedacht, lasse mich auch durch Stress nicht aus der Ruhe bringen." }
-    }
-  },
-  {
-    frage: "Frage 12: Wie reagierst du auf hohen Zeit- oder Leistungsdruck?",
-    keyword: "Leistungsdruck",
-    answers: {
-      A: { code: "S23", text: "Ich strahle <strong>Ruhe</strong> aus, strukturiere meine Aufgaben und lasse mich nicht hetzen." },
-      B: { code: "S24", text: "Ich ziehe mich gern zurück, lasse andere agieren – und nutze die Gelegenheit, <strong>unauffällig</strong> meinen Vorteil zu sichern." },
-      C: { code: "R25", text: "Ich gehe <strong>systematisch</strong> vor, um Fehler zu vermeiden und den Überblick zu behalten." },
-      D: { code: "R26", text: "Ich ziehe das Tempo an, bleibe <strong>fokussiert</strong> und möchte Höchstleistung zeigen." }
-    }
-  },
-  {
-    frage: "Frage 13: Welche besondere Stärke bringst du verlässlich in dein Berufsleben ein?",
-    keyword: "Stärke",
-    answers: {
-      A: { code: "S25", text: "Ich gehe meinen eigenen Weg, arbeite mit Biss und bringe  <strong>kreative</strong> Ideen ein auch wenn ich mich selten anpasse." },
-      B: { code: "S26", text: "Ich bin <strong>robust</strong>, halte lange durch und scheue keine grossen Herausforderungen." },
-      C: { code: "R23", text: "Meine Stärke liegt darin, mich situativ <strong>anzupassen</strong>, zwischen den Zeilen zu lesen und auch in komplexen Situationen ohne grossen Widerstand meinen Weg zu finden." },
-      D: { code: "R24", text: "Ich bin <strong>kooperativ</strong>, entwickle neue Ideen und fördere den Zusammenhalt im Team." }
-    }
-  },
-  {
-    frage: "Frage 14: Welche Stärken beschreiben dich am besten (Mix‐Frage)?",
-    keyword: "Stärken",
-    answers: {
-      A: { code: "C1", text: "Fleiss, Flexibilität, Raffinesse, <strong>visionäres</strong> Denken (vereint mehrere Eigenschaften)." },
-      B: { code: "C2", text: "<strong>Robust</strong>, unabhängig, zupackend, meistert grosse Herausforderungen." },
-      C: { code: "C3", text: "Gelassen, bedächtig, <strong>weise</strong>, strategisch – oft mit ruhiger Energie." },
-      D: { code: "C4", text: "Manchmal <strong>provokant</strong>, loyal, spontan, ideenreich in neuen Situationen." }
-    }
-  },
-  {
-    frage: "Frage 15: In welchem Bereich möchtest du dich persönlich weiterentwickeln?",
-    keyword: "weiterentwickeln",
-    answers: {
-      A: { code: "C1", text: "Ich möchte lernen, nicht immer alles <strong>kontrollieren</strong> zu wollen und auch loszulassen." },
-      B: { code: "C2", text: "Ich will bewusster mit <strong>impulsiven</strong> Reaktionen umgehen und mehr Geduld entwickeln." },
-      C: { code: "C3", text: "Ich arbeite daran, <strong>Entscheidungen</strong> mutiger zu treffen und nicht zu lange zu grübeln." },
-      D: { code: "C4", text: "Ich möchte meine <strong>Spontanität</strong> besser strukturieren und emotionale Ausbrüche im Zaum halten." }
-    }
+    "frage": "Frage 1: Wie setzt du deine Fähigkeiten in einem Team am liebsten ein?",
+  "keyword": "Team",
+  "answers": {
+    "A": { "code": "S1", "text": "Ich übernehme gerne <strong>Verantwortung</strong>, koordiniere Aufgaben und achte auf den Gesamtüberblick." },
+    "B": { "code": "S2", "text": "Ich arbeite <strong>strukturiert</strong>, gehe Schritt für Schritt vor und bleibe bei erprobten Methoden." },
+    "C": { "code": "R1", "text": "Auch unter Druck halte ich durch, bleibe <strong>ausdauernd</strong> und verliere mein Ziel nicht aus den Augen." },
+    "D": { "code": "R2", "text": "Im Team verfolge ich einen individuellen Ansatz, bringe eigene <strong>Ideen</strong> ein und schätze es, wenn auch alternative Perspektiven berücksichtigt werden." }
   }
+},
+{
+  "frage": "Frage 2: Wie verhältst du dich, wenn im Team Konflikte auftreten?",
+  "keyword": "Konflikte",
+  "answers": {
+    "A": { "code": "S3", "text": "Ich suche das direkte <strong>Gespräch</strong>, höre alle Seiten an und strebe eine gemeinsame Lösung an." },
+    "B": { "code": "S4", "text": "In Konflikten halte ich mich vordergründig <strong>neutral</strong>, beobachte genau – und greife subtil ein, wenn ich erkenne, wo mein Einfluss am wirkungsvollsten ist." },
+    "C": { "code": "R3", "text": "Ich stelle <strong>provozierende</strong> Fragen, um festgefahrene Denkblockaden aufzubrechen – auch wenn das aneckt." },
+    "D": { "code": "R4", "text": "Ich bleibe <strong>ruhig</strong>, vermeide vorschnelle Urteile und vermittle Stabilität in der Gruppe." }
+  }
+},
+{
+  "frage": "Frage 3: Was motiviert dich, deine Arbeit mit vollem Einsatz zu erledigen?",
+  "keyword": "Einsatz",
+  "answers": {
+    "A": { "code": "S5", "text": "Ich schöpfe meine Stärke aus <strong>Erfahrung</strong>. Auch in schwierigen Situationen halte ich durch und verliere nicht den Boden unter den Füßen." },
+    "B": { "code": "S6", "text": "Inspirierende <strong>Visionen</strong> und die Hoffnung, etwas Sinnvolles oder Kreatives beizutragen." },
+    "C": { "code": "R5", "text": "Die Chance, <strong>strategisch</strong> vorzugehen, clevere Lösungen zu finden und Chancen zu erkennen." },
+    "D": { "code": "R6", "text": "Ich bin dann voll dabei, wenn ich <strong>schnell</strong> reagiere, gezielt Einfluss nehme und mit Nachdruck meine Interessen durchsetzen kann – notfalls auch gegen Widerstand." }
+  }
+},
+{
+  "frage": "Frage 4: Wie gehst du mit unerwarteten Veränderungen im Arbeitsablauf um?",
+  "keyword": "Veränderungen",
+  "answers": {
+    "A": { "code": "S7", "text": "Ich bleibe <strong>ruhig</strong>, passe mich an, sobald ich die neue Situation verstehe." },
+    "B": { "code": "S8", "text": "Ich <strong>analysiere</strong> gründlich, schaue mir Risiken und Chancen an, bevor ich handle." },
+    "C": { "code": "R7", "text": "Ich ziehe mich etwas zurück, gehe <strong>schrittweise</strong> vor und vermeide übereilte Entschlüsse." },
+    "D": { "code": "R8", "text": "Ich übernehme <strong>spontan</strong> Verantwortung und greife schnell ein, wenn ich eine Möglichkeit sehe." }
+  }
+},
+{
+  "frage": "Frage 5: Welche Aspekte sind dir in einem Arbeitsumfeld besonders wichtig?",
+  "keyword": "Arbeitsumfeld",
+  "answers": {
+    "A": { "code": "S9", "text": "Besonnene, eher langsame Entscheidungen, damit nichts <strong>überstürzt</strong> wird." },
+    "B": { "code": "S10", "text": "Ein Umfeld, in dem ich klug agieren, Entwicklungen <strong>beobachten</strong> und zum richtigen Zeitpunkt die besten Chancen nutzen kann." },
+    "C": { "code": "R11", "text": "<strong>Provokante</strong> Impulse, die eingefahrene Routinen aufbrechen – auch wenn andere dies als aufdringlich empfinden." },
+    "D": { "code": "R12", "text": "Effizienz und <strong>Zuverlässigkeit</strong>, damit das Team ein klares Ziel im Auge behält." }
+  }
+},
+{
+  "frage": "Frage 6: Wie triffst du persönlich Entscheidungen in unsicheren Situationen?",
+  "keyword": "Entscheidungen",
+  "answers": {
+    "A": { "code": "S11", "text": "Ich beziehe gern mein Umfeld ein, diskutiere mit dem Team und suche einen <strong>Konsens</strong>." },
+    "B": { "code": "S12", "text": "Ich setze auf Bewährtes, bleibe <strong>loyal</strong> gegenüber bestehenden Strukturen und gehe ungern Risiken ein." },
+    "C": { "code": "R9", "text": "Ich handle <strong>schnell</strong> und entschlossen, ohne mich lange von Unsicherheiten aufhalten zu lassen." },
+    "D": { "code": "R10", "text": "Ich folge meinem <strong>Bauchgefühl</strong> und bin offen für spontane Ideen, auch wenn sie ungewöhnlich sind." }
+  }
+},
+{
+  "frage": "Frage 7: Welche Rolle spielt Unabhängigkeit in deinem Arbeitsalltag?",
+  "keyword": "Unabhängigkeit",
+  "answers": {
+    "A": { "code": "S13", "text": "Ich halte mich für äußerst vielseitig und <strong>kreativ</strong>, manchmal überschätze ich dabei meine Möglichkeiten." },
+    "B": { "code": "S14", "text": "Ich finde <strong>Durchsetzungsfähigkeit</strong> entscheidend, um eigenständig handeln zu können." },
+    "C": { "code": "R15", "text": "<strong>Teamgeist</strong> geht vor; ich lege großen Wert auf Austausch und ein starkes Gemeinschaftsgefühl." },
+    "D": { "code": "R16", "text": "Mir ist eine reibungslose <strong>Kommunikation</strong> besonders wichtig, damit alle an einem Strang ziehen." }
+  }
+},
+{
+  "frage": "Frage 8: Wie stehst du zu Verantwortung im Job?",
+  "keyword": "Verantwortung",
+  "answers": {
+    "A": { "code": "S15", "text": "Ich übernehme <strong>Verantwortung</strong> eher unterstützend, sorge für Effizienz und helfe dem Team, ohne im Rampenlicht zu stehen." },
+    "B": { "code": "S16", "text": "Ich setze <strong>konsequent</strong> meine eigenen Ideen durch, selbst wenn das Team dies als eigenwillig oder störend empfindet." },
+    "C": { "code": "R13", "text": "Ich nutze Verantwortung <strong>strategisch</strong> und scheue mich nicht, nachdrücklich zu handeln, wenn es meinen Zielen dient." },
+    "D": { "code": "R14", "text": "Ich kombiniere viele <strong>Fähigkeiten</strong> und bin überzeugt, fast alles lösen zu können, was teils überheblich wirkt." }
+  }
+},
+{
+  "frage": "Frage 9: Wie reagierst du, wenn du kritisiert wirst?",
+  "keyword": "kritisiert",
+  "answers": {
+    "A": { "code": "S17", "text": "Ich bin <strong>offen</strong> dafür, reflektiere mein Verhalten und passe mich an, wenn es sinnvoll ist." },
+    "B": { "code": "S18", "text": "Ich halte an meinem <strong>Standpunkt</strong> fest und lasse mich nicht schnell verunsichern." },
+    "C": { "code": "R19", "text": "Ich denke ausgiebig nach und ziehe meine Lehren aus <strong>konstruktiver Kritik</strong>." },
+    "D": { "code": "R20", "text": "Ich bleibe <strong>gefasst</strong> und nutze Feedback als Chance zur Weiterentwicklung." }
+  }
+},
+{
+  "frage": "Frage 10: Welche Rolle nimmst du typischerweise in einem Team ein?",
+  "keyword": "Rolle",
+  "answers": {
+    "A": { "code": "S19", "text": "Ich übernehme gerne <strong>Führung</strong>, bin mutig und gehe voran." },
+    "B": { "code": "S20", "text": "Ich arbeite <strong>gründlich</strong>, kümmere mich um Details und gebe dem Team Rückhalt." },
+    "C": { "code": "R21", "text": "Ich bringe <strong>visionäre</strong> Ideen ein, wirke jedoch manchmal zögerlich oder unsicher, wenn es an die Umsetzung geht." },
+    "D": { "code": "R22", "text": "Ich halte an bewährten Rollen fest, agiere zurückhaltend, aber mit <strong>Erfahrung</strong>, besonders wenn es um Stabilität geht." }
+  }
+},
+{
+  "frage": "Frage 11: Wie gestaltest du deine langfristige Planung?",
+  "keyword": "Planung",
+  "answers": {
+    "A": { "code": "S21", "text": "Ich investiere viel <strong>Energie</strong> und nutze jede Gelegenheit, notfalls auch manipulativ, um voranzukommen." },
+    "B": { "code": "S22", "text": "Ich passe meine Pläne <strong>flexibel</strong> an, behalte aber mein Hauptziel stets im Blick." },
+    "C": { "code": "R17", "text": "Ich wahre den <strong>Überblick</strong>, formuliere klare Visionen und verfolge sie konsequent." },
+    "D": { "code": "R18", "text": "Ich bleibe <strong>besonnen</strong> und bedacht, lasse mich auch durch Stress nicht aus der Ruhe bringen." }
+  }
+},
+{
+  "frage": "Frage 12: Wie reagierst du auf hohen Zeit- oder Leistungsdruck?",
+  "keyword": "Leistungsdruck",
+  "answers": {
+    "A": { "code": "S23", "text": "Ich strahle <strong>Ruhe</strong> aus, strukturiere meine Aufgaben und lasse mich nicht hetzen." },
+    "B": { "code": "S24", "text": "Ich ziehe mich gern zurück, lasse andere agieren – und nutze die Gelegenheit, <strong>unauffällig</strong> meinen Vorteil zu sichern." },
+    "C": { "code": "R25", "text": "Ich gehe <strong>systematisch</strong> vor, um Fehler zu vermeiden und den Überblick zu behalten." },
+    "D": { "code": "R26", "text": "Ich ziehe das Tempo an, bleibe <strong>fokussiert</strong> und möchte Höchstleistung zeigen." }
+  }
+},
+{
+  "frage": "Frage 13: Welche besondere Stärke bringst du verlässlich in dein Berufsleben ein?",
+  "keyword": "Stärke",
+  "answers": {
+    "A": { "code": "S25", "text": "Ich gehe meinen eigenen Weg, arbeite mit Biss und bringe <strong>kreative</strong> Ideen ein, auch wenn ich mich selten anpasse." },
+    "B": { "code": "S26", "text": "Ich bin <strong>robust</strong>, halte lange durch und scheue keine großen Herausforderungen." },
+    "C": { "code": "R23", "text": "Meine Stärke liegt darin, mich situativ <strong>anzupassen</strong>, zwischen den Zeilen zu lesen und auch in komplexen Situationen ohne großen Widerstand meinen Weg zu finden." },
+    "D": { "code": "R24", "text": "Ich bin <strong>kooperativ</strong>, entwickle neue Ideen und fördere den Zusammenhalt im Team." }
+  }
+},
+{
+  "frage": "Frage 14: Welche Stärken beschreiben dich am besten (Mix‐Frage)?",
+  "keyword": "Stärken",
+  "answers": {
+    "A": { "code": "C1", "text": "Fleiß, Flexibilität, Raffinesse, <strong>visionäres</strong> Denken (vereint mehrere Eigenschaften)." },
+    "B": { "code": "C2", "text": "<strong>Robust</strong>, unabhängig, zupackend, meistert große Herausforderungen." },
+    "C": { "code": "C3", "text": "Gelassen, bedächtig, <strong>weise</strong>, strategisch – oft mit ruhiger Energie." },
+    "D": { "code": "C4", "text": "Manchmal <strong>provokant</strong>, loyal, spontan, ideenreich in neuen Situationen." }
+  }
+},
+{
+  "frage": "Frage 15: In welchem Bereich möchtest du dich persönlich weiterentwickeln?",
+  "keyword": "weiterentwickeln",
+  "answers": {
+    "A": { "code": "C1", "text": "Ich möchte lernen, nicht immer alles <strong>kontrollieren</strong> zu wollen und auch loszulassen." },
+    "B": { "code": "C2", "text": "Ich will bewusster mit <strong>impulsiven</strong> Reaktionen umgehen und mehr Geduld entwickeln." },
+    "C": { "code": "C3", "text": "Ich arbeite daran, <strong>Entscheidungen</strong> mutiger zu treffen und nicht zu lange zu grübeln." },
+    "D": { "code": "C4", "text": "Ich möchte meine <strong>Spontanität</strong> besser strukturieren und emotionale Ausbrüche im Zaum halten." }
+  }
+}
 ];
 
  // Dynamische Erzeugung der Fragen im Formular
