@@ -50,40 +50,40 @@
 }
 
     /* Logo, Header und Beschreibung */
-    .logo-wrapper {
-      text-align: center;
-    }
-    .logo-wrapper .organisationszoo {
-      display: inline-block !important;
-      background-color: #ffffff !important;
-      padding: 0 3mm !important;
-      font-size: 48px;
-      font-weight: 700;
-      color: #E44A00;
-      margin: 20px auto 0;
-    }
-    .logo-wrapper .eule,
-    #result-header img {
-      display: block;
-      margin: 0 auto;
-      width: 200px;       /* gewünschte Breite; anpassen, falls nötig */
-      height: 200px;      /* gleiche Höhe für einen quadratischen (und damit runden) Bereich */
-      object-fit: cover;  /* sorgt dafür, dass das Bild den gesamten Kreis füllt */
-      border-radius: 50%;
-      background-color: #ffffff;
-      border: none;
-    }
-    .logo-container {
-      width: 100vw;
-      margin-left: calc(-50vw + 50%);
-      background-color: #ffffff;
-      padding: 40px 0;
-      box-sizing: border-box;
-    }
-    .logo-background {
-      background-color: #ffffff;
-      padding: 30px 0;
-    }
+.logo-wrapper {
+  text-align: center;
+}
+
+/* OrganisationsZoo-Text ausblenden */
+.logo-wrapper .organisationszoo {
+  display: none !important;
+}
+
+/* Eule ohne kreisförmigen Zuschnitt */
+.logo-wrapper .eule,
+#result-header img {
+  display: block;
+  margin: 0 auto;
+  width: 200px;       /* gewünschte Breite; anpassen, falls nötig */
+  height: 200px;      /* gleiche Höhe für einen quadratischen Bereich */
+  object-fit: cover;  /* sorgt dafür, dass das Bild vollständig angezeigt wird */
+  border-radius: 0;   /* kein runder Zuschnitt */
+  background-color: #ffffff;
+  border: none;
+}
+
+.logo-container {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background-color: #ffffff;
+  padding: 40px 0;
+  box-sizing: border-box;
+}
+
+.logo-background {
+  background-color: #ffffff;
+  padding: 30px 0;
+}
    .beschreibung {
     max-width: 800px;
     margin: 40px auto;
@@ -246,7 +246,7 @@ input[type="radio"] {
       margin: 25px auto;
       padding: 12px 25px;
       font-size: 1rem;
-      background-color: #8e5c33; /* Braun */
+      background-color: #E44A00;
       color: #fff;
       border: none;
       border-radius: 30px;
@@ -271,6 +271,7 @@ input[type="radio"] {
         height: auto !important;
       }
     }
+
 
    /* Druck-Stile */
 @media print {
@@ -375,6 +376,58 @@ input[type="radio"] {
   }
 }
 
+@media screen and (max-width: 600px) {
+  #result-header {
+    /* Skaliere den gesamten Container, damit er auf mobilen Geräten reinpasst */
+    transform: scale(0.8);
+    transform-origin: top left;
+    /* Eventuell musst du die Breite erhöhen, damit die Skalierung korrekt funktioniert. 
+       Hier als Beispiel: */
+    width: 125%;
+  }
+}
+
+.tier-container {
+  background: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-size: 0.85em;
+  flex-wrap: wrap;
+  color: #000; /* Textfarbe schwarz */
+}
+
+/* Dark Mode – Hintergrund & Textfarbe trotzdem wie im Light Mode */
+@media (prefers-color-scheme: dark) {
+  .tier-container {
+    background-color: white !important;
+    color: #000 !important;
+  }
+}
+
+/* Mobile Optimierung */
+@media screen and (max-width: 600px) {
+  .tier-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .tier-container > div {
+    margin-bottom: 10px;
+  }
+
+  .tier-container img {
+    height: auto;
+    max-height: 120px;
+  }
+}
   </style>
 </head>
 <body>
@@ -438,7 +491,7 @@ input[type="radio"] {
       A: { code: "S1", text: "Ich übernehme gerne <strong>Verantwortung</strong>, koordiniere Aufgaben und achte auf den Gesamtüberblick." },
       B: { code: "S2", text: "Ich arbeite <strong>strukturiert</strong>, gehe Schritt für Schritt vor und bleibe bei erprobten Methoden." },
       C: { code: "R1", text: "Ich halte auch unter Druck durch, bleibe <strong>ausdauernd</strong> und verliere mein Ziel nicht aus den Augen." },
-      D: { code: "R2", text: "Ich verfolge im Team meinen eigenen Weg, bringe eigene <strong>Ideen </strong> ein,  auch wenn ich nicht immer mit dem Strom schwimme." }
+      D: { code: "R2", text: "Im Team verfolge ich einen individuellen Ansatz bringe eigene <strong>Ideen</strong>  ein und schätze es, wenn auch alternative Perspektiven berücksichtigt werden." }
     }
   },
   {
@@ -905,33 +958,33 @@ console.log(similarityMapping);
 
       // Definition der tierEigenschaften
       const tierEigenschaften = {
-        "Ameise": ["Struktur", "Sozialverhalten"],
-        "Biene": ["Struktur", "Sozialverhalten"],
-        "chamaeleon": ["Flexibilität", "Kreativität"],
-        "Hund": ["Empathie", "Sozialverhalten"],
-        "Adler": ["Strategie", "Durchsetzung"],
-        "Katze": ["Struktur", "Strategie"],
-        "Gibbon": ["Sozialverhalten", "Kreativität"],
-        "Hyäne": ["Durchsetzung", "Strategie"],
-        "insekt_nuetzlich": ["Empathie", "Kreativität"],
-        "insekt_laestig": ["Durchsetzung", "Flexibilität"],
-        "Schakal": ["Durchsetzung", "Kreativität"],
-        "Löwe": ["Durchsetzung", "Strategie"],
-        "Maus": ["Struktur", "Emotionale Stabilität"],
-        "Parasit": ["Flexibilität", "Strategie"],
-        "Eule": ["Strategie", "Struktur"],
-        "Piranha": ["Durchsetzung", "Flexibilität"],
-        "Eiche": ["Struktur", "Emotionale Stabilität"],
-        "Klapperschlange": ["Strategie", "Struktur"],
-        "Faultier": ["Emotionale Stabilität", "Struktur"],
-        "Dinosaurier": ["Strategie", "Struktur"],
-        "Einhorn": ["Kreativität", "Empathie"],
-        "Geier": ["Strategie", "Flexibilität"],
-        "Wal": ["Empathie", "Emotionale Stabilität"],
-        "Hybrid": ["Flexibilität", "Strategie"],
-        "Yak": ["Struktur", "Emotionale Stabilität"],
-        "Kind": ["Empathie", "Kreativität"]
-      };
+  "Ameise": ["Struktur", "Sozialverhalten"],
+  "Biene": ["Struktur", "Sozialverhalten"],
+  "chamaeleon": ["Flexibilität", "Strategie"],
+  "Hund": ["Empathie", "Sozialverhalten"],
+  "Adler": ["Strategie", "Durchsetzung"],
+  "Katze": ["Strategie", "Flexibilität"],
+  "Gibbon": ["Kreativität", "Sozialverhalten"],
+  "Hyäne": ["Durchsetzung", "Strategie"],
+  "insekt_nuetzlich": ["Empathie", "Kreativität"],
+  "insekt_laestig": ["Flexibilität", "Durchsetzung"],
+  "Schakal": ["Durchsetzung", "Sozialverhalten"],
+  "Löwe": ["Durchsetzung", "Strategie"],
+  "Maus": ["Struktur", "Emotionale Stabilität"],
+  "Parasit": ["Flexibilität", "Strategie"],
+  "Eule": ["Strategie", "Empathie"],
+  "Piranha": ["Durchsetzung", "Flexibilität"],
+  "Eiche": ["Struktur", "Emotionale Stabilität"],
+  "Klapperschlange": ["Strategie", "Flexibilität"],
+  "Faultier": ["Emotionale Stabilität", "Struktur"],
+  "Dinosaurier": ["Struktur", "Emotionale Stabilität"],
+  "Einhorn": ["Kreativität", "Empathie"],
+  "Geier": ["Strategie", "Flexibilität"],
+  "Wal": ["Empathie", "Emotionale Stabilität"],
+  "Hybrid": ["Kreativität", "Durchsetzung"],
+  "Yak": ["Sozialverhalten", "Emotionale Stabilität"],
+  "Kind": ["Kreativität", "Empathie"]
+};
 
       // Mapping CODE -> Tier
       const codeToTier = {
@@ -969,7 +1022,7 @@ console.log(similarityMapping);
         "Gibbon": { kurz: " Kontaktfreudig, reflektierend, teils distanziert", symbolischFür: "Kommunikation" },
         "Hyäne": { kurz: " Strategisch, ehrgeizig, aggressiv", symbolischFür: "Zielstrebigkeit" },
         "Insekt (nützlich)": { kurz: " Unterstützend, einfallsreich, positiv", symbolischFür: "Nützlichkeit" },
-        "Insekt (lästig)": { kurz: " Eigensinnig, unberechenbar, oft störend", symbolischFür: "Hartnäckigkeit" },
+        "Insekt_laestig": { kurz: " Eigensinnig, unberechenbar, oft störend", symbolischFür: "Hartnäckigkeit" },
         "Schakal": { kurz: " Individualistisch, aggressiv, rebellisch", symbolischFür: "Unabhängigkeit" },
         "Löwe": { kurz: " Intuitiv, machtbewusst, strategisch", symbolischFür: "Kraft" },
         "Maus": { kurz: " Denkend, vorsichtig, zuverlässig", symbolischFür: "Sicherheit" },
@@ -1006,8 +1059,8 @@ console.log(similarityMapping);
         "Maus": "Löwe",
         "Wal": "Schakal",
         "Schakal": "Wal",
-        "Insekt (nützlich)": "Insekt (lästig)",
-        "Insekt (lästig)": "Insekt (nützlich)",
+        "Insekt (nützlich)": "Insekt_laestig",
+        "Insekt_laestig": "Insekt (nützlich)",
         "Piranha": "Faultier",
         "Faultier": "Piranha",
         "Einhorn": "Geier",
@@ -1056,9 +1109,9 @@ console.log(similarityMapping);
       "Parasit": "Das nützliche Insekt und der Parasit haben unterschiedliche Prioritäten – Unterstützung versus taktisches Verhalten.",
       "Klapperschlange": "Insekt (nützlich) und Klapperschlange gehen unterschiedlich vor: Kooperative Ansätze versus kritische Impulse."
     },
-    "Insekt (lästig)": {
-      "Kind": "Insekt (lästig) und Kind können aufeinanderprallen, da das unberechenbare Insekt das emotionale Kind überfordern kann.",
-      "Hund": "Insekt (lästig) provoziert, während der Hund auf Harmonie bedacht ist – das führt zu Spannungen."
+    "Insekt_laestig": {
+      "Kind": "Insekt_laestig und Kind können aufeinanderprallen, da das unberechenbare Insekt das emotionale Kind überfordern kann.",
+      "Hund": "Insekt_laestig provoziert, während der Hund auf Harmonie bedacht ist – das führt zu Spannungen."
     },
     "Schakal": {
       "Wal": "Schakal und Wal können unterschiedliche Schwerpunkte haben – taktisches Vorgehen versus emotionale Tiefe.",
@@ -1151,33 +1204,52 @@ document.querySelector(".user-inputs").style.display = "none"; // Versteckt den 
   var userEmail = document.querySelector('input[name="email"]').value;
 
 ergebnisElem.insertAdjacentHTML("afterbegin", `
-  <div id="result-header" style="position: relative; padding-top: 3cm; margin-bottom: 1cm; width: 100%;">
+  <div id="result-header" style="
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;  /* nur horizontales Padding */
+    margin: 0;       /* kein extra vertikales Padding */
+    background-color: #ffffff;
+    box-sizing: border-box;
+  ">
+    <!-- Links: Kontaktdaten -->
     <div id="left-info" style="
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    width: 33%; 
-    font-size: 0.75em; 
-    color: #333;
-    line-height: 1.2;
-">
-  <div>Nicole Stöcker und Peter Renner,</div>
-  <div>Murwiesenstrasse 30, <span style="white-space: nowrap;">8057 Zürich, Schweiz</span></div>
-  <div>info@organisationszoo.ch, Telefon +41 43 288 53 83, www.organisationszoo.ch</div>
-  <div style="margin-top: 0.2cm;">Name: ${userName}</div>
-  <div>E-Mail: ${userEmail}</div>
-</div>
-    <!-- Mitte: Individuelles Verhaltensprofil -->
-    <div style="position: absolute; top: 0; left: 33%; width: 34%; text-align: center; font-size: 1.2em; font-weight: bold; color: #E44A00;">
+      flex: 1;
+      font-size: 0.75em;
+      color: #333;
+      line-height: 1.2;
+    ">
+      <div>Nicole Stöcker und Peter Renner,</div>
+      <div>Murwiesenstrasse 30, <span style="white-space: nowrap;">8057 Zürich, Schweiz</span></div>
+      <div>info@organisationszoo.ch, Telefon +41 43 288 53 83, www.organisationszoo.ch</div>
+      <div>Name: ${userName}</div>
+      <div>E-Mail: ${userEmail}</div>
+    </div>
+    <!-- Mitte: Titel -->
+    <div style="
+      flex: 1;
+      text-align: center;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #E44A00;
+    ">
       Individuelles Verhaltensprofil
     </div>
-    <!-- Rechts: Eulen-Logo plus OrganisationsZoo -->
-    <div style="position: absolute; top: 0; right: 0; width: 33%; text-align: center;">
-      <img src="eule-organisationszoo.png" alt="Eule" 
-           style="height: 2.5cm; width: auto; object-fit: cover; border-radius: 50%; background-color: #fff; border: none;">
-      <div class="organisationszoo" style="font-size: 1.2em; font-weight: bold; color: #E44A00; margin-top: 0.2cm;">
-        OrganisationsZoo
-      </div>
+    <!-- Rechts: Eulen-Logo -->
+    <div id="right-logo" style="
+      flex: 1;
+      text-align: right;
+    ">
+      <img src="eule-organisationszoo.png" alt="Eule" style="
+        height: 2.5cm;
+        width: auto;
+        object-fit: cover;
+        border-radius: 0;
+        background-color: #fff;
+        border: none;
+      ">
     </div>
   </div>
 `);
@@ -1303,7 +1375,7 @@ konfliktPaare.sort((a, b) => b.score - a.score);
 
 // Neuen Konfliktbereich erzeugen:
 let conflictHeader = document.createElement("div");
-conflictHeader.innerHTML = "<h2 style='font-size: 1.5em;'>HAT MÜHE MIT</h2>";
+conflictHeader.innerHTML = "<h2 style='font-size: 1.5em;'>Grösste Herausforderungen mit:</h2>";
 
 if (konfliktPaare.length > 0) {
   const conflictPair = konfliktPaare[0];
@@ -1354,7 +1426,7 @@ const categoryDescriptions = {
     "Gibbon": "Kommunikativ und reflektiert, moderiert gut in Gruppen.",
     "Hyäne": "Dominant und durchsetzungsstark, sorgt für klare Rollenverteilung.",
     "Insekt (nützlich)": "Unterstützend und ideenreich, denkt lösungsorientiert für das Team.",
-    "Insekt (lästig)": "Egoistisch und unruhig, kann Teamprozesse stören.",
+    "Insekt_laestig": "Egoistisch und unruhig, kann Teamprozesse stören.",
     "Schakal": "Eigensinnig und rebellisch, bringt Spannung ins Team – nicht immer konstruktiv.",
     "Löwe": "Führungsstark, aber wenig teamorientiert – lieber Anführer als Mitläufer.",
     "Maus": "Ruhig und vorsichtig, arbeitet gewissenhaft im Hintergrund.",
@@ -1384,7 +1456,7 @@ const categoryDescriptions = {
     "Gibbon": "Reflektierend und unterstützend – führt durch Dialog.",
     "Hyäne": "Durchsetzungsfähig und kontrollierend, oft dominant.",
     "Insekt (nützlich)": "Hilfreich im Hintergrund – übernimmt Verantwortung ohne Führungsanspruch.",
-    "Insekt (lästig)": "Verantwortungsscheu, wirkt oft störend statt führend.",
+    "Insekt_laestig": "Verantwortungsscheu, wirkt oft störend statt führend.",
     "Schakal": "Rebellisch, übernimmt ungern Verantwortung – führt lieber gegen den Strom.",
     "Maus": "Zurückhaltend, übernimmt Verantwortung nur in sicherem Rahmen.",
     "Parasit": "Vermeidet Verantwortung, agiert lieber im Schatten.",
@@ -1412,7 +1484,7 @@ const categoryDescriptions = {
     "Katze": "Analytisch und unabhängig – entscheidet eigenständig nach Abwägung.",
     "Hyäne": "Berechnend und kontrollierend – verfolgt langfristige Strategien.",
     "Insekt (nützlich)": "Kreativ und lösungsorientiert – denkt unkonventionell.",
-    "Insekt (lästig)": "Impulsiv und störend – wenig strategische Tiefe.",
+    "Insekt_laestig": "Impulsiv und störend – wenig strategische Tiefe.",
     "Schakal": "Spontan, eigennützig – Entscheidungen oft rebellisch motiviert.",
     "Maus": "Vorsichtig und bedacht – wägt lange ab vor Entscheidungen.",
     "Parasit": "Vermeidet Entscheidungen – passt sich lieber an Gegebenheiten an.",
@@ -1438,7 +1510,7 @@ const categoryDescriptions = {
     "Gibbon": "Kommuniziert in Stresssituationen offen – sucht Ausgleich durch Austausch.",
     "Hyäne": "Reagiert impulsiv, aber zielgerichtet – kämpft sich durch.",
     "Insekt (nützlich)": "Flexibel und kreativ – löst Stress pragmatisch.",
-    "Insekt (lästig)": "Verstärkt Stress im Umfeld – unruhig und störend.",
+    "Insekt_laestig": "Verstärkt Stress im Umfeld – unruhig und störend.",
     "Schakal": "Rebelliert in Stresssituationen – neigt zu impulsivem Verhalten.",
     "Löwe": "Bleibt dominant und kontrollierend – lässt sich selten aus der Ruhe bringen.",
     "Maus": "Reagiert mit Vorsicht und Rückzug – sensibel gegenüber Stress.",
@@ -1468,7 +1540,7 @@ const categoryDescriptions = {
     "Löwe": "Selbstbewusst und stolz – persönliche Entwicklung ist machtorientiert.",
     "Hyäne": "Stark getrieben von Ehrgeiz – reflektiert strategisch.",
     "Insekt (nützlich)": "Selbstwirksam und lernbereit – wächst durch nützliche Aufgaben.",
-    "Insekt (lästig)": "Geringe Selbstreflexion – eher selbstzentriert.",
+    "Insekt_laestig": "Geringe Selbstreflexion – eher selbstzentriert.",
     "Schakal": "Rebellisch, aber mit innerem Antrieb zur Veränderung.",
     "Maus": "Still und vorsichtig – reflektiert tief, aber zurückhaltend.",
     "Parasit": "Wenig selbstkritisch – Entwicklung meist aus Notwendigkeit.",
@@ -1534,20 +1606,7 @@ for (const [category, animalScores] of Object.entries(categoryResults)) {
   
   // Erstelle eine Container-Zeile mit drei gleich breiten Spalten
 categoryOutputHTML += `
-  <div style="
-    background: white;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    font-size: 0.85em;
-    flex-wrap: wrap;
-  ">
+  <div class="tier-container">
 
     <!-- Bild links -->
     <div style="flex: 0 0 80px; text-align: center; margin-right: 10px;">
@@ -1593,16 +1652,17 @@ netzdiagrammInfo.innerHTML = `
     Schau dir an, in welchen Bereichen du besonders ausgeprägt bist und wo noch Potenzial zur Weiterentwicklung besteht.
   </p>
 `;
+
 // Füge die Info-Div an der gewünschten Stelle ein
 ergebnisElem.appendChild(netzdiagrammInfo);
 
 // Canvas für Radar-Chart mit HiDPI-Rendering (scharf im Druck)
-const size = 300; // sichtbare Größe
-const scale = 2;  // Auflösung (z. B. 2x)
+const size = 400; // statt 300, damit das Diagramm größer wird
+const scale = 2;  // Auflösung beibehalten
 const canvas = document.createElement("canvas");
 
-canvas.style.display = "block";       // Block-Level für margin auto
-canvas.style.margin = "0 auto";       // Zentriert horizontal
+canvas.style.display = "block";
+canvas.style.margin = "0 auto";
 
 canvas.width = size * scale;
 canvas.height = size * scale;
@@ -1610,8 +1670,7 @@ canvas.style.width = size + "px";
 canvas.style.height = size + "px";
 
 const ctx = canvas.getContext("2d");
-ctx.scale(scale, scale); // Inhalt skaliert, bleibt scharf beim Drucken
-
+ctx.scale(scale, scale);
 ergebnisElem.appendChild(canvas);
 
 // Die 8 Tiere mit den meisten Punkten automatisch wählen
@@ -1663,18 +1722,46 @@ displayTiere.forEach(tier => {
   });
 });
 
+// Eigenschaftswerte in Prozent umrechnen
 Object.keys(gesamtEigenschaftCounts).forEach(attr => {
   const max = gesamtEigenschaftMax[attr] || 1;
   gesamtEigenschaftCounts[attr] = Math.round((gesamtEigenschaftCounts[attr] / max) * 100);
 });
 
+// Gefilterte Eigenschaften (nur jene, die der ersten 8 Tiere zugeordnet sind)
 const filteredEigKeys = Object.keys(filteredEigenschaftCounts);
 
+// Berechne den Durchschnitt aller Prozentwerte (für alle relevanten Attribute)
+let sum = 0;
+filteredEigKeys.forEach(attr => {
+  sum += gesamtEigenschaftCounts[attr];
+});
+const overallAverage = sum / filteredEigKeys.length;
+
+// Berechne für jede Eigenschaft die Differenz zum Durchschnitt
+const attributeDifferences = {};
+filteredEigKeys.forEach(attr => {
+  // Differenz: Eigenschaftswert minus Gesamtdurchschnitt
+  attributeDifferences[attr] = Math.round((gesamtEigenschaftCounts[attr] - overallAverage) * 10) / 10;
+});
+
+console.log("Prozentwerte:", gesamtEigenschaftCounts);
+console.log("Durchschnitt:", overallAverage);
+console.log("Differenzen:", attributeDifferences);
+
+// Berechne den höchsten Wert als Basis für dynamicMax
 const maxEigenschaftswert = Math.max(...Object.values(gesamtEigenschaftCounts));
-const dynamicMax = Math.ceil(maxEigenschaftswert * 1.2);  // 20 % Luft nach oben
+const dynamicMax = Math.ceil(maxEigenschaftswert * 1.2);  // 20 % Luft nach oben
+
+// Dark Mode Erkennung:
+const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+// Dynamische Farbzuweisung für die Point Labels und Grid-Linien:
+const pointLabelColor = darkMode ? "#ffffff" : "#000000";  // Weiß im Dark Mode, Schwarz im Light Mode
+const gridColor = darkMode ? "#555555" : "#eee";  // Beispiel: Alternativ kannst du hier auch "#cccccc" o.ä. verwenden
 
 if (filteredEigKeys.length > 0) {
- new Chart(ctx, {
+  new Chart(ctx, {
   type: 'radar',
   data: {
     labels: Object.keys(gesamtEigenschaftCounts),
@@ -1692,17 +1779,17 @@ if (filteredEigKeys.length > 0) {
     scales: {
       r: {
         suggestedMin: 0,
-        suggestedMax: dynamicMax, // dynamisch
+        suggestedMax: dynamicMax,
         ticks: {
           stepSize: 20,
           backdropColor: "transparent",
-          font: { size: 10 }
+          font: { size: 12 }
         },
         pointLabels: {
-  font: { size: 14 },
-  color: "#333"
-}, // ✅ Komma hier!
-grid: { color: "#eee" },
+          font: { size: 28 },
+          color: pointLabelColor  // Dynamische Farbe: weiß im Dark Mode, schwarz im Light Mode
+        },
+        grid: { color: gridColor },
         angleLines: { color: "#ccc" }
       }
     },
@@ -1711,9 +1798,6 @@ grid: { color: "#eee" },
     }
   }
 });
-
-} else {
-  console.warn("⚠️ Keine Daten für Radar-Chart gefunden.");
 }
 
 // ---------------------------
@@ -1724,24 +1808,27 @@ grid: { color: "#eee" },
   reflekt.innerHTML = `
     <h3> Was dein Tierprofil dir zeigt – und warum es mehr als nur spannend ist</h3>
     <p>
-      Dein Ergebnis ist mehr als eine nette Spielerei: <strong>Es ist ein Spiegel deiner aktuellen Verhaltensdynamik</strong>.
-      Jedes Tier steht für bestimmte Denk-, Fühl- und Handlungsweisen – und <em>der Mix macht dich einzigartig</em>.
-    </p>
-    <p>
-      Vielleicht steckt in dir ein mutiger <strong>Löwe</strong>, eine strukturierte <strong>Ameise</strong>,
-      ein visionäres <strong>Einhorn</strong> oder ein tiefgründiger <strong>Wal</strong>?
-    </p>
-    <p>
-      Diese Tierbilder helfen dir, dich selbst mit einem Augenzwinkern und Tiefe zu betrachten –
-      <strong>ohne Schubladen, dafür mit Raum zur Reflexion</strong>.
-    </p>
-    <p>
-      Lust, dein Profil gemeinsam mit anderen zu entdecken, zu hinterfragen und weiterzuentwickeln?
-      <strong>Dann ist ein Workshop genau das Richtige für dich!</strong>
-    </p>
-    <p>
-      Denn: <em>Persönlichkeitsentwicklung darf Spass machen.</em> Erkenntnisse gewinnen wir oft am besten im Austausch.
-    </p>
+  Dein Ergebnis ist mehr als eine nette Spielerei: 
+  <strong>Es ist ein Spiegel deiner aktuellen Verhaltensdynamik</strong>.
+  Jedes Tier steht für bestimmte Denk-, Fühl- und Handlungsweisen – und 
+  <em>der Mix macht dich einzigartig</em>.
+</p>
+<p>
+  Vielleicht steckt in dir die stille Weisheit einer <strong>Eule</strong>, die Treue eines <strong>Hundes</strong>, 
+  das strategische Gespür einer <strong>Hyäne</strong>, die Vision eines <strong>Adlers</strong> oder 
+  das kreative Chaos eines <strong>Gibbons</strong>?
+</p>
+<p>
+  Diese Tierbilder helfen dir, dich selbst mit einem Augenzwinkern und gleichzeitig mit Tiefe zu betrachten – 
+  <strong>ohne Schubladen, dafür mit Raum zur Reflexion</strong>.
+</p>
+<p>
+  Lust, dein Profil gemeinsam mit anderen zu entdecken, zu hinterfragen und weiterzuentwickeln?
+  <strong>Dann ist ein Workshop genau das Richtige für dich!</strong>
+</p>
+<p>
+  Denn: <em>Persönlichkeitsentwicklung darf Spass machen.</em> Erkenntnisse gewinnen wir oft am besten im Austausch.
+</p>
   `;
  ergebnisElem.appendChild(reflekt);
 });
@@ -1765,7 +1852,7 @@ printButton.addEventListener("click", function() {
 </script>
 <!-- Footer nur beim Drucken sichtbar – direkt vor </body> -->
 <div class="print-footer">
- © 2025 <span style="color: #E44A00;">OrganisationsZoo</span> bei Nicole Stöcker, Peter Renner und Simon Bertogg - Alle Rechte vorbehalten
+ © 2025 <span style="color: #E44A00;">OrganisationsZoo</span> Nicole Stöcker, Peter Renner und Simon Bertogg - Alle Rechte vorbehalten
 </div>
 </body>
 </html>
