@@ -1758,22 +1758,37 @@ top5.forEach(([tier, val]) => {
   const canvasId = `tierChart_${tier.replace(/\s+/g, '_')}`;
   const info = tierTexte[tier] || {};
 
-  const div = document.createElement("div");
-  div.className = "tier-profil";
-  div.innerHTML = `
-    <div class="tier-bild">
-      <img src="${tier.toLowerCase()}.png" alt="${tier}" />
-    </div>
-    <div class="tier-text">
-      <strong>${tier}</strong>
-      <p>${info.kurz || ""}</p>
-      <span>Symbolisch für: ${info.symbolischFür || "-"}</span>
-    </div>
-    <div class="tier-diagramm">
-      <canvas id="${canvasId}" width="80" height="80"></canvas>
-    </div>
-  `;
-  chartWrap.appendChild(div);
+  function makeFileName(name) {
+  return name
+    .toLowerCase()
+    .replaceAll("ä", "ae")
+    .replaceAll("ö", "oe")
+    .replaceAll("ü", "ue")
+    .replaceAll("ß", "ss")
+    .replaceAll(" ", "_")               // falls Leerzeichen vorkommen
+    .normalize("NFD")                   // diakritische Zeichen auftrennen
+    .replace(/[\u0300-\u036f]/g, "");   // und entfernen
+}
+
+// … in deiner Schleife oder Funktion:
+const fileName = makeFileName(tier);
+
+const div = document.createElement("div");
+div.className = "tier-profil";
+div.innerHTML = `
+  <div class="tier-bild">
+    <img src="${fileName}.png" alt="${tier}" />
+  </div>
+  <div class="tier-text">
+    <strong>${tier}</strong>
+    <p>${info.kurz || ""}</p>
+    <span>Symbolisch für: ${info.symbolischFür || "-"}</span>
+  </div>
+  <div class="tier-diagramm">
+    <canvas id="${canvasId}" width="80" height="80"></canvas>
+  </div>
+`;
+chartWrap.appendChild(div);
 
   setTimeout(() => {
     new Chart(
@@ -2145,17 +2160,27 @@ kategorien.forEach(kat => {
     border-left: 6px solid #E44A00;
   `;
 
-  const img = document.createElement("img");
-  img.src = `img/${topTier.toLowerCase().replaceAll("ä", "ae")}.png`;
-  img.alt = topTier;
-  img.style.cssText = `
-    width: 90px;
-    height: 90px;
-    object-fit: contain;
-    border-radius: 12px;
-    background: #f0f0f0;
-    padding: 8px;
-  `;
+  const fileName = topTier
+  .toLowerCase()
+  .replaceAll("ä", "ae")
+  .replaceAll("ö", "oe")
+  .replaceAll("ü", "ue")
+  .replaceAll("ß", "ss")
+  .replaceAll(" ", "_")       // für den Fall, dass doch einmal Leerzeichen im Namen sind
+  .normalize("NFD")           // Diakritika zerlegen
+  .replace(/[\u0300-\u036f]/g, "");
+
+const img = document.createElement("img");
+img.src  = `${fileName}.png`;
+img.alt  = topTier;
+img.style.cssText = `
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #f0f0f0;
+  padding: 8px;
+`;
 
   const textDiv = document.createElement("div");
   textDiv.style.cssText = `
