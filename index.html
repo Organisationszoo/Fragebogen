@@ -486,6 +486,106 @@
         color: #aaa;
       }
     }
+
+:root {
+  /* Helles Theme */
+  --bg-color: #ffffff;
+  --text-primary: #222222;
+  --text-secondary: #444444;
+  --border-color: #E44A00;
+}
+
+@media (prefers-color-scheme: dark) {
+  .heading-wrapper h2,
+  .heading-wrapper p {
+    /* zwingend hell anzeigen */
+    color: #ffffff !important;
+  }
+}
+
+.heading-wrapper {
+  max-width: 90%;
+  width: 800px;
+  margin: 50px auto 30px;
+  padding: 0 16px;             /* sorgt für Abstand auf kleinen Bildschirmen */
+  text-align: center;
+}
+
+.heading-wrapper h2 {
+  font-size: 1.8em;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.heading-wrapper p {
+  font-size: 0.95em;
+  /* statt var(--text-secondary) jetzt: */
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;      /* mobile: untereinander */
+  align-items: center;
+  gap: 16px;
+  background-color: var(--bg-color);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 30px auto;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  max-width: 90%;
+  border-left: 6px solid var(--border-color);
+}
+
+/* Ab Tablet‑Größe nebeneinander anordnen */
+@media (min-width: 600px) {
+  .section {
+    flex-direction: row;
+    gap: 24px;
+    padding: 20px 28px;
+  }
+}
+
+.section img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #f0f0f0;
+  padding: 8px;
+}
+
+.section .text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section .text h3 {
+  margin: 0;
+  font-size: 1.1em;
+  color: var(--text-primary);
+}
+
+.section .text p {
+  margin: 0;
+  font-size: 0.95em;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.reflexion-text {
+  font-size: 0.95em;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .reflexion-text {
+    color: #ffffff !important;
+  }
+}
   </style>
 </head>
 <body>
@@ -571,6 +671,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const ergebnisElem = document.getElementById("ergebnis");
   const printButton  = document.getElementById("printButton");
 let attributeData = {};
+function makeFileName(name) {
+  return name
+    .toLowerCase()
+    .replaceAll("ä", "ae")
+    .replaceAll("ö", "oe")
+    .replaceAll("ü", "ue")
+    .replaceAll("ß", "ss")
+    .replaceAll(" ", "_")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
       
       // Array der Fragen
       const questions = [
@@ -1746,49 +1857,33 @@ ergebnisElem.innerHTML += `<h2>„Deine tierischen Verhaltensmuster“</h2>`;
 const sortedTiers = Object.entries(tierCounts).sort((a, b) => b[1] - a[1]);
 const top5 = sortedTiers.slice(0, 5);
 
+// Nur noch einmal den Wrapper mit deiner CSS‑Klasse erzeugen:
 const chartWrap = document.createElement("div");
-chartWrap.style.display = "flex";
-chartWrap.style.flexDirection = "column";
-chartWrap.style.gap = "20px";
-chartWrap.style.alignItems = "center";
+chartWrap.className = "chartWrap";
 
 const maxPunkte = 35;
+
 top5.forEach(([tier, val]) => {
-  const percentage = ((val / maxPunkte) * 100).toFixed(1);
-  const canvasId = `tierChart_${tier.replace(/\s+/g, '_')}`;
-  const info = tierTexte[tier] || {};
+  const fileName = makeFileName(tier);
+  const canvasId = `tierChart_${fileName}`;
 
-  function makeFileName(name) {
-  return name
-    .toLowerCase()
-    .replaceAll("ä", "ae")
-    .replaceAll("ö", "oe")
-    .replaceAll("ü", "ue")
-    .replaceAll("ß", "ss")
-    .replaceAll(" ", "_")               // falls Leerzeichen vorkommen
-    .normalize("NFD")                   // diakritische Zeichen auftrennen
-    .replace(/[\u0300-\u036f]/g, "");   // und entfernen
-}
+  const div = document.createElement("div");
+  div.className = "tier-profil";
+  div.innerHTML = `
+    <div class="tier-bild">
+      <img src="${fileName}.png" alt="${tier}" />
+    </div>
+    <div class="tier-text">
+      <strong>${tier}</strong>
+      <p>${(tierTexte[tier] || {}).kurz || ''}</p>
+      <span>Symbolisch für: ${(tierTexte[tier] || {}).symbolischFür || '-'}</span>
+    </div>
+    <div class="tier-diagramm">
+      <canvas id="${canvasId}" width="80" height="80"></canvas>
+    </div>
+  `;
 
-// … in deiner Schleife oder Funktion:
-const fileName = makeFileName(tier);
-
-const div = document.createElement("div");
-div.className = "tier-profil";
-div.innerHTML = `
-  <div class="tier-bild">
-    <img src="${fileName}.png" alt="${tier}" />
-  </div>
-  <div class="tier-text">
-    <strong>${tier}</strong>
-    <p>${info.kurz || ""}</p>
-    <span>Symbolisch für: ${info.symbolischFür || "-"}</span>
-  </div>
-  <div class="tier-diagramm">
-    <canvas id="${canvasId}" width="80" height="80"></canvas>
-  </div>
-`;
-chartWrap.appendChild(div);
+  chartWrap.appendChild(div);
 
   setTimeout(() => {
     new Chart(
@@ -2107,10 +2202,13 @@ questions.forEach((q, i) => {
   });
 });
 
+// Überschrift-Wrapper
 const headingWrapper = document.createElement("div");
-headingWrapper.style.maxWidth = "800px";
-headingWrapper.style.margin = "50px auto 30px";
-headingWrapper.style.textAlign = "center";
+headingWrapper.classList.add("heading-wrapper");
+
+// … und später beim Erzeugen der Tier‑Sektionen …
+const section = document.createElement("div");
+section.classList.add("section");
 
 const heading = document.createElement("h2");
 heading.textContent = "Instinkte, Intuition & Einfluss – deine Verhaltenskarte ";
@@ -2120,16 +2218,13 @@ heading.style.marginBottom = "12px";
 const erklaerung = document.createElement("p");
 erklaerung.textContent = "Diese Übersicht zeigt, wie deine charakterlichen Tendenzen sich in verschiedenen Situationen ausdrücken – ganz ohne Schubladendenken, aber mit einem Augenzwinkern.";
 erklaerung.style.fontSize = "0.95em";
-erklaerung.style.color = "#444";
 erklaerung.style.lineHeight = "1.6";
 
 headingWrapper.appendChild(heading);
 headingWrapper.appendChild(erklaerung);
 ergebnisElem.appendChild(headingWrapper);
 
-// 🔁 Pro Kategorie: bestes passendes Tier finden & anzeigen
-const kategorien = Object.keys(kategorienMapping);
-kategorien.forEach(kat => {
+Object.keys(kategorienMapping).forEach(kat => {
   const relevantFragen = kategorienMapping[kat];
 
   // Zähle, welches Top‑5‑Tier am häufigsten in dieser Kategorie auftrat
@@ -2141,82 +2236,41 @@ kategorien.forEach(kat => {
     }
   });
 
-  // Tier mit der höchsten Zählung finden
-  const topTier = Object.entries(tierCount).sort((a, b) => b[1] - a[1])[0]?.[0];
-  const beschreibung = categoryDescriptions[kat]?.[topTier];
+  const topTier = Object.entries(tierCount)
+    .sort((a, b) => b[1] - a[1])[0]?.[0];
 
-  if (topTier && beschreibung) {
-  const section = document.createElement("div");
-  section.style.cssText = `
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    background: white;
-    border-radius: 16px;
-    padding: 20px 28px;
-    margin: 30px auto;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-    max-width: 850px;
-    border-left: 6px solid #E44A00;
-  `;
+  const beschreibung = (
+    (categoryDescriptions[kat] || {})[topTier]
+    || 'Hier erfährst du mehr über dieses Tier.'
+  );
 
-  const fileName = topTier
-  .toLowerCase()
-  .replaceAll("ä", "ae")
-  .replaceAll("ö", "oe")
-  .replaceAll("ü", "ue")
-  .replaceAll("ß", "ss")
-  .replaceAll(" ", "_")       // für den Fall, dass doch einmal Leerzeichen im Namen sind
-  .normalize("NFD")           // Diakritika zerlegen
-  .replace(/[\u0300-\u036f]/g, "");
+  if (topTier) {
+    const section = document.createElement("div");
+    section.classList.add("section");
 
-const img = document.createElement("img");
-img.src  = `${fileName}.png`;
-img.alt  = topTier;
-img.style.cssText = `
-  width: 90px;
-  height: 90px;
-  object-fit: contain;
-  border-radius: 12px;
-  background: #f0f0f0;
-  padding: 8px;
-`;
+    // Dateiname mit makeFileName ermitteln
+    const fileName = makeFileName(topTier);
+    console.log("Kategorie:", kat, "TopTier:", topTier, "→", fileName + ".png");
 
-  const textDiv = document.createElement("div");
-  textDiv.style.cssText = `
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  `;
+    // Bild erstellen und anhängen
+    const img = document.createElement("img");
+    img.src = `${fileName}.png`;
+    img.alt = topTier;
+    section.appendChild(img);
 
-  const title = document.createElement("h3");
-  title.textContent = kat;
-  title.style.cssText = `
-    margin: 0;
-    font-size: 1.1em;
-    color: #222;
-  `;
+    // Text-Container
+    const textDiv = document.createElement("div");
+    textDiv.classList.add("text");
+    const title = document.createElement("h3");
+    title.textContent = kat;
+    const beschrP = document.createElement("p");
+    beschrP.innerHTML = `<strong>${topTier}</strong>: ${beschreibung}`;
+    textDiv.append(title, beschrP);
 
-  const beschr = document.createElement("p");
-  beschr.innerHTML = `<strong>${topTier}</strong>: ${beschreibung}`;
-  beschr.style.cssText = `
-    margin: 0;
-    font-size: 0.95em;
-    color: #444;
-    line-height: 1.4;
-  `;
-
-  textDiv.appendChild(title);
-  textDiv.appendChild(beschr);
-  section.appendChild(img);
-  section.appendChild(textDiv);
-  ergebnisElem.appendChild(section);
-}
-});
-
-        // Seitenumbruch einfügen
-        ergebnisElem.insertAdjacentHTML("beforeend", `<div class="page-break"></div>`);
+    section.appendChild(textDiv);
+    ergebnisElem.appendChild(section);
+  }
+}); // ← Vergiss nicht, hier die forEach‑Schleife zu schließen
 
 // ---------------------------
 // Berechne die Prozentwerte für jedes Attribut
@@ -2257,7 +2311,7 @@ const reflexionText = document.createElement("p");
 reflexionText.textContent =
   "Dieses Diagramm zeigt, wie ausgeprägt bestimmte Eigenschaften bei dir im Gesamtbild erscheinen – basierend auf deinen Antworten. Es ist eine Momentaufnahme deiner Reflexion über dich selbst.";
 reflexionText.style.fontSize = "0.95em";
-reflexionText.style.color = "#444";
+reflexionText.classList.add("reflexion-text");
 reflexionText.style.lineHeight = "1.6";
 
 reflexionWrapper.appendChild(reflexionTitle);
