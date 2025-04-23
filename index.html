@@ -2539,14 +2539,6 @@ if (attributeLabels.length > 0) {
       });
     } // Ende der if‑Abfrage
 
-  // Wenn top5 korrekt berechnet wurde:
-  console.log("Sende an Google Sheet:", {
-    name: userName,
-    email: userEmail,
-    situation: userSituation,
-    top5
-  });
-
 formElem.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -2558,17 +2550,15 @@ formElem.addEventListener("submit", async (e) => {
   console.log("Sende an Google Sheet:", {
     name: userName,
     email: userEmail,
-    situation: userSituation,
     top5
   });
 
   // Daten an Google Sheet senden
-  await fetch("https://script.google.com/macros/s/AKfycbwl_0vz46941fsNEs3gDkCXo3YFdlkHcUgt80IcypVb2MCS-2wg8-sTNReR30LegLpn5Q/exec", {
+  await fetch("https://script.google.com/macros/s/AKfycbzfr795TdJHNfQhGVZG08fuAL-HN-3u2qHWctkLzOPl6bFsoQIUHOPTsRvwfxMrGfsn-w/exec", {
     method: "POST",
     body: new URLSearchParams({
       name: userName,
       email: userEmail,
-      situation: userSituation,
       tier1: top5[0]?.[0] || "",
       tier2: top5[1]?.[0] || "",
       tier3: top5[2]?.[0] || "",
