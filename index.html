@@ -2539,23 +2539,50 @@ if (attributeLabels.length > 0) {
       });
     } // Ende der if‑Abfrage
 
-fetch("https://script.google.com/macros/s/AKfycbwl_0vz46941fsNEs3gDkCXo3YFdlkHcUgt80IcypVb2MCS-2wg8-sTNReR30LegLpn5Q/exec", {
-  method: "POST",
-  body: new URLSearchParams({
+  // Wenn top5 korrekt berechnet wurde:
+  console.log("Sende an Google Sheet:", {
     name: userName,
     email: userEmail,
     situation: userSituation,
-    tier1: top5[0]?.[0] || "",
-    tier2: top5[1]?.[0] || "",
-    tier3: top5[2]?.[0] || "",
-    tier4: top5[3]?.[0] || "",
-    tier5: top5[4]?.[0] || ""
-  }),
-}).then(response => response.text())
-  .then(data => console.log("Gespeichert:", data))
-  .catch(error => console.error("Fehler beim Speichern:", error));
+    top5
+  });
 
-ergebnisElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+formElem.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const userName = document.getElementById("name").value.trim();
+  const userEmail = document.getElementById("email").value.trim();
+  const userSituation = document.getElementById("situation").value.trim();
+
+  // Wenn top5 korrekt berechnet wurde:
+  console.log("Sende an Google Sheet:", {
+    name: userName,
+    email: userEmail,
+    situation: userSituation,
+    top5
+  });
+
+  // Daten an Google Sheet senden
+  await fetch("https://script.google.com/macros/s/AKfycbwl_0vz46941fsNEs3gDkCXo3YFdlkHcUgt80IcypVb2MCS-2wg8-sTNReR30LegLpn5Q/exec", {
+    method: "POST",
+    body: new URLSearchParams({
+      name: userName,
+      email: userEmail,
+      situation: userSituation,
+      tier1: top5[0]?.[0] || "",
+      tier2: top5[1]?.[0] || "",
+      tier3: top5[2]?.[0] || "",
+      tier4: top5[3]?.[0] || "",
+      tier5: top5[4]?.[0] || ""
+    }),
+  })
+    .then(response => response.text())
+    .then(data => console.log("Antwort vom Sheet:", data))
+    .catch(error => console.error("Fehler beim Speichern:", error));
+
+  // Danach zur Auswertung scrollen
+  ergebnisElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
 
   }); // ← schließt formElem.addEventListener("submit", …)
 
