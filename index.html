@@ -586,6 +586,17 @@
     color: #ffffff !important;
   }
 }
+:root {
+  --bg-card: #ffffff;
+  --text-color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-card: #1e1e1e;
+    --text-color: #ffffff;
+  }
+}
   </style>
 </head>
 <body>
@@ -629,15 +640,36 @@
   <label><input type="radio" name="modus" value="fremd"> Eine andere Person (Fremdbild)</label>
 </div>
 
-  <h1>Dein Fragebogen</h1>
-
   <!-- 🧍‍♀️ Eingabefelder für Name und E-Mail -->
-  <div class="user-inputs">
-    <label for="name">Name:</label><br />
-    <input type="text" id="name" name="name" placeholder="Dein Name" /><br /><br />
+<div class="user-inputs" style="max-width: 480px; margin-bottom: 2rem;">
+  
+  <label for="name" style="font-weight: 500; display: block; margin-bottom: 6px; color: #222;">
+    Name:
+  </label>
+  <input 
+    type="text" 
+    id="name" 
+    name="name" 
+    placeholder="Dein Name"
+    style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 1.5rem;"
+  />
 
-    <label for="email">E-Mail-Adresse: <span style="color: red">*</span></label><br />
-    <input type="email" id="email" name="email" placeholder="deine@email.de" required /><br /><br />
+  <p style="font-size: 0.95em; color: #222; margin-bottom: 8px;">
+    Gib bitte deine E‑Mail-Adresse ein – sie ist notwendig, um dein Ergebnis anzuzeigen.
+  </p>
+
+  <label for="email" style="font-weight: 500; display: block; margin-bottom: 6px; color: #222;">
+    E‑Mail-Adresse <span style="color: red;">*</span>
+  </label>
+  <input 
+    type="email" 
+    id="email" 
+    name="email" 
+    placeholder="deine@email.ch" 
+    required
+    style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"
+  />
+</div>
 
     <label for="situation" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
       Welche Situation stelle ich mir vor?
@@ -655,6 +687,8 @@
     ></textarea>
   </div>
 
+<h1>Dein Fragebogen</h1>
+
   <!-- 📋 Der Fragebogen -->
   <form id="fragebogen"></form>
 
@@ -663,7 +697,7 @@
 
   <!-- 🖨 Ergebnis + Druckbutton -->
   <div id="ergebnis" style="display:none;"></div>
-  <button id="printButton" style="display:none;">🖨 Drucken</button>
+  <button id="printButton" style="display:none;"> Drucken</button>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -1683,6 +1717,13 @@ function makeFileName(name) {
   if (introTextElem) {
     introTextElem.style.display = "none";
   }
+
+// 🧼 Situationsfeld ausblenden (Label + Textarea)
+const situationLabel = document.querySelector('label[for="situation"]');
+const situationTextarea = document.getElementById('situation');
+
+if (situationLabel) situationLabel.style.display = "none";
+if (situationTextarea) situationTextarea.style.display = "none";
   
 // Weitere Elemente ausblenden:
 document.querySelector("h1").style.display = "none";
@@ -1712,65 +1753,124 @@ document.getElementById("auswertenBtn").style.display  = "none";
         var userEmail = document.querySelector('input[name="email"]').value;
 const situationText = document.getElementById("situation").value.trim() || "Keine konkrete Situation angegeben";
 
-        // Ergebnis-Header einfügen
-ergebnisElem.insertAdjacentHTML("afterbegin", `
-  <div id="result-header" style="
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1rem;
-    margin: 0;
-    background-color: #ffffff;
-    box-sizing: border-box;
+// 1) Logo, Welcome, Profil-Titel + Situation und Kontaktdaten
+ergebnisElem.insertAdjacentHTML('afterbegin', `
+  <div style="text-align:center; margin-bottom:1rem;">
+    <img
+      src="eule-organisationszoo.png"
+      alt="Eule"
+      style="height:120px; width:auto; object-fit:cover;"
+    />
+  </div>
+
+  <!-- Willkommen mit normaler Schriftfarbe + orangefarbene OrganisationsZoo -->
+  <h2 style="
+    text-align:center;
+    font-size:1.8em;
+    margin:0 0 1.5rem;
+    font-weight:700;
+    color:inherit;       /* erbt im Dark Mode die helle Farbe */
   ">
-    <!-- Links: Kontaktdaten -->
+    Willkommen im <span style="color:#E44A00;">OrganisationsZoo</span>
+  </h2>
+
+ <!-- Links: Kontaktdaten -->
     <div id="left-info" style="
       flex: 1;
       font-size: 0.75em;
-      color: #333;
-      line-height: 1.2;
+      color: inherit;
+      line-height: 1.4;
     ">
-      <div>Nicole Stöcker und Peter Renner,</div>
-      <div>Murwiesenstrasse 30, <span style="white-space: nowrap;">8057 Zürich, Schweiz</span></div>
-      <div>info@organisationszoo.ch, Tel: +41 43 288 53 83,</div>
-      <div>Name: ${userName}</div>
-      <div>E-Mail: ${userEmail}</div>
-    </div>
-
-    <!-- Mitte: Titel + Situationsbeschreibung -->
-    <div style="
-      flex: 1;
-      text-align: center;
-      font-size: 1.1em;
-      font-weight: bold;
-      color: #E44A00;
-      line-height: 1.3;
-    ">
-      Ihr Verhaltensprofil zur gewählten Situation
-      <div style="
-        font-size: 0.85em;
-        font-weight: normal;
-        color: #444;
-        margin-top: 0.25rem;
-      ">
-        ${situationText}
+      <div>
+        <span style="color:#E44A00; font-weight:700;">
+          OrganisationsZoo
+        </span>
       </div>
-    </div>
+      <div>
+        Nicole Stöcker, Peter Renner und Simon Bertogg
+      </div>
+      <div>
+        Murwiesenstrasse 30,&nbsp;
+        <span style="white-space:nowrap;">
+          8057 Zürich, Schweiz
+        </span>
+      </div>
+      <div>
+        Tel: +41 79 634 07 50
+      </div>
+      <div>
+        <a href="mailto:info@organisationszoo.ch" style="color:inherit; text-decoration:none;">
+          info@organisationszoo.ch
+        </a>
+      </div>
+      <!-- hier den Abstand einfügen -->
+      <div style="height:0.75rem;"></div>
 
-    <!-- Rechts: Eulen-Logo -->
-    <div id="right-logo" style="
-      flex: 1;
-      text-align: right;
+      <div><strong>Name:</strong> ${userName}</div>
+      <div><strong>E‑Mail:</strong> ${userEmail}</div>
+    </div>
+  </div>
+`);
+
+// Reflexionstext erstellen und anhängen
+const reflekt = document.createElement('div');
+reflekt.classList.add('reflexion-text');
+reflekt.style.marginTop = '1.5rem';
+reflekt.innerHTML = `
+  <h3 style="font-size:1em; color:#E44A00; margin-bottom:0.5rem;">
+    Was dein Tierprofil dir zeigt – und warum es mehr als nur spannend ist
+  </h3>
+  <p>
+    Dein Ergebnis ist mehr als eine nette Spielerei:
+    <strong>Es ist ein Spiegel deiner aktuellen Verhaltensdynamik</strong>.
+    Jedes Tier steht für bestimmte Denk-, Fühl- und Handlungsweisen –
+    <em>der Mix macht dich einzigartig</em>.
+  </p>
+  <p>
+    Vielleicht steckt in dir die stille Weisheit einer <strong>Eule</strong>,
+    die Treue eines <strong>Hundes</strong>, das strategische Gespür einer
+    <strong>Hyäne</strong>, die Vision eines <strong>Adlers</strong> oder
+    das kreative Chaos eines <strong>Gibbons</strong>?
+  </p>
+  <p>
+    Diese Tierbilder helfen dir, dich selbst mit einem Augenzwinkern und
+    gleichzeitig mit Tiefe zu betrachten – <strong>ohne Schubladen, dafür mit
+    Raum zur Reflexion</strong>.
+  </p>
+  <p>
+    Lust, dein Profil gemeinsam mit anderen zu entdecken, zu hinterfragen und
+    weiterzuentwickeln? <strong>Dann ist ein Workshop genau das Richtige für dich!</strong>
+  </p>
+  <p>
+    Denn: <em>Persönlichkeitsentwicklung darf Spass machen.</em> Erkenntnisse
+    gewinnen wir oft am besten im Austausch.
+  </p>
+`;
+ergebnisElem.appendChild(reflekt);
+
+const breakAfterReflekt = document.createElement('div');
+breakAfterReflekt.className = 'page-break';
+ergebnisElem.appendChild(breakAfterReflekt);
+
+// 3) Profil-Titel + Situation unter dem Reflexionstext
+ergebnisElem.insertAdjacentHTML('beforeend', `
+  <div style="
+    text-align:center;
+    font-size:1.1em;
+    font-weight:bold;
+    color:#E44A00;
+    line-height:1.3;
+    margin-top:2rem;
+    margin-bottom:1rem;
+  ">
+    Ihr Verhaltensprofil zur gewählten Situation
+    <div style="
+      font-size:0.85em;
+      font-weight:normal;
+      color:inherit;
+      margin-top:0.25rem;
     ">
-      <img src="eule-organisationszoo.png" alt="Eule" style="
-        height: 2.5cm;
-        width: auto;
-        object-fit: cover;
-        border-radius: 0;
-        background-color: #fff;
-        border: none;
-      ">
+      ${situationText}
     </div>
   </div>
 `);
@@ -1861,7 +1961,7 @@ const top5 = sortedTiers.slice(0, 5);
 const chartWrap = document.createElement("div");
 chartWrap.className = "chartWrap";
 
-const maxPunkte = 35;
+const maxPunkte = 25;
 
 top5.forEach(([tier, val]) => {
   const fileName = makeFileName(tier);
@@ -1993,6 +2093,10 @@ if (sortedOpponents.length > 0) {
 
   conflictDiv.innerHTML = conflictHTML;
   ergebnisElem.appendChild(conflictDiv);
+
+const breakAfterGehege = document.createElement("div");
+breakAfterGehege.className = "page-break";
+ergebnisElem.appendChild(breakAfterGehege);
   
 } else {
   // Wenn keine Konflikte gefunden wurden:
@@ -2016,13 +2120,11 @@ const containerStyle = `
   margin-bottom: 20px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 `;
-
 const tierStyle = `
   flex: 1;
   font-weight: bold;
   font-size: 1.1em;
 `;
-
 const categoryStyle = `
   flex: 1;
   text-align: center;
@@ -2030,13 +2132,13 @@ const categoryStyle = `
   font-size: 1em;
   color: #444;
 `;
-
 const beschreibungStyle = `
   flex: 2;
   font-size: 0.95em;
   color: #333;
   text-align: left;
 `;
+
 
 // Mapping: Kategorie → relevante Frageindizes
 const kategorienMapping = {
@@ -2190,87 +2292,134 @@ const categoryDescriptions = {
  } // 👈 Ende des letzten Kategorien-Blocks
 };
 
-// 🔍 Verknüpfung: Welche Top‑5‑Tiere wurden bei welchen Fragen gewählt?
+// ––––––––––––––––––––––––––––––––––––––––––––––––––––
+// 1) Mapping: Bei welchen Fragen taucht jedes Top‑5‑Tier auf?
+// ––––––––––––––––––––––––––––––––––––––––––––––––––––
 const tierZuKategorie = {};
 questions.forEach((q, i) => {
   Object.values(q.answers).forEach(ans => {
     const tier = codeToTier[ans.code];
     if (tier && top5.some(([name]) => name === tier)) {
-      if (!tierZuKategorie[tier]) tierZuKategorie[tier] = [];
-      tierZuKategorie[tier].push(i);
+      (tierZuKategorie[tier] ||= []).push(i);
     }
   });
 });
 
-// Überschrift-Wrapper
 const headingWrapper = document.createElement("div");
-headingWrapper.classList.add("heading-wrapper");
+headingWrapper.style.maxWidth = "800px";
+headingWrapper.style.margin = "40px auto 30px";
+headingWrapper.style.padding = "0 16px";
+headingWrapper.style.display = "flex";
+headingWrapper.style.flexDirection = "column";
+headingWrapper.style.gap = "12px";
 
-// … und später beim Erzeugen der Tier‑Sektionen …
-const section = document.createElement("div");
-section.classList.add("section");
+// 1. Haupttitel: Instinkte, Intuition & Einfluss
+const subtitle = document.createElement("h2");
+subtitle.textContent = "Instinkte, Intuition & Einfluss";
+subtitle.style.fontSize = "1.6em";
+subtitle.style.fontWeight = "700";
+subtitle.style.margin = "0";
+subtitle.style.color = "inherit"; // Standardfarbe (dunkel im Light Mode, hell im Dark Mode)
+subtitle.style.textAlign = "left";
+headingWrapper.appendChild(subtitle);
 
-const heading = document.createElement("h2");
-heading.textContent = "Instinkte, Intuition & Einfluss – deine Verhaltenskarte ";
-heading.style.fontSize = "1.8em";
-heading.style.marginBottom = "12px";
-
+// 2. Erklärungstext
 const erklaerung = document.createElement("p");
 erklaerung.textContent = "Diese Übersicht zeigt, wie deine charakterlichen Tendenzen sich in verschiedenen Situationen ausdrücken – ganz ohne Schubladendenken, aber mit einem Augenzwinkern.";
 erklaerung.style.fontSize = "0.95em";
 erklaerung.style.lineHeight = "1.6";
-
-headingWrapper.appendChild(heading);
+erklaerung.style.margin = "0";
+erklaerung.style.textAlign = "left";
+erklaerung.style.color = "inherit";
 headingWrapper.appendChild(erklaerung);
+
+// 3. Zweite Hauptzeile: „Deine Verhaltenskarte“
+const verhaltensTitel = document.createElement("h2");
+verhaltensTitel.textContent = "„Deine Verhaltenskarte“";
+verhaltensTitel.style.fontSize = "1.6em";
+verhaltensTitel.style.fontWeight = "700";
+verhaltensTitel.style.margin = "24px 0 0";
+verhaltensTitel.style.color = "inherit";
+verhaltensTitel.style.textAlign = "left";
+headingWrapper.appendChild(verhaltensTitel);
+
+// In Ergebnis einfügen
 ergebnisElem.appendChild(headingWrapper);
 
 Object.keys(kategorienMapping).forEach(kat => {
-  const relevantFragen = kategorienMapping[kat];
-
-  // Zähle, welches Top‑5‑Tier am häufigsten in dieser Kategorie auftrat
-  const tierCount = {};
+  const relevanteFragen = kategorienMapping[kat];
+  const counts = {};
   Object.entries(tierZuKategorie).forEach(([tier, fragen]) => {
-    if (top5.some(([name]) => name === tier)) {
-      const count = fragen.filter(q => relevantFragen.includes(q)).length;
-      if (count > 0) tierCount[tier] = count;
-    }
+    const c = fragen.filter(i => relevanteFragen.includes(i)).length;
+    if (c > 0) counts[tier] = c;
   });
 
-  const topTier = Object.entries(tierCount)
-    .sort((a, b) => b[1] - a[1])[0]?.[0];
+  const topTier = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] || top5[0][0];
+  const beschreibung = categoryDescriptions[kat]?.[topTier] || 'Hier erfährst du mehr über dieses Tier.';
+  const fileName = makeFileName(topTier);
 
-  const beschreibung = (
-    (categoryDescriptions[kat] || {})[topTier]
-    || 'Hier erfährst du mehr über dieses Tier.'
-  );
+  // Gesamtcontainer
+  const section = document.createElement('div');
+  section.style.cssText = `
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    background-color: var(--bg-card, #fff);
+    color: var(--text-color, #000);
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin: 20px 0;
+    transition: background 0.3s, color 0.3s;
+    flex-wrap: wrap;
+  `;
 
-  if (topTier) {
-    const section = document.createElement("div");
-    section.classList.add("section");
+  // Bild links
+  const imageDiv = document.createElement('div');
+  imageDiv.style.cssText = `
+    flex: 0 0 auto;
+    width: 60px;
+    height: 60px;
+  `;
+  imageDiv.innerHTML = `<img src="${fileName}.png" alt="${topTier}" style="width:100%; height:auto;">`;
+  section.appendChild(imageDiv);
 
-    // Dateiname mit makeFileName ermitteln
-    const fileName = makeFileName(topTier);
-    console.log("Kategorie:", kat, "TopTier:", topTier, "→", fileName + ".png");
+  // Textblock rechts (mittig stacked)
+  const textWrapper = document.createElement('div');
+  textWrapper.style.cssText = `
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  `;
 
-    // Bild erstellen und anhängen
-    const img = document.createElement("img");
-    img.src = `${fileName}.png`;
-    img.alt = topTier;
-    section.appendChild(img);
+  const titleEl = document.createElement('div');
+  titleEl.style.cssText = `
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 6px;
+  `;
+  titleEl.textContent = kat;
 
-    // Text-Container
-    const textDiv = document.createElement("div");
-    textDiv.classList.add("text");
-    const title = document.createElement("h3");
-    title.textContent = kat;
-    const beschrP = document.createElement("p");
-    beschrP.innerHTML = `<strong>${topTier}</strong>: ${beschreibung}`;
-    textDiv.append(title, beschrP);
+  const descEl = document.createElement('div');
+  descEl.style.cssText = `
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: inherit;
+  `;
+  descEl.innerHTML = beschreibung;
 
-    section.appendChild(textDiv);
-    ergebnisElem.appendChild(section);
-  }
-}); // ← Vergiss nicht, hier die forEach‑Schleife zu schließen
+  textWrapper.appendChild(titleEl);
+  textWrapper.appendChild(descEl);
+  section.appendChild(textWrapper);
+
+  ergebnisElem.appendChild(section);
+});
+
+// Seitenumbruch nach allen Verhaltenskategorien
+const breakNachKarte = document.createElement("div");
+breakNachKarte.className = "page-break";
+ergebnisElem.appendChild(breakNachKarte);
 
 // ---------------------------
 // Berechne die Prozentwerte für jedes Attribut
@@ -2385,57 +2534,45 @@ if (attributeLabels.length > 0) {
       },
       plugins: {
         legend: { display: false }
-      }
-    }
-  });
-}
-
-            // Reflexionstext als Abschluss
-        const reflekt = document.createElement("div");
-        reflekt.style.fontSize = "0.75em";
-        reflekt.innerHTML = `
-          <h3> Was dein Tierprofil dir zeigt – und warum es mehr als nur spannend ist</h3>
-          <p>
-            Dein Ergebnis ist mehr als eine nette Spielerei: 
-            <strong>Es ist ein Spiegel deiner aktuellen Verhaltensdynamik</strong>.
-            Jedes Tier steht für bestimmte Denk-, Fühl- und Handlungsweisen – und 
-            <em>der Mix macht dich einzigartig</em>.
-          </p>
-          <p>
-            Vielleicht steckt in dir die stille Weisheit einer <strong>Eule</strong>, die Treue eines <strong>Hundes</strong>, 
-            das strategische Gespür einer <strong>Hyäne</strong>, die Vision eines <strong>Adlers</strong> oder 
-            das kreative Chaos eines <strong>Gibbons</strong>?
-          </p>
-          <p>
-            Diese Tierbilder helfen dir, dich selbst mit einem Augenzwinkern und gleichzeitig mit Tiefe zu betrachten – 
-            <strong>ohne Schubladen, dafür mit Raum zur Reflexion</strong>.
-          </p>
-          <p>
-            Lust, dein Profil gemeinsam mit anderen zu entdecken, zu hinterfragen und weiterzuentwickeln?
-            <strong>Dann ist ein Workshop genau das Richtige für dich!</strong>
-          </p>
-          <p>
-            Denn: <em>Persönlichkeitsentwicklung darf Spass machen.</em> Erkenntnisse gewinnen wir oft am besten im Austausch.
-          </p>
-        `;
-        ergebnisElem.appendChild(reflekt);
+   }
+        }
       });
+    } // Ende der if‑Abfrage
 
-      // 🧠 E-Mail prüfen, Button nur aktivieren bei gültiger Adresse
-      const emailInput = document.getElementById("email");
-      const auswertenBtn = document.getElementById("auswertenBtn");
-      emailInput.addEventListener("input", () => {
-        const emailWert = emailInput.value.trim();
-        const istGueltig = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailWert);
-        auswertenBtn.disabled = !istGueltig;
-      });
+fetch("https://script.google.com/macros/s/AKfycbwl_0vz46941fsNEs3gDkCXo3YFdlkHcUgt80IcypVb2MCS-2wg8-sTNReR30LegLpn5Q/exec", {
+  method: "POST",
+  body: new URLSearchParams({
+    name: userName,
+    email: userEmail,
+    situation: userSituation,
+    tier1: top5[0]?.[0] || "",
+    tier2: top5[1]?.[0] || "",
+    tier3: top5[2]?.[0] || "",
+    tier4: top5[3]?.[0] || "",
+    tier5: top5[4]?.[0] || ""
+  }),
+}).then(response => response.text())
+  .then(data => console.log("Gespeichert:", data))
+  .catch(error => console.error("Fehler beim Speichern:", error));
 
-       // 🖨 Druck-Button: Löst window.print() aus
-  printButton.addEventListener("click", function() {
-    window.print();
+ergebnisElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  }); // ← schließt formElem.addEventListener("submit", …)
+
+  // 🧠 E-Mail prüfen, Button nur aktivieren bei gültiger Adresse
+  const emailInput   = document.getElementById("email");
+  const auswertenBtn = document.getElementById("auswertenBtn");
+  emailInput.addEventListener("input", () => {
+    const emailWert  = emailInput.value.trim();
+    const istGueltig = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailWert);
+    auswertenBtn.disabled = !istGueltig;
   });
-});
-  </script>
+
+  // 🖨 Druck-Button: Löst window.print() aus
+  printButton.addEventListener("click", () => window.print());
+
+}); // ← schließt document.addEventListener("DOMContentLoaded", …)
+</script>
 
   <!-- Footer nur beim Drucken sichtbar – direkt vor </body> -->
   <div class="print-footer">
