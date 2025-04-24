@@ -597,6 +597,129 @@
     --text-color: #ffffff;
   }
 }
+:root {
+  --bg-color: #ffffff;
+  --text-primary: #222222;
+  --text-secondary: #666666;
+  --border-color: #ccc;
+  --accent-color: #E44A00;
+}
+/* In dein bestehendes <style>-Block */
+.required-label::after {
+  content: ' *';
+  color: red;            /* oder var(--accent-color) */
+  margin-left: 0.25rem;
+  font-weight: bold;
+}
+
+/* Container für alle Felder */
+.user-inputs {
+  max-width: 480px;
+  margin: 0 0 1.5rem 0;       /* oben 0, rechts 0, unten 1.5rem, links 0 */
+  padding: 0;                 /* kein Innenabstand mehr */
+  font-family: 'Open Sans', sans-serif;
+  text-align: left;
+}
+
+/* Label-Style */
+.user-inputs label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Hilfetexte unter Labels */
+.user-inputs .help-text {
+  margin: -0.25rem 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Inputs und Textareas */
+.user-inputs input,
+.user-inputs textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+/* Mehrzeilige Felder */
+.user-inputs textarea {
+  resize: vertical;
+}
+
+/* Fokus-Zustand */
+.user-inputs input:focus,
+.user-inputs textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(228, 74, 0, 0.2);
+}
+
+/* Pflichtfeld-Stern im Feld */
+.required-field {
+  position: relative;
+}
+.required-field input {
+  padding-right: 2rem;
+}
+.required-field::after {
+  content: '*';
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  color: var(--accent-color);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+/* Radio-Group (Selbst/Fremd) */
+.user-inputs .radio-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin: 0.5rem 0 0 0;
+}
+.user-inputs .radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.user-inputs .radio-group input[type="radio"] {
+  accent-color: var(--accent-color);
+  transform: scale(1.1);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1e1e1e;
+    --text-primary: #eee;
+    --text-secondary: #aaa;
+    --border-color: #444;
+  }
+}
+
+/* Mobile-Feinheiten */
+@media (max-width: 600px) {
+  .user-inputs {
+    padding: 0 0.5rem;
+  }
+}
   </style>
 </head>
 <body>
@@ -633,18 +756,20 @@
     Viel Erfolg – und entdecke deine tierisch starken Seiten!
   </p>
 </div>
-<!-- 🧭 Modusauswahl für Selbst- oder Fremdbild -->
+
 <div class="user-inputs">
-  <label><strong>Wen bewertest du?</strong></label><br />
-  <label><input type="radio" name="modus" value="selbst" checked> Mich selbst (Selbstbild)</label><br />
-  <label><input type="radio" name="modus" value="fremd"> Eine andere Person (Fremdbild)</label>
+  <label>Wen bewertest du?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="modus" value="selbst" checked> Mich selbst</label>
+    <label><input type="radio" name="modus" value="fremd"> Eine andere Person</label>
+  </div>
 </div>
 
   <!-- 🧍‍♀️ Eingabefelder für Name und E-Mail -->
 <div class="user-inputs" style="max-width: 480px; margin-bottom: 2rem;">
   
-  <label for="name" style="font-weight: 500; display: block; margin-bottom: 6px; color: #222;">
-    Name:
+  <label for="name" style="font-weight: 700; display: block; margin-bottom: 0.5rem; color: var(--text-primary);">
+  Name:
   </label>
   <input 
     type="text" 
@@ -654,38 +779,39 @@
     style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 1.5rem;"
   />
 
-  <p style="font-size: 0.95em; color: #222; margin-bottom: 8px;">
-    Gib bitte deine E‑Mail-Adresse ein – sie ist notwendig, um dein Ergebnis anzuzeigen.
-  </p>
+<div class="user-inputs">
+  <!-- 1. Label mit rotem Stern -->
+  <label for="email" class="required-label">E-Mail-Adresse</label>
 
-  <label for="email" style="font-weight: 500; display: block; margin-bottom: 6px; color: #222;">
-    E‑Mail-Adresse <span style="color: red;">*</span>
-  </label>
-  <input 
-    type="email" 
-    id="email" 
-    name="email" 
-    placeholder="deine@email.ch" 
+<!-- 3. Hilfetext darunter -->
+  <p class="help-text">
+    Gib bitte deine E-Mail-Adresse ein – sie ist notwendig, um dein Ergebnis anzuzeigen.
+  </p>
+  
+  <!-- 2. Input-Feld -->
+  <input
+    type="email"
+    id="email"
+    name="email"
+    placeholder="deine@email.ch"
     required
-    style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"
   />
 </div>
+</div>
 
-    <label for="situation" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
-      Welche Situation stelle ich mir vor?
-      <span style="display: block; font-size: 0.85em; color: #666; margin-top: 0.25rem;">
-        z. B. „Ich als Teamleiter im Team“, „Ich als Angestellte*r mit Kolleg*in“ oder „Ich im Projekt“
-      </span>
-    </label>
-    <textarea
-      id="situation"
-      name="situation"
-      rows="3"
-      placeholder="Beschreibe kurz deine Rolle und Situation"
-      required
-      style="width: 100%; max-width: 600px; padding: 0.75rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; resize: vertical;"
-    ></textarea>
-  </div>
+<div class="user-inputs">
+  <label for="situation">Welche Situation stelle ich mir vor?</label>
+  <p class="help-text">
+    z. B. „Ich als Teamleiter im Team“, „Ich als Angestellte*r mit Kolleg*in“ oder „Ich im Projekt“
+  </p>
+  <textarea
+    id="situation"
+    name="situation"
+    rows="3"
+    placeholder="Beschreibe kurz deine Rolle und Situation"
+    required
+  ></textarea>
+</div>
 
 <h1>Dein Fragebogen</h1>
 
@@ -1753,23 +1879,20 @@ document.getElementById("auswertenBtn").style.display  = "none";
         var userEmail = document.querySelector('input[name="email"]').value;
 const situationText = document.getElementById("situation").value.trim() || "Keine konkrete Situation angegeben";
 
-// 1) Logo, Welcome, Profil-Titel + Situation und Kontaktdaten
 ergebnisElem.insertAdjacentHTML('afterbegin', `
-  <div style="text-align:center; margin-bottom:1rem;">
+  <div id="auswertung-start" style="text-align:center; margin-bottom:1rem;">
     <img
       src="eule-organisationszoo.png"
       alt="Eule"
       style="height:120px; width:auto; object-fit:cover;"
     />
   </div>
-
-  <!-- Willkommen mit normaler Schriftfarbe + orangefarbene OrganisationsZoo -->
   <h2 style="
     text-align:center;
     font-size:1.8em;
     margin:0 0 1.5rem;
     font-weight:700;
-    color:inherit;       /* erbt im Dark Mode die helle Farbe */
+    color:inherit;
   ">
     Willkommen im <span style="color:#E44A00;">OrganisationsZoo</span>
   </h2>
@@ -1811,6 +1934,15 @@ ergebnisElem.insertAdjacentHTML('afterbegin', `
     </div>
   </div>
 `);
+
+requestAnimationFrame(() => {
+  const ziel = document.getElementById("auswertung-start");
+  if (ziel) {
+    ziel.scrollIntoView({ behavior: "smooth", block: "start" });
+  } else {
+    console.warn("Scrollziel nicht gefunden!");
+  }
+});
 
 // Reflexionstext erstellen und anhängen
 const reflekt = document.createElement('div');
@@ -2539,13 +2671,23 @@ if (attributeLabels.length > 0) {
       });
     } // Ende der if‑Abfrage
 
-formElem.addEventListener("submit", async (e) => {
+formElem.addEventListener("submit", function(e) {
   e.preventDefault();
 
-  // Danach zur Auswertung scrollen
-  ergebnisElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
+  // … ALLES, was die Ergebnisse aufbaut und #auswertung-start injiziert …
 
+  // Ergebnis und Print-Button zeigen
+  ergebnisElem.style.display = "block";
+  printButton.style.display = "block";
+
+  setTimeout(() => {
+  const ziel = document.getElementById("auswertung-start");
+  if (ziel) {
+    ziel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}, 0); // oder 50–100ms
+
+}); // 
   }); // ← schließt formElem.addEventListener("submit", …)
 
   // 🧠 E-Mail prüfen, Button nur aktivieren bei gültiger Adresse
