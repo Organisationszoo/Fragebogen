@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fragebogen mit Tierprofil</title>
   <!-- Open Sans einbinden statt Roboto -->
@@ -718,6 +719,23 @@
 @media (max-width: 600px) {
   .user-inputs {
     padding: 0 0.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .tier-profil {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .tier-bild, .tier-text, .tier-diagramm {
+    flex: none;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .tier-bild img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
   }
 }
   </style>
@@ -1673,7 +1691,7 @@ function makeFileName(name) {
         "Faultier": { kurz: " Geduldig, bescheiden, langsam", symbolischFür: "Gelassenheit" },
         "Dinosaurier": { kurz: " Stark, distanziert, zurückgezogen", symbolischFür: "Uralte Macht" },
         "Einhorn": { kurz: " Visionär, anpassungsfähig, naiv", symbolischFür: "Träumerei" },
-        "Geier": { kurz: " Vorausschauend, intuitiv, wenig loyal", symbolischFür: "Opportunismus" },
+        "Geier": { kurz: " Vorausschauend, intuitiv, wenig loyal", symbolischFür: "Schlau" },
         "Wal": { kurz: " Vertrauenswürdig, stark, emotional", symbolischFür: "Tiefe" },
         "Hybrid": { kurz: " Intelligent, anpassungsfähig, distanziert", symbolischFür: "Universalität" },
         "Yak": { kurz: " Robust, bescheiden, strategisch", symbolischFür: "Ausdauer" },
@@ -1950,33 +1968,37 @@ reflekt.classList.add('reflexion-text');
 reflekt.style.marginTop = '1.5rem';
 reflekt.innerHTML = `
   <h3 style="font-size:1em; color:#E44A00; margin-bottom:0.5rem;">
-    Was dein Tierprofil dir zeigt – und warum es mehr als nur spannend ist
-  </h3>
-  <p>
-    Dein Ergebnis ist mehr als eine nette Spielerei:
-    <strong>Es ist ein Spiegel deiner aktuellen Verhaltensdynamik</strong>.
-    Jedes Tier steht für bestimmte Denk-, Fühl- und Handlungsweisen –
-    <em>der Mix macht dich einzigartig</em>.
-  </p>
-  <p>
-    Vielleicht steckt in dir die stille Weisheit einer <strong>Eule</strong>,
-    die Treue eines <strong>Hundes</strong>, das strategische Gespür einer
-    <strong>Hyäne</strong>, die Vision eines <strong>Adlers</strong> oder
-    das kreative Chaos eines <strong>Gibbons</strong>?
-  </p>
-  <p>
-    Diese Tierbilder helfen dir, dich selbst mit einem Augenzwinkern und
-    gleichzeitig mit Tiefe zu betrachten – <strong>ohne Schubladen, dafür mit
-    Raum zur Reflexion</strong>.
-  </p>
-  <p>
-    Lust, dein Profil gemeinsam mit anderen zu entdecken, zu hinterfragen und
-    weiterzuentwickeln? <strong>Dann ist ein Workshop genau das Richtige für dich!</strong>
-  </p>
-  <p>
-    Denn: <em>Persönlichkeitsentwicklung darf Spass machen.</em> Erkenntnisse
-    gewinnen wir oft am besten im Austausch.
-  </p>
+Was dein Tierprofil dir zeigt – und warum es mehr als nur spannend ist</h3>
+<p>
+  Dein Ergebnis ist mehr als eine nette Spielerei: 
+  <strong>Es spiegelt deine aktuelle Verhaltensdynamik wider.</strong> 
+  Jedes Tier steht für bestimmte Denk-, Fühl- und Handlungsweisen – <em>dein individueller Mix macht dich einzigartig!</em>
+</p>
+
+<p>
+  Vielleicht trägst du den unermüdlichen Fleiss einer <strong>Ameise</strong> in dir, die Organisation einer <strong>Biene</strong> oder die Weisheit einer <strong>Eule</strong>. 
+  Vielleicht erkennst du dich in der visionären Klarheit eines <strong>Adlers</strong> oder der spielerischen Energie eines <strong>Gibbons</strong> wieder? 
+  Auch taktisches Geschick wie ein <strong>Chamäleon</strong> oder die entschlossene Kraft eines <strong>Schakals</strong> könnten dich prägen.
+</p>
+
+<p>
+  Vielleicht wirken in dir auch der kindliche Enthusiasmus eines <strong>Kindes</strong>, die Anpassungsfähigkeit eines <strong>Insekts</strong> oder die Gelassenheit eines <strong>Wals</strong> – oder du trägst die kämpferische Härte eines <strong>Dinosauriers</strong> in dir. 
+  Und manchmal zeigt sich auch der Wunsch eines <strong>Einhorns</strong>, besonders, idealistisch und bedeutend zu sein.
+</p>
+
+<p>
+  Diese Tierbilder laden dich ein, deine Stärken und Entwicklungspotenziale mit Leichtigkeit und Tiefe zu entdecken – 
+  <strong>frei von Schubladen, offen für echte Reflexion.</strong>
+</p>
+
+<p>
+  Lust, dein Profil gemeinsam zu erkunden und weiterzuentwickeln? 
+  <strong>Dann ist der Workshop genau das Richtige für dich!</strong>
+</p>
+
+<p>
+  <em>Persönlichkeitsentwicklung darf Spass machen – Erkenntnisse entstehen am besten im lebendigen Austausch!</em>
+</p>
 `;
 ergebnisElem.appendChild(reflekt);
 
@@ -2111,32 +2133,39 @@ top5.forEach(([tier, val]) => {
       <span>Symbolisch für: ${(tierTexte[tier] || {}).symbolischFür || '-'}</span>
     </div>
     <div class="tier-diagramm">
-      <canvas id="${canvasId}" width="80" height="80"></canvas>
+<canvas id="${canvasId}" width="80" height="80"></canvas>
     </div>
   `;
 
   chartWrap.appendChild(div);
 
-  setTimeout(() => {
-    new Chart(
-      document.getElementById(canvasId).getContext("2d"),
-      {
-        type: 'pie',
-        data: {
-          labels: ["Erreichte Punkte", "Fehlende Punkte"],
-          datasets: [{
-            data: [val, maxPunkte - val],
-            backgroundColor: ["#E44A00", "#FFD1B2"],
-            borderWidth: 0
-          }]
-        },
-        options: {
-          responsive: false,
-          plugins: { legend: { display: false } }
+setTimeout(() => {
+  new Chart(
+    document.getElementById(canvasId).getContext("2d"),
+    {
+      type: 'pie',
+      data: {
+        labels: [], // Keine Labels im Diagramm
+        datasets: [{
+          data: [val, maxPunkte - val],
+          backgroundColor: ["#E44A00", "#FFD1B2"],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            enabled: false
+          }
         }
       }
-    );
-  }, 10);
+    }
+  );
+}, 10);
 });
 
 ergebnisElem.appendChild(chartWrap);
@@ -2497,8 +2526,8 @@ Object.keys(kategorienMapping).forEach(kat => {
     align-items: flex-start;
     gap: 20px;
     padding: 20px;
-    background-color: var(--bg-card, #fff);
-    color: var(--text-color, #000);
+   background-color: #ffffff;
+color: #000000;
     border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     margin: 20px 0;
